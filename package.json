@@ -1,0 +1,7 @@
+{
+  "name": "personalities",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Gregory Tippett <gntsketches@gmail.com>",
+  "license": "MIT"
+}
