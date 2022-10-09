@@ -1,4 +1,4 @@
-// import { traits } from './descriptors/traits';
+import { traits } from './descriptors/traits';
 
-// console.log('>>> traitss', traits);
-console.log('>>> traitss');
+console.log('>>> traits', traits);
+// console.log('>>> traitss');
