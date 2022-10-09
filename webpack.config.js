@@ -1,4 +1,6 @@
 module.exports = {
+  mode: 'development',
+  devtool: false,
   resolve: {
     extensions: ['.ts', '.js']
   },
@@ -12,5 +14,10 @@ module.exports = {
         }
       }
     ]
+  },
+  devServer: {
+    static: {
+      directory: './dist'
+    }
   }
 }
