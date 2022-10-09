@@ -1,0 +1,57 @@
+TODO
+  - html machine
+    https://www.youtube.com/watch?v=hYCqhdJiAxM
+  
+
+TODO setup 
+  This question:
+    https://stackoverflow.com/questions/68721073/what-is-the-difference-between-installing-eslint-as-extension-and-installing-as
+  - what did I lint?
+  - how do you even lint?
+  - linter config
+      ben awad with ts https://www.youtube.com/watch?v=mg_pDqszL3g
+      freeCodeCamp https://www.youtube.com/watch?v=qhuFviJn-es
+        use init to get basic stuff
+      https://khalilstemmler.com/blogs/typescript/eslint-for-typescript/
+      https://typescript-eslint.io/docs/
+  - prettier
+  - babel
+      https://medium.com/@francesco.agnoletto/how-to-set-up-typescript-with-babel-and-webpack-6fba1b6e72d5
+
+
+TODO study:
+  - VSCode why does search with src include node_modules?
+  - Study TypeScript & DOM
+      https://www.typescriptlang.org/docs/handbook/dom-manipulation.html
+      difference between children and childNodes?
+  - am I using the term 'declarative' correctly?
+      https://alexsidorenko.com/blog/react-is-declarative-what-does-it-mean/
+      https://stackoverflow.com/questions/33655534/difference-between-declarative-and-imperative-in-react-js
+
+
+*** TS FYI ****************************************************************************************
+
+// let verbList: string[][] = [];
+// let verbList: Array<string>[] = [];
+
+// For CDN use:
+// https://stackoverflow.com/questions/12709074/how-do-you-explicitly-set-a-new-property-on-window-in-typescript
+  declare global { interface Window { dragula: any; } }
+  const verbsDrake = dragula([DOMVerbList, DOMTrash], {
+      removeOnSpill: false,
+  });
+
+
+
+*** RESOURCES ****************************************************************************************
+  https://game-icons.net/
+
+
+*** MYSTERIES ****************************************************************************************
+    - something added extra .js files alongside .ts files
+        https://stackoverflow.com/questions/63422959/webpack-build-or-typescript-is-creating-js-files-right-in-my-src
+        what's weird is that it doesn't do this on build
+            not sure exactly when/why these files are created
+        also maybe u didn't want to get rid of them
+            tsconfig has "target": "es5", and it's interesting,
+              eg ListTemplate.js used an iife
