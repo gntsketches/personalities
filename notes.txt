@@ -1,9 +1,40 @@
 TODO
-  - html machine
-    https://www.youtube.com/watch?v=hYCqhdJiAxM
+  - new branch to preseve current babel config, and notes about:
+      webpack module rules: does the order matter? (well you can try changing them...) ... YES app crashes if you put ts rule before babel
+      right-to-left, bottom-to-top: https://stackoverflow.com/questions/32234329/what-is-the-loader-order-for-webpack
+      https://stackoverflow.com/questions/38320220/how-to-setup-typescript-babel-webpack
+      etc
+  - transition this to the leantypescript model (@babel/preset-typescript)
+
+
+TODO are you ready to lint? seemed to be working with learntypescript...
+
+
+TODO css modules
+  https://blog.logrocket.com/how-to-configure-css-modules-webpack/
+  https://blog.jakoblind.no/css-modules-webpack/
+
+
+TODO babel experiment
+    try to ID some features which are/aren't present
+      like what are some advanced features that aren't in browsers yet?
+    study: what features from what releases?
+      https://www.odinschool.com/blog/programming/java-script-versions#:~:text=ES5%20was%20released%20in%202009,release%20of%20its%20previous%20version.
   
 
 TODO setup 
+  - not so good... also btw this is 2018... https://medium.com/@francesco.agnoletto/how-to-set-up-typescript-with-babel-and-webpack-6fba1b6e72d5
+
+
+
+BUT DO YOU EVEN NEED BABEL?
+  https://dev.to/mbeaudru/is-babel-still-relevant-for-typescript-projects-36a7
+  tldr: maybe not but it's handly for some things
+    probably wouldn't hurt to use it so you get familiar with it
+
+
+
+LINTING 
   This question:
     https://stackoverflow.com/questions/68721073/what-is-the-difference-between-installing-eslint-as-extension-and-installing-as
   - what did I lint?
@@ -15,8 +46,6 @@ TODO setup
       https://khalilstemmler.com/blogs/typescript/eslint-for-typescript/
       https://typescript-eslint.io/docs/
   - prettier
-  - babel
-      https://medium.com/@francesco.agnoletto/how-to-set-up-typescript-with-babel-and-webpack-6fba1b6e72d5
 
 
 TODO study:
