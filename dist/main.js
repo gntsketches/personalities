@@ -6,15 +6,13 @@
 /*!***********************************!*\
   !*** ./src/descriptors/traits.ts ***!
   \***********************************/
-/***/ ((__unused_webpack_module, exports) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.traits = void 0;
-exports.traits = [{
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "traits": () => (/* binding */ traits)
+/* harmony export */ });
+var traits = [{
   "description": "I idolize a particular hero of my faith, and constantly refer to that person's deeds and example.",
   "background": "alcolyte",
   "source": "phb"
@@ -637,19 +635,17 @@ module.exports = styleTagTransform;
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-var exports = __webpack_exports__;
 /*!**********************!*\
   !*** ./src/index.ts ***!
   \**********************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _styles_style_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./styles/style.scss */ "./src/styles/style.scss");
+/* harmony import */ var _descriptors_traits__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./descriptors/traits */ "./src/descriptors/traits.ts");
 
 
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-__webpack_require__(/*! ./styles/style.scss */ "./src/styles/style.scss");
-var traits_1 = __webpack_require__(/*! ./descriptors/traits */ "./src/descriptors/traits.ts");
-console.log('>>> traits...', traits_1.traits);
-// console.log('>>> traitss');
+console.log('>>> the traits...', _descriptors_traits__WEBPACK_IMPORTED_MODULE_1__.traits);
+var thing = '1';
+console.log('something...', thing);
 })();
 
 /******/ })()

@@ -1,3 +1,8 @@
+// import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
+  // "SyntaxError: Cannot use import statement outside a module..."
+  // and yet...
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+
 module.exports = {
   mode: 'development',
   devtool: false,
@@ -12,13 +17,12 @@ module.exports = {
         use: {
           // without additional settings, this will reference .babelrc
           loader: 'babel-loader',
-        }
-      },
-      {
-        test: /\.ts$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'ts-loader'
+          options: {
+            presets: [
+              "@babel/preset-env",
+              "@babel/preset-typescript"
+            ]
+          }
         }
       },
       {
@@ -31,5 +35,8 @@ module.exports = {
     static: {
       directory: './dist'
     }
-  }
+  },
+  plugins: [
+    new ForkTsCheckerWebpackPlugin()
+  ]
 }
