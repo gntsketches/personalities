@@ -1,18 +1,29 @@
 
 LINTING 
-  TODO review robinw-vscode
   > might be worth just experimenting with eslint for a bit before u add prettier...
 
 
+Simplistic framework
+    https://gomakethings.com/html-templates-with-vanilla-javascript/
+    HTML machine?... https://www.youtube.com/watch?v=hYCqhdJiAxM 
+    state management
+    flexible render method (use a templating library)
+    wrapper for listener assignment (to update state)
+    trigger to render on state update (triggers?)
+
 
 TODO babel experiment
+    doc tho https://babeljs.io/docs/en/
     try to ID some features which are/aren't present
       like what are some advanced features that aren't in browsers yet?
     study: what features from what releases?
       https://www.odinschool.com/blog/programming/java-script-versions#:~:text=ES5%20was%20released%20in%202009,release%20of%20its%20previous%20version.
-  
+    fyi: https://babeljs.io/docs/en/babel-preset-typescript 
 
 
+
+TODO drag
+  https://www.npmjs.com/package/sortablejs
 
 
 
@@ -30,6 +41,16 @@ TODO study:
   - am I using the term 'declarative' correctly?
       https://alexsidorenko.com/blog/react-is-declarative-what-does-it-mean/
       https://stackoverflow.com/questions/33655534/difference-between-declarative-and-imperative-in-react-js
+
+
+
+
+*** Personalities *********************************************************
+    dndbeyond.com/sources/basic-rules/personality-and-background
+    http://weirdzine.com/wp-content/uploads/2015/09/Personality-Traits.pdf
+    https://mykindofmeeple.com/dnd-personality-traits/
+
+
 
 
 *** TS FYI ****************************************************************************************
