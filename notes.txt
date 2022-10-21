@@ -6,6 +6,7 @@ LINTING
 
 
 TODO babel experiment
+    doc tho https://babeljs.io/docs/en/
     try to ID some features which are/aren't present
       like what are some advanced features that aren't in browsers yet?
     study: what features from what releases?
