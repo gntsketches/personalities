@@ -1,10 +1,8 @@
 
-TODO are you ready to lint? seemed to be working with learntypescript...
+LINTING 
+  TODO review robinw-vscode
+  > might be worth just experimenting with eslint for a bit before u add prettier...
 
-
-TODO css modules
-  https://blog.logrocket.com/how-to-configure-css-modules-webpack/
-  https://blog.jakoblind.no/css-modules-webpack/
 
 
 TODO babel experiment
@@ -18,18 +16,10 @@ TODO babel experiment
 
 
 
-LINTING 
-  This question:
-    https://stackoverflow.com/questions/68721073/what-is-the-difference-between-installing-eslint-as-extension-and-installing-as
-  - what did I lint?
-  - how do you even lint?
-  - linter config
-      ben awad with ts https://www.youtube.com/watch?v=mg_pDqszL3g
-      freeCodeCamp https://www.youtube.com/watch?v=qhuFviJn-es
-        use init to get basic stuff
-      https://khalilstemmler.com/blogs/typescript/eslint-for-typescript/
-      https://typescript-eslint.io/docs/
-  - prettier
+TODO css modules
+  https://blog.logrocket.com/how-to-configure-css-modules-webpack/
+  https://blog.jakoblind.no/css-modules-webpack/
+
 
 
 TODO study:
