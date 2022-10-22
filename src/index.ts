@@ -13,21 +13,22 @@ const state = {
   title: 'Personalities',
 };
 
-function build(parent: HTMLElement, el: string, className?: string, text?: string) {
-  // let html = '';
-  // html +=
-  //   `<${el} class="${className ? className : ''}">${text ? text : ''}</${el}>`;
-  // parent.innerHTML = html;
+interface IOptions {
+  className?: string,
+  text?: string,
+}
+
+function build(parent: HTMLElement, el: string, options?: IOptions) {
   const element = document.createElement(el);
-  if (className) element.classList.add(className);
-  if (text) element.innerText = text;
+  if (options?.className) element.classList.add(options.className);
+  if (options?.text) element.innerText = options.text;
   parent.appendChild(element)
 
   return element;
 }
 
-const main = build(root, 'div', 'main');
-const header = build(main, 'h1', 'header', state.title);
-const options = build(main, 'div', 'options');
+const main = build(root, 'div', {className: 'main'});
+const header = build(main, 'h1', {className: 'header', text: state.title});
+const options = build(main, 'div', {className: 'options'});
 const mainInput = build(options, 'input');
 
