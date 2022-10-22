@@ -1,4 +1,22 @@
 
+body
+  main
+  header
+    title
+    click-to-copy
+  options
+    dice roller
+    toggle: traits ideals bonds flaws quirks trinkets
+    filter
+    textarea 
+    add-me
+  characteristics
+    text editable
+    drag handle
+    remove
+
+
+
 LINTING 
   > might be worth just experimenting with eslint for a bit before u add prettier...
 

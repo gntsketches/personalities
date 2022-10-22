@@ -646,6 +646,16 @@ __webpack_require__.r(__webpack_exports__);
 console.log('>>> the traits...', _descriptors_traits__WEBPACK_IMPORTED_MODULE_1__.traits);
 var thing = '1';
 console.log('something...', thing);
+var root = document.getElementById('root');
+var state = {
+  word: 'test'
+};
+function build(parent, el) {
+  var html = '';
+  html += "<".concat(el, " class=\"wizard\">\n      <strong>").concat(state.word, "</strong>\n    </").concat(el, ">");
+  parent.innerHTML = html;
+}
+build(root, 'div');
 })();
 
 /******/ })()
