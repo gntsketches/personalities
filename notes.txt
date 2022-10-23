@@ -83,7 +83,13 @@ TODO study:
       removeOnSpill: false,
   });
 
-
+  // https://medium.com/@jeffbutsch/typescript-interface-functions-c691a108e3f1
+  // https://www.tutorialsteacher.com/typescript/typescript-interface
+  // https://medium.com/geekculture/html-event-handling-in-typescript-b9ca7178d912
+    onClick?(): void, // Type '(e: Event) => void' is not assignable to type '() => void'
+    // onClick?(arg0: Event): void, // but this works
+    // onClick?: (arg0: Event) => void, // so does this
+    const mainInput = build(options, 'input', {className: 'main-input', onClick: listenerTest});
 
 *** RESOURCES ****************************************************************************************
   https://game-icons.net/

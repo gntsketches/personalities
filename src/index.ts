@@ -16,8 +16,8 @@ const state = {
 interface IOptions {
   className?: string,
   text?: string,
-  // https://medium.com/@jeffbutsch/typescript-interface-functions-c691a108e3f1
-  onClick?(): void,
+  onClick?(arg0: Event): void,
+  onInput?: (arg0: Event) => void,
 }
 
 function build(parent: HTMLElement, el: string, options?: IOptions) {
@@ -25,17 +25,22 @@ function build(parent: HTMLElement, el: string, options?: IOptions) {
   if (options?.className) element.classList.add(options.className);
   if (options?.text) element.innerText = options.text;
   if (options?.onClick) element.addEventListener('click', options.onClick);
+  if (options?.onInput) element.addEventListener('input', options.onInput);
   parent.appendChild(element)
 
   return element;
 }
 
-const listenerTest = () => {
-  console.log('listening!');
+const updateMainInput = (e: Event) => {
+  // console.log('e', e);
+  const target = e.target as HTMLInputElement; 
+  const value = target.value;
+  console.log('listening!', value);
+  
 }
 
 const main = build(root, 'div', {className: 'main'});
 const header = build(main, 'h1', {className: 'header', text: state.title});
 const options = build(main, 'div', {className: 'options'});
-const mainInput = build(options, 'input', {className: 'main-input', onClick: listenerTest});
+const mainInput = build(options, 'input', {className: 'main-input', onInput: updateMainInput});
 
