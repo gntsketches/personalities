@@ -11,7 +11,16 @@ const root = document.getElementById('root') as HTMLDListElement;
 
 const state = {
   title: 'Personalities',
+  mainInput: '',
 };
+
+// function updateState(keyVal: 'title' | string[]) { // ['title', 'new personality'] // nerp
+// function updateState(keyVal: string[]) { // ['title', 'new personality']
+function setState(key: keyof typeof state, val: string) { // ['title', 'new personality']
+  state[key] = val;
+  render();
+}
+
 
 interface IOptions {
   className?: string,
@@ -36,11 +45,23 @@ const updateMainInput = (e: Event) => {
   const target = e.target as HTMLInputElement; 
   const value = target.value;
   console.log('listening!', value);
-  
+  setState('mainInput', value);
 }
 
-const main = build(root, 'div', {className: 'main'});
-const header = build(main, 'h1', {className: 'header', text: state.title});
-const options = build(main, 'div', {className: 'options'});
-const mainInput = build(options, 'input', {className: 'main-input', onInput: updateMainInput});
 
+const render = () => {
+  console.log('rendering');
+  const main = build(root, 'div', {className: 'main'});
+  const header = build(main, 'h1', {className: 'header', text: state.title});
+  const options = build(main, 'div', {className: 'options'});
+  const mainInput = build(options, 'input', {className: 'main-input', onInput: updateMainInput});
+}
+
+render();
+
+// HELPERS /////////////////////////////
+function removeAllChildNodes(parent) {
+  while (parent.firstChild) {
+      parent.removeChild(parent.firstChild);
+  }
+}

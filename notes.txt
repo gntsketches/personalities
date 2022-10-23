@@ -91,6 +91,11 @@ TODO study:
     // onClick?: (arg0: Event) => void, // so does this
     const mainInput = build(options, 'input', {className: 'main-input', onClick: listenerTest});
 
+  Object key typing:
+    https://bobbyhadz.com/blog/typescript-element-implicitly-has-any-type-expression
+    https://bobbyhadz.com/blog/typescript-type-string-is-not-assignable-to-type#:~:text=The%20%22Type%20'string'%20is,const%20or%20a%20type%20assertion.
+    
+
 *** RESOURCES ****************************************************************************************
   https://game-icons.net/
 
