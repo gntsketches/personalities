@@ -96,6 +96,17 @@ TODO study:
     https://bobbyhadz.com/blog/typescript-type-string-is-not-assignable-to-type#:~:text=The%20%22Type%20'string'%20is,const%20or%20a%20type%20assertion.
     
 
+
+
+
+
+*** DOM ***
+  https://oozou.com/til/create-element-with-attributes-in-one-line-69
+
+
+
+
+
 *** RESOURCES ****************************************************************************************
   https://game-icons.net/
 

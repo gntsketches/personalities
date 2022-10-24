@@ -18,6 +18,8 @@ const state = {
 // function updateState(keyVal: string[]) { // ['title', 'new personality']
 function setState(key: keyof typeof state, val: string) { // ['title', 'new personality']
   state[key] = val;
+  console.log('state', state);
+  
   render();
 }
 
@@ -30,9 +32,13 @@ interface IOptions {
 }
 
 function build(parent: HTMLElement, el: string, options?: IOptions) {
+  // console.log('build options', options);
   const element = document.createElement(el);
   if (options?.className) element.classList.add(options.className);
-  if (options?.text) element.innerText = options.text;
+  if (options?.text) {
+    if (el === 'input') element.setAttribute('value', options.text);
+    else element.innerText = options.text;
+  }
   if (options?.onClick) element.addEventListener('click', options.onClick);
   if (options?.onInput) element.addEventListener('input', options.onInput);
   parent.appendChild(element)
@@ -54,14 +60,16 @@ const render = () => {
   const main = build(root, 'div', {className: 'main'});
   const header = build(main, 'h1', {className: 'header', text: state.title});
   const options = build(main, 'div', {className: 'options'});
-  const mainInput = build(options, 'input', {className: 'main-input', onInput: updateMainInput});
+  const mainInput = build(options, 'input', {
+    className: 'main-input', text: state.mainInput, onInput: updateMainInput
+  });
 }
 
 render();
 
 // HELPERS /////////////////////////////
-function removeAllChildNodes(parent) {
-  while (parent.firstChild) {
-      parent.removeChild(parent.firstChild);
-  }
-}
+// function removeAllChildNodes(parent) {
+//   while (parent.firstChild) {
+//       parent.removeChild(parent.firstChild);
+//   }
+// }
