@@ -31,6 +31,7 @@ interface IOptions {
   onInput?: (arg0: Event) => void,
 }
 
+// maybe what you want here is "register" - something that connects a certain value with state, and receives updates...?
 function build(parent: HTMLElement, el: string, options?: IOptions) {
   // console.log('build options', options);
   const element = document.createElement(el);
@@ -57,6 +58,7 @@ const updateMainInput = (e: Event) => {
 
 const render = () => {
   console.log('rendering');
+  root.innerHTML = '';
   const main = build(root, 'div', {className: 'main'});
   const header = build(main, 'h1', {className: 'header', text: state.title});
   const options = build(main, 'div', {className: 'options'});
