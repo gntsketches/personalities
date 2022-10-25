@@ -14,13 +14,19 @@ const state = {
   mainInput: '',
 };
 
+const registered = {};
+
 // function updateState(keyVal: 'title' | string[]) { // ['title', 'new personality'] // nerp
 // function updateState(keyVal: string[]) { // ['title', 'new personality']
 function setState(key: keyof typeof state, val: string) { // ['title', 'new personality']
   state[key] = val;
   console.log('state', state);
   
-  render();
+  publish(key);
+}
+
+function publish(stateField: keyof typeof state) {
+  registered[stateField]();
 }
 
 
@@ -31,7 +37,6 @@ interface IOptions {
   onInput?: (arg0: Event) => void,
 }
 
-// maybe what you want here is "register" - something that connects a certain value with state, and receives updates...?
 function build(parent: HTMLElement, el: string, options?: IOptions) {
   // console.log('build options', options);
   const element = document.createElement(el);
@@ -47,6 +52,11 @@ function build(parent: HTMLElement, el: string, options?: IOptions) {
   return element;
 }
 
+// maybe what you want here is "register" - something that connects a certain value with state, and receives updates...?
+function register(stateField: keyof typeof state, callback: unknown) { // prefers unknown to any!
+  registered[stateField] = callback;
+}
+
 const updateMainInput = (e: Event) => {
   // console.log('e', e);
   const target = e.target as HTMLInputElement; 
@@ -58,13 +68,15 @@ const updateMainInput = (e: Event) => {
 
 const render = () => {
   console.log('rendering');
-  root.innerHTML = '';
+  // root.innerHTML = '';
   const main = build(root, 'div', {className: 'main'});
   const header = build(main, 'h1', {className: 'header', text: state.title});
   const options = build(main, 'div', {className: 'options'});
   const mainInput = build(options, 'input', {
     className: 'main-input', text: state.mainInput, onInput: updateMainInput
   });
+  // would be cool to use method chaining here: const mainInput = build(...).register(...)
+  register('mainInput', () => mainInput.setAttribute('value', state.mainInput));
 }
 
 render();
