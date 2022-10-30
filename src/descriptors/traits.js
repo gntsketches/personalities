@@ -1,6 +1,4 @@
-import { descriptor } from "../interfaces/descriptor";
-
-export const traits: descriptor[] = [
+export const traits = [
 {
   "description": "I idolize a particular hero of my faith, and constantly refer to that person's deeds and example.",
   "background": "alcolyte",
