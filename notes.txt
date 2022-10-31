@@ -22,6 +22,10 @@ body
 
 
 
+TODO sourcemaps for console.logs...
+
+
+
 https://betterprogramming.pub/chaining-patterns-in-javascript-df05e3030ee7
 
 
