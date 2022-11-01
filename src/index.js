@@ -1,16 +1,15 @@
-import './styles/style.scss'
+import { build } from './lib/build';
 
 import { traits } from './descriptors/traits';
+import CharList from './components/charList';
+import './styles/style.scss'
 
 console.log('>>> the traits...', traits);
-
-// const thing: String = '1' // lint doesn't like it 🎉
-// console.log('something...', thing);
 
 // TODO rename DOMRoot
 const root = document.getElementById('root');
 
-const state = {
+export const state = {
   title: 'Personalities',
   mainInput: '',
   characteristics: [
@@ -23,28 +22,13 @@ const registered = {};
 
 function setState(key, val) { 
   state[key] = val;
-  console.log('state', state);
+  console.log('setState', state);
   
   publish(key);
 }
 
 function publish(stateField) {
   registered[stateField]();
-}
-
-function build(parent, el, options) {
-  console.log('build options', options);
-  const element = document.createElement(el);
-  if (options?.className) element.classList.add(options.className);
-  if (options?.text) {
-    if (el === 'input') element.setAttribute('value', options.text);
-    else element.innerText = options.text;
-  }
-  if (options?.onClick) element.addEventListener('click', options.onClick);
-  if (options?.onInput) element.addEventListener('input', options.onInput);
-  parent.appendChild(element)
-
-  return element;
 }
 
 function register(stateField, callback) {
@@ -59,7 +43,7 @@ const addMe = () => {
   }
   setState('characteristics', [...state.characteristics, characteristic]);
   setState('mainInput', '');
-  console.log('state', state);
+  console.log('addMe state', state);
 }
 
 const updateMainInput = (e) => {
@@ -83,22 +67,15 @@ const render = () => {
       const DOMAddMe = build(options, 'button', {
         className: 'add-me', text: 'Add Me', onClick: addMe
       });
-      register('characteristics', () => render()); // can you rerender only part of this? how to component-ize for partial rerenders?
+      register('characteristics', () => charList.render()); // can you rerender only part of this? how to component-ize for partial rerenders?
+
       const mainInput = build(options, 'input', {
         className: 'main-input', text: state.mainInput, onInput: updateMainInput,
       });
       // would be cool to use method chaining here: const mainInput = build(...).register(...)
       register('mainInput', () => mainInput.setAttribute('value', state.mainInput));
 
-    const DOMChars = build(main, 'div', {
-      className: 'characteristics-list', 
-    });
-
-    state.characteristics.forEach(characteristic => {
-      const char = build(DOMChars, 'div', {
-        className: 'char', text: characteristic.text,
-      })
-    });
+    const charList = new CharList(main, 'div');
 }
 
 render();
