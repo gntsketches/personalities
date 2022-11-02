@@ -38,16 +38,34 @@ Simplistic framework
 
     ?? maybe what you want here is "register" - something that connects a certain value with state, and receives updates...?
 
-    https://gomakethings.com/automatically-re-rendering-an-element-when-its-state-changes-with-vanilla-javascript/
-      https://gomakethings.com/articles/page/35/
-      https://gomakethings.com/manipulating-elements-after-theyre-rendered-into-the-dom/
     https://stackoverflow.com/questions/56037261/how-to-rerender-single-element-of-a-web-component
-    https://gomakethings.com/html-templates-with-vanilla-javascript/
-    HTML machine?... https://www.youtube.com/watch?v=hYCqhdJiAxM 
+    HTML machine... eg: https://www.youtube.com/watch?v=hYCqhdJiAxM 
     state management
-    flexible render method (use a templating library)
+    flexible render method (use a templating library?)
     wrapper for listener assignment (to update state)
     trigger to render on state update (triggers?)
+      PROBLEM is that reRender (as rebuilding DOM) causes inputs to loose focus
+        (ie: it's not just a performance issue)
+        even autofocus probably won't work - cursor position is prob internal state of the field
+      SO it's a bad approach to automatically re-build on state field changes
+      best to only call rebuild when you need it
+      what you might could do is to still register callbacks based on state field changes though
+        (would be nice to define these internally for each component)
+        so eg: in "Characteristic" component your callback updates the field value 
+        (note that this requires using array/object overwrites every time...)
+        (see notes about reg in component.js)
+      BUT, there may still need to be a distinction between "events in general" and "state updates"
+        example: 
+          AddMe button - this can rebuild the list because loss of focus at that time is ok
+          vs updating (via contenteditable) the text of an item in the list
+          both will setState('characteristics', [...newCharacteristics])
+          so the pubsub system will have to develop there
+            expand current methods? or use separate methods for stateField and general?
+            probably separate, because current setState calls registered items EVERY TIME
+              (?...are there things that you reliably want to do that with?
+                having the hook there is a neat idea (as a feature) but not clear if it will be used...
+
+
 
 
 TODO babel experiment

@@ -31,7 +31,7 @@ function publish(stateField) {
   registered[stateField]();
 }
 
-function register(stateField, callback) {
+export function register(stateField, callback) {
   registered[stateField] = callback;
 }
 
