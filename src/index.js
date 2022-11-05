@@ -4,8 +4,6 @@ import { traits } from './descriptors/traits';
 import CharList from './components/CharList';
 import './styles/style.scss'
 
-console.log('>>> the traits...', traits);
-
 // TODO rename DOMRoot
 const root = document.getElementById('root');
 

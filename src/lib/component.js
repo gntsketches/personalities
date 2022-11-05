@@ -2,10 +2,11 @@ import { register as reg } from '../index';
 import { build } from './build';
 
 export default class Component {
-  constructor(parent, rootElement, registeredFields) { // or is it stateFields? or both?
+  constructor(parent, rootElement, props) { 
     this.parent = parent;
     this.rootElement = rootElement;
-    // this.registeredFields = registeredFields;
+    this.props = props;
+    // this.registeredFields = registeredFields; // don't think so...
 
     this.build = build;
 
