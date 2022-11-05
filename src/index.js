@@ -1,7 +1,7 @@
 import { build } from './lib/build';
 
 import { traits } from './descriptors/traits';
-import CharList from './components/charList';
+import CharList from './components/CharList';
 import './styles/style.scss'
 
 console.log('>>> the traits...', traits);
@@ -20,19 +20,21 @@ export const state = {
 
 const registered = {};
 
-function setState(key, val) { 
+export function setState(key, val) { 
   state[key] = val;
   console.log('setState', state);
   
   publish(key);
 }
 
-function publish(stateField) {
-  registered[stateField]();
+function publish(field) {
+  console.log('PUBLISHING ', field);
+  console.log('REGISTERED', registered);
+  if (registered[field]) registered[field]();
 }
 
-export function register(stateField, callback) {
-  registered[stateField] = callback;
+export function register(field, callback) {
+  registered[field] = callback;
 }
 
 const addMe = () => {
@@ -44,6 +46,7 @@ const addMe = () => {
   setState('characteristics', [...state.characteristics, characteristic]);
   setState('mainInput', '');
   console.log('addMe state', state);
+  publish('add-me')
 }
 
 const updateMainInput = (e) => {
@@ -54,9 +57,8 @@ const updateMainInput = (e) => {
   setState('mainInput', value);
 }
 
-
 const render = () => {
-  console.log('rendering');
+  console.log('>>> main render <<<');
   root.innerHTML = '';
   // TODO rename all these like "DOMMain"
   const main = build(root, 'div', {className: 'main'});
@@ -67,7 +69,7 @@ const render = () => {
       const DOMAddMe = build(options, 'button', {
         className: 'add-me', text: 'Add Me', onClick: addMe
       });
-      register('characteristics', () => charList.render()); // can you rerender only part of this? how to component-ize for partial rerenders?
+      register('add-me', () => charList.render()); // can you rerender only part of this? how to component-ize for partial rerenders?
 
       const mainInput = build(options, 'input', {
         className: 'main-input', text: state.mainInput, onInput: updateMainInput,

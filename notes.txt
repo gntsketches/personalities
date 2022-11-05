@@ -16,6 +16,7 @@ body
     textarea 
     add-me
   characteristics
+    type (ideal bond etc...)
     text editable
     drag handle
     remove
@@ -64,6 +65,8 @@ Simplistic framework
             probably separate, because current setState calls registered items EVERY TIME
               (?...are there things that you reliably want to do that with?
                 having the hook there is a neat idea (as a feature) but not clear if it will be used...
+        but for starters let's try them in the same and see what happens...
+        BTW you'll want to register an array of funtions (same event can call multiple things)
 
 
 

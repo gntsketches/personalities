@@ -31,18 +31,14 @@ export default class Component {
     console.log('This is the component base, extend it with something...'); 
   }
 
-  /* 
-    HOW to subscribe to any registered field?
-      (is there a way to do it automatically?)
-      ... such as to call reRender...
-  */
   // WIP...
   // ... SO call to render here is bad, but this might be the place where you reg the callbacks
   // ie: you could assign them with a dictionary/dispatch table on the specific component,
   // and then hook them into global state here
   register() {
     this.registered().forEach(e => {
-      reg(e, () => this.render());
+      // reg(e, () => this.render());
+      reg(e, () => console.log('component-registered callback:', e));
     });
   }
 
