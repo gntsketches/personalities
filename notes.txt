@@ -7,23 +7,29 @@ https://spin.atomicobject.com/2016/06/26/parallelize-development-git-worktrees/
 body
   main
   header
-    title
+    Y title
     click-to-copy
   options
-    dice roller
+    Y textarea 
+    Y add-me
+    dice roller input & fill-in
     toggle: traits ideals bonds flaws quirks trinkets
-    filter
-    textarea 
-    add-me
+    trait-searchbar (& selection popup)
   characteristics
-    type (ideal bond etc...)
-    text editable
+    Y text editable
+    Y remove
+    label for type (small font, ideal bond etc...)
     drag handle
-    remove
 
 
 
-TODO sourcemaps for console.logs...
+TODO 
+  DECIDE on char vs characteristics
+  TODO sourcemaps for console.logs
+  "main" component
+  scope/module for state & registration (hmm "file state"?) 
+
+
 
 
 
@@ -67,6 +73,9 @@ Simplistic framework
                 having the hook there is a neat idea (as a feature) but not clear if it will be used...
         but for starters let's try them in the same and see what happens...
         BTW you'll want to register an array of funtions (same event can call multiple things)
+      ...it may take a while (even to end of project) to know how/whether you're going to use 
+        the setState auto-publish & component auto-register features
+        let's keep them in for how and watch how the rest of this builds
 
 
 

@@ -20,14 +20,14 @@ const registered = {};
 
 export function setState(key, val) { 
   state[key] = val;
-  console.log('setState', state);
+  console.log('NEW STATE', state);
   
   publish(key);
 }
 
 function publish(field) {
-  console.log('PUBLISHING ', field);
-  console.log('REGISTERED', registered);
+  // console.log('PUBLISHING ', field);
+  // console.log('REGISTERED', registered);
   if (registered[field]) registered[field]();
 }
 
@@ -36,14 +36,14 @@ export function register(field, callback) {
 }
 
 const addMe = () => {
-  console.log('adding the current info to the list!');
+  // console.log('adding the current info to the list!');
   // TS define as interface
   const characteristic = {
     text: state.mainInput,
   }
   setState('characteristics', [...state.characteristics, characteristic]);
   setState('mainInput', '');
-  console.log('addMe state', state);
+  // console.log('addMe state', state);
   publish('add-me')
 }
 
@@ -51,12 +51,12 @@ const updateMainInput = (e) => {
   // console.log('e', e);
   const target = e.target; 
   const value = target.value;
-  console.log('listening!', value);
+  // console.log('listening!', value);
   setState('mainInput', value);
 }
 
 const render = () => {
-  console.log('>>> main render <<<');
+  // console.log('>>> main render <<<');
   root.innerHTML = '';
   // TODO rename all these like "DOMMain"
   const main = build(root, 'div', {className: 'main'});

@@ -1,6 +1,7 @@
 export function build(parent, el, options) {
   // console.log('build options', options);
   const element = document.createElement(el);
+  if (options?.id) element.id = options.id;
   if (options?.className) element.classList.add(options.className);
   if (options?.text) {
     if (el === 'input') element.setAttribute('value', options.text);
