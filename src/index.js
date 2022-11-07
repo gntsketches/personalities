@@ -20,20 +20,20 @@ const registered = {};
 
 export function setState(key, val) { 
   state[key] = val;
-  console.log('NEW STATE', state);
+  // console.log('NEW STATE', state);
   
   publish(key);
 }
 
-function publish(field) {
-  console.log('attempt to publish ', field);
+export function publish(field) {
+  // console.log('attempt to publish ', field);
   if (registered[field]) registered[field]();
-  console.log('PUBLISHED ', field);
+  // console.log('PUBLISHED ', field);
 }
 
 export function register(field, callback) {
   registered[field] = callback;
-  console.log('REGISTERED', registered);
+  // console.log('REGISTERED', registered);
 }
 
 const addMe = () => {
@@ -75,10 +75,6 @@ const render = () => {
       });
       // would be cool to use method chaining here: const mainInput = build(...).register(...)
       register('mainInput', () => {
-        console.log('mainInput registered callback state', JSON.stringify(state));
-        console.log('mainInput', mainInput);
-        // mainInput.setAttribute('value', state.mainInput)
-        // mainInput.setAttribute('value', 'TEST')
         mainInput.value = state.mainInput;
       });
 

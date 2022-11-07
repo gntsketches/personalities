@@ -29,7 +29,7 @@ export default class Component {
   }
 
   render() {
-    console.log('This is the component base, extend it with something...'); 
+    console.error('This is the component base, extend it with something...'); 
   }
 
   // WIP...
@@ -39,7 +39,7 @@ export default class Component {
   register() {
     this.registered().forEach(e => {
       // reg(e, () => this.render());
-      reg(e, () => console.log('component-registered callback:', e));
+      reg(e, () => console.info('component-registered callback:', e));
     });
   }
 
