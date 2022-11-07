@@ -24,6 +24,8 @@ body
 
 
 TODO 
+
+
   DECIDE on char vs characteristics
   TODO sourcemaps for console.logs
   "main" component
@@ -169,3 +171,10 @@ TODO study:
         also maybe u didn't want to get rid of them
             tsconfig has "target": "es5", and it's interesting,
               eg ListTemplate.js used an iife
+
+*** MYSTERIES (solved) ****************************************************************************************
+  main input not clearing wtf. it breaks between these commits:
+    3249459 basic individual components without reactivity
+    3665b82 addMe button and list with call to render
+      https://stackoverflow.com/questions/29929797/setattribute-doesnt-work-the-way-i-expect-it-to
+      https://stackoverflow.com/questions/6003819/what-is-the-difference-between-properties-and-attributes-in-html

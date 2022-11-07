@@ -26,13 +26,14 @@ export function setState(key, val) {
 }
 
 function publish(field) {
-  // console.log('PUBLISHING ', field);
-  // console.log('REGISTERED', registered);
+  console.log('attempt to publish ', field);
   if (registered[field]) registered[field]();
+  console.log('PUBLISHED ', field);
 }
 
 export function register(field, callback) {
   registered[field] = callback;
+  console.log('REGISTERED', registered);
 }
 
 const addMe = () => {
@@ -73,7 +74,13 @@ const render = () => {
         className: 'main-input', text: state.mainInput, onInput: updateMainInput,
       });
       // would be cool to use method chaining here: const mainInput = build(...).register(...)
-      register('mainInput', () => mainInput.setAttribute('value', state.mainInput));
+      register('mainInput', () => {
+        console.log('mainInput registered callback state', JSON.stringify(state));
+        console.log('mainInput', mainInput);
+        // mainInput.setAttribute('value', state.mainInput)
+        // mainInput.setAttribute('value', 'TEST')
+        mainInput.value = state.mainInput;
+      });
 
     const charList = new CharList(main, 'div');
 }
