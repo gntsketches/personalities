@@ -48,10 +48,10 @@ export default class CharList extends Component {
     // console.log("THE DOMCHARS ", DOMChars);
     this.DOMChars = DOMChars;
 
-    state.characteristics.forEach((char, index) => {
-      const c = new CharItem(DOMChars, "div", {
+    state.characteristics.forEach((characteristic, index) => {
+      const DOMCharItem = new CharItem(DOMChars, "div", {
         id: `char-item${index}`,
-        char,
+        characteristic,
         index,
         charInput: this.charInput,
         removeChar: (index) => this.removeChar(index),

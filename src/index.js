@@ -5,8 +5,7 @@ import CharList from './components/CharList';
 import MainOptions from "./components/MainOptions";
 import './styles/style.scss'
 
-// TODO rename DOMRoot
-const root = document.getElementById('root');
+const DOMRoot = document.getElementById('root');
 
 export const state = {
   title: 'Personalities',
@@ -48,14 +47,14 @@ const updateMainInput = (e) => {
 
 const render = () => {
   // console.log('>>> main render <<<');
-  root.innerHTML = '';
-  const main = build(root, 'div', {className: 'main'});
+  DOMRoot.innerHTML = '';
+  const main = build(DOMRoot, 'div', {className: 'main'});
 
-    const header = build(main, 'h1', {className: 'header', text: state.title});
+    const DOMHeader = build(main, 'h1', {className: 'header', text: state.title});
 
-    const mainOptions = new MainOptions(main, 'div', { updateMainInput });
+    const DOMMainOptions = new MainOptions(main, 'div', { updateMainInput });
 
-    const charList = new CharList(main, 'div', { test: 'CharList props test' });
+    const DOMCharList = new CharList(main, 'div', { test: 'CharList props test' });
 }
 
 render();

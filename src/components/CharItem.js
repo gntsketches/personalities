@@ -13,7 +13,7 @@ export default class CharItem extends Component {
 
     this.build(DOMChar, "div", {
       className: "characteristic-text",
-      text: this.props.char.text,
+      text: this.props.characteristic.text,
       contentEditable: true,
       onInput: (e) => this.props.charInput(e, this.props.index),
     });

@@ -24,11 +24,6 @@ body
 
 
 TODO 
-
-
-  DECIDE on char vs characteristics
-    "rename all these like "DOMMain"...
-  conventions for snake vs camel case (eg css, pubsub callbacks...)
   sourcemaps for console.logs
   remove extra element in component (pass in style)
     OR is there a way to pass in the DOM root to components generically?
@@ -36,6 +31,14 @@ TODO
   scope/module for state & registration (hmm "file state"?) 
 
 
+CONVENTIONS 
+  DOMThing for anything js variable that is a DOM element...
+
+  char vs characteristics
+    "characteristic(s)" as state field and css,
+    "char" abbreviation for other uses (component, element, method)
+
+  snake-case in css (class/id), camelCase for javascript (varibles / object key names)
 
 
 
