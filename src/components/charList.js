@@ -2,11 +2,17 @@ import Component from "../lib/Component";
 import CharItem from "./CharItem";
 
 // TEMPORARY import state directly for concept test
-import { setState, state } from "../index";
+import { register, setState, state } from "../index";
 
 export default class CharList extends Component {
-  // WIP... maybe assign this field in constructor instead
+  constructor(...args) {
+    super(...args);
+
+    register('addMe', () => this.render());
+  }
+
   registered() {
+    // WIP... maybe assign this field in constructor instead
     // return ['characteristics']
     return []; // no current use for this...
   }
@@ -31,10 +37,10 @@ export default class CharList extends Component {
   }
 
   render() {
-    // console.log("CharList render");
     // HMM render should somehow perform the clearing of the container automatically...
     this.container.innerHTML = "";
 
+    // console.log('CharList render this.container', this.container);
     const DOMChars = this.build(this.container, "div", {
       id: "characteristics-list",
       className: "characteristics-list",

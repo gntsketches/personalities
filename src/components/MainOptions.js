@@ -4,6 +4,13 @@ import Component from "../lib/Component";
 import { register, publish, setState, state } from "../index";
 
 export default class MainOptions extends Component {
+  constructor(...args) {
+    super(...args);
+
+    register('mainInput', () => {
+      this.DOMMainInput.value = state.mainInput;
+    });
+  }
 
   addMe = () => {
     // console.log('adding the current info to the list!');
@@ -13,11 +20,12 @@ export default class MainOptions extends Component {
     }
     setState('characteristics', [...state.characteristics, characteristic]);
     setState('mainInput', '');
-    // console.log('addMe state', state);
-    publish('add-me')
+    console.log('addMe state', state);
+    publish('addMe')
   }
 
   render() {
+    console.log('MainOptions this', this);
     // HMM render should somehow perform the clearing of the container automatically...
     this.container.innerHTML = "";
 
@@ -26,9 +34,13 @@ export default class MainOptions extends Component {
       className: "main-options",
     });
 
-    const DOMAddMe = build(DOMOptions, 'button', {
-      className: 'add-me', text: 'Add Me', onClick: addMe
+    const DOMAddMe = this.build(DOMOptions, 'button', {
+      className: 'add-me', text: 'Add Me', onClick: () => this.addMe()
     });
-    register('add-me', () => charList.render()); // can you rerender only part of this? how to component-ize for partial rerenders?
+
+    const DOMMainInput = this.build(DOMOptions, 'input', {
+      className: 'main-input', text: state.mainInput, onInput: this.props.updateMainInput,
+    });
+    this.DOMMainInput = DOMMainInput;
   }
 }

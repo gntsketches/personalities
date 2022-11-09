@@ -3,6 +3,7 @@ import { build } from './build';
 
 export default class Component {
   constructor(parent, rootElement, props) { 
+    // console.log('Component constructor'); // no log here, though it seems to be working...
     this.parent = parent;
     this.rootElement = rootElement;
     this.props = props;
@@ -14,6 +15,7 @@ export default class Component {
   }
 
   init() {
+    // console.log('...init... this:', this); // no log here, though it seems to be working...
     this.container = document.createElement(this.rootElement);
     this.parent.appendChild(this.container)
 

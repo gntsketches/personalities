@@ -1,6 +1,6 @@
 import Component from "../lib/Component";
 
-export default class CharList extends Component {
+export default class CharItem extends Component {
   render() {
     // console.log("CharItem render props", this.props);
     // HMM render should somehow perform the clearing of the container automatically...

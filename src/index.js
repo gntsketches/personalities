@@ -2,6 +2,7 @@ import { build } from './lib/build';
 
 import { traits } from './descriptors/traits';
 import CharList from './components/CharList';
+import MainOptions from "./components/MainOptions";
 import './styles/style.scss'
 
 // TODO rename DOMRoot
@@ -31,25 +32,14 @@ export function publish(field) {
   // console.log('PUBLISHED ', field);
 }
 
+// TODO this can only accept one callback per event!
 export function register(field, callback) {
   registered[field] = callback;
   // console.log('REGISTERED', registered);
 }
 
-const addMe = () => {
-  // console.log('adding the current info to the list!');
-  // TS define as interface
-  const characteristic = {
-    text: state.mainInput,
-  }
-  setState('characteristics', [...state.characteristics, characteristic]);
-  setState('mainInput', '');
-  // console.log('addMe state', state);
-  publish('add-me')
-}
-
 const updateMainInput = (e) => {
-  // console.log('e', e);
+  // console.log('updateMainInput e', e);
   const target = e.target; 
   const value = target.value;
   // console.log('listening!', value);
@@ -59,33 +49,13 @@ const updateMainInput = (e) => {
 const render = () => {
   // console.log('>>> main render <<<');
   root.innerHTML = '';
-  // TODO rename all these like "DOMMain"
   const main = build(root, 'div', {className: 'main'});
 
     const header = build(main, 'h1', {className: 'header', text: state.title});
 
-    const options = build(main, 'div', {className: 'options'});
-      const DOMAddMe = build(options, 'button', {
-        className: 'add-me', text: 'Add Me', onClick: addMe
-      });
-      register('add-me', () => charList.render()); // can you rerender only part of this? how to component-ize for partial rerenders?
+    const mainOptions = new MainOptions(main, 'div', { updateMainInput });
 
-      const mainInput = build(options, 'input', {
-        className: 'main-input', text: state.mainInput, onInput: updateMainInput,
-      });
-      // would be cool to use method chaining here: const mainInput = build(...).register(...)
-      register('mainInput', () => {
-        mainInput.value = state.mainInput;
-      });
-
-    const charList = new CharList(main, 'div');
+    const charList = new CharList(main, 'div', { test: 'CharList props test' });
 }
 
 render();
-
-// HELPERS /////////////////////////////
-// function removeAllChildNodes(parent) {
-//   while (parent.firstChild) {
-//       parent.removeChild(parent.firstChild);
-//   }
-// }

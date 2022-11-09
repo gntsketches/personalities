@@ -27,7 +27,11 @@ TODO
 
 
   DECIDE on char vs characteristics
-  TODO sourcemaps for console.logs
+    "rename all these like "DOMMain"...
+  conventions for snake vs camel case (eg css, pubsub callbacks...)
+  sourcemaps for console.logs
+  remove extra element in component (pass in style)
+    OR is there a way to pass in the DOM root to components generically?
   "main" component
   scope/module for state & registration (hmm "file state"?) 
 
@@ -78,6 +82,11 @@ Simplistic framework
       ...it may take a while (even to end of project) to know how/whether you're going to use 
         the setState auto-publish & component auto-register features
         let's keep them in for how and watch how the rest of this builds
+        EXAMPLES
+          >>> currently setState autoPublish is used for mainInput
+    
+    Hmm:
+      "would be cool to use method chaining here: const mainInput = build(...).register(...)"
 
 
 
@@ -121,6 +130,12 @@ TODO study:
     https://mykindofmeeple.com/dnd-personality-traits/
 
 
+*** HELPERS *** 
+function removeAllChildNodes(parent) {
+  while (parent.firstChild) {
+      parent.removeChild(parent.firstChild);
+  }
+}
 
 
 *** TS FYI ****************************************************************************************
