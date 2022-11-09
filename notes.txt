@@ -24,9 +24,9 @@ body
 
 
 TODO 
-  sourcemaps for console.logs
-  remove extra element in component (pass in style)
-    OR is there a way to pass in the DOM root to components generically?
+  remove extra element in component (pass in styles)
+    you might actually not even want the init function in component;
+      more organized to have all the definitions in one place
   "main" component
   scope/module for state & registration (hmm "file state"?) 
 
