@@ -1,8 +1,8 @@
-import { register as reg } from '../index';
-import { build } from './build';
+import { register as reg } from "../index";
+import { build } from "./build";
 
 export default class Component {
-  constructor(parent, rootElement, props) { 
+  constructor(parent, rootElement, props) {
     // console.log('Component constructor'); // no log here, though it seems to be working...
     this.parent = parent;
     this.rootElement = rootElement;
@@ -15,14 +15,28 @@ export default class Component {
   }
 
   init() {
-    // console.log('...init... this:', this); // no log here, though it seems to be working...
-    this.container = document.createElement(this.rootElement);
-    this.parent.appendChild(this.container)
+    // console.log('...init... this:', this);
+    const container = document.createElement(this.rootElement);
+    this.container = container;
+    this.parent.appendChild(container);
 
-    // WIP...
-    this.register()
+    this.applyContainerOptions();
+
+    // WIP...?
+    this.register();
 
     this.render();
+  }
+
+  applyContainerOptions = () => {
+    const options = this.containerOptions();
+    console.log("defineContainerOptions options", options);
+    if (options?.id) this.container.id = options.id;
+    if (options?.className) this.container.classList.add(options.className);
+  }
+
+  containerOptions() {
+    return {};
   }
 
   // WIP...
@@ -31,7 +45,7 @@ export default class Component {
   }
 
   render() {
-    console.error('This is the component base, extend it with something...'); 
+    console.error("This is the component base, extend it with something...");
   }
 
   // WIP...
@@ -39,14 +53,14 @@ export default class Component {
   // ie: you could assign them with a dictionary/dispatch table on the specific component,
   // and then hook them into global state here
   register() {
-    this.registered().forEach(e => {
+    this.registered().forEach((e) => {
       // reg(e, () => this.render());
-      reg(e, () => console.info('component-registered callback:', e));
+      reg(e, () => console.info("component-registered callback:", e));
     });
   }
 
   reRender() {
-    this.container.innerHTML = '';
+    this.container.innerHTML = "";
     this.render();
   }
 }

@@ -1,7 +1,7 @@
 import { build } from "./lib/build";
 
 import { traits } from "./descriptors/traits";
-import CharList from "./components/CharList";
+import CharList from "./components/CharList1";
 import MainOptions from "./components/MainOptions";
 import "./styles/style.scss";
 
@@ -17,7 +17,7 @@ const registered = {};
 
 export function setState(key, val) {
   state[key] = val;
-  // console.log('NEW STATE', state);
+  console.log("NEW STATE", state);
 
   publish(key);
 }
@@ -28,7 +28,6 @@ export function publish(field) {
   // console.log('PUBLISHED ', field);
 }
 
-// TODO this can only accept one callback per event!
 export function register(field, callback) {
   registered[field] = callback;
   // console.log('REGISTERED', registered);

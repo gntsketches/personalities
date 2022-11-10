@@ -24,21 +24,24 @@ export default class MainOptions extends Component {
     publish('addMe')
   }
 
+  containerOptions() {
+    return {
+      id: 'main-options',
+      className: 'main-options',
+    }
+  }
+
   render() {
     console.log('MainOptions this', this);
     // HMM render should somehow perform the clearing of the container automatically...
     this.container.innerHTML = "";
 
-    const DOMOptions = this.build(this.container, "div", {
-      id: "main-options",
-      className: "main-options",
-    });
-
-    const DOMAddMe = this.build(DOMOptions, 'button', {
+    const DOMAddMe = this.build(this.container, 'button', {
       className: 'add-me', text: 'Add Me', onClick: () => this.addMe()
     });
 
-    const DOMMainInput = this.build(DOMOptions, 'input', {
+    // const DOMMainInput = this.build(DOMOptions, 'input', {
+    const DOMMainInput = this.build(this.container, 'input', {
       className: 'main-input', text: state.mainInput, onInput: this.props.updateMainInput,
     });
     this.DOMMainInput = DOMMainInput;

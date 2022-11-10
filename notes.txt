@@ -24,11 +24,10 @@ body
 
 
 TODO 
-  remove extra element in component (pass in styles)
-    you might actually not even want the init function in component;
-      more organized to have all the definitions in one place
   "main" component
   scope/module for state & registration (hmm "file state"?) 
+  use decorators for render? (to get it to clear innerHTML programatically)
+  register can only accept one callback per event
 
 
 CONVENTIONS 

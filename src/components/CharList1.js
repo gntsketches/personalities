@@ -36,20 +36,19 @@ export default class CharList extends Component {
     foundCharItem.remove();
   }
 
+  containerOptions() {
+    return {
+      id: "characteristics-list",
+      className: "characteristics-list",
+    };
+  }
+
   render() {
     // HMM render should somehow perform the clearing of the container automatically...
     this.container.innerHTML = "";
 
-    // console.log('CharList render this.container', this.container);
-    const DOMChars = this.build(this.container, "div", {
-      id: "characteristics-list",
-      className: "characteristics-list",
-    });
-    // console.log("THE DOMCHARS ", DOMChars);
-    this.DOMChars = DOMChars;
-
     state.characteristics.forEach((characteristic, index) => {
-      const DOMCharItem = new CharItem(DOMChars, "div", {
+      const DOMCharItem = new CharItem(this.container, "div", {
         id: `char-item${index}`,
         characteristic,
         index,
