@@ -33,14 +33,6 @@ export function register(field, callback) {
   // console.log('REGISTERED', registered);
 }
 
-const updateMainInput = (e) => {
-  // console.log('updateMainInput e', e);
-  const target = e.target;
-  const value = target.value;
-  // console.log('listening!', value);
-  setState("mainInput", value);
-};
-
 const render = () => {
   // console.log('>>> main render <<<');
   DOMRoot.innerHTML = "";
@@ -51,7 +43,7 @@ const render = () => {
     text: state.title,
   });
 
-  const DOMMainOptions = new MainOptions(main, "div", { updateMainInput });
+  const DOMMainOptions = new MainOptions(main, "div");
 
   const DOMCharList = new CharList(main, "div", {
     test: "CharList props test",

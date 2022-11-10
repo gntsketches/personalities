@@ -33,10 +33,10 @@ export default class Component {
     console.log("defineContainerOptions options", options);
     if (options?.id) this.container.id = options.id;
     if (options?.className) this.container.classList.add(options.className);
-  }
+  };
 
   containerOptions() {
-    return {};
+    return {}
   }
 
   // WIP...

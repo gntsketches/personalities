@@ -3,7 +3,6 @@ https://spin.atomicobject.com/2016/06/26/parallelize-development-git-worktrees/
 
 
 
-
 body
   main
   header
@@ -24,10 +23,15 @@ body
 
 
 TODO 
-  "main" component
-  scope/module for state & registration (hmm "file state"?) 
+  easymotion! u installed it
   use decorators for render? (to get it to clear innerHTML programatically)
   register can only accept one callback per event
+  differentiate register and storeRegister
+  "main" component
+  lib structure:
+    scope/module for state & registration (hmm "file state"?) 
+      (probably you'll apply calls to base Component)
+      (but shouldn't you be wrapping everything in a thing or something?)
 
 
 CONVENTIONS 
@@ -84,6 +88,10 @@ Simplistic framework
       ...it may take a while (even to end of project) to know how/whether you're going to use 
         the setState auto-publish & component auto-register features
         let's keep them in for how and watch how the rest of this builds
+      > one reason it might be better to have them separate is that 
+          you might accidentally register a key which also a stateField
+          so better to have to explicitly register the kye twice for something that you do want to do that
+            
         EXAMPLES
           >>> currently setState autoPublish is used for mainInput
     
