@@ -1,7 +1,8 @@
-import Component from "../lib/Component";
-
+import Component from "../../lib/Component";
 // TEMPORARY import state directly for concept test
-import { register, publish, setState, state } from "../index";
+import { register, publish, setState, state } from "../../index";
+
+import "./MainOptions.scss";
 
 export default class MainOptions extends Component {
   constructor(...args) {

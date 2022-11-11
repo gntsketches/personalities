@@ -1,0 +1,33 @@
+.char-item {
+  background: skyblue;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  margin-bottom: 10px;
+
+  .left {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    .char-item-drag-handle {
+      background: green;
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    .text {
+      margin-left: 10px;
+    }
+  }
+
+  .remove {
+    cursor: pointer;
+    user-select: none;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}

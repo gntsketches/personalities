@@ -1,4 +1,4 @@
-import { register as reg } from "../index";
+// import { register as reg } from "../index";
 import { build } from "./build";
 
 export default class Component {
@@ -11,7 +11,21 @@ export default class Component {
 
     this.build = build;
 
+    if (props.store) {
+      this.initStore(props.store);
+    }
+
     this.init();
+  }
+
+  initStore(store) {
+    if (this.store) {
+      console.warn('Store is already declared');
+      return;
+    }
+
+    this.store = store;
+    console.log('store initialized:', this.store);
   }
 
   init() {
