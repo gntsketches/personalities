@@ -1,8 +1,32 @@
 
-div {
-  // background: green;
+.main {
+  background: black;
 
-  h1 {
-    color: blue;
+  .header {
+    background: lightcoral;
+    padding: 20px;
+    font-size: 30px;
   }
+
+  .main-options {
+    background: lightgreen;
+    padding: 10px;
   }
+
+  .characteristics-list {
+    background: lightblue;
+    padding: 10px;
+
+    .characteristic-item {
+      background: skyblue;
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+      margin-bottom: 10px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}

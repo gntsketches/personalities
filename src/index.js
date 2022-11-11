@@ -8,7 +8,7 @@ import "./styles/style.scss";
 const DOMRoot = document.getElementById("root");
 
 export const state = {
-  title: "Personalities",
+  title: "Personalities 5e",
   mainInput: "",
   characteristics: [{ text: "test1" }, { text: "test2" }],
 };

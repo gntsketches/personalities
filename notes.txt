@@ -17,13 +17,15 @@ body
   characteristics
     Y text editable
     Y remove
-    label for type (small font, ideal bond etc...)
     drag handle
+    label for type (small font, ideal bond etc...)
 
+
+TODO drag
+  https://www.npmjs.com/package/sortablejs
 
 
 TODO 
-  easymotion! u installed it
   vim config for vscode https://www.youtube.com/watch?v=Vkm4bc2Y0AA
   register can only accept one callback per event
   differentiate register and storeRegister
@@ -31,6 +33,7 @@ TODO
     scope/module for state & registration (hmm "file state"?) 
       (probably you'll apply calls to base Component)
       (but shouldn't you be wrapping everything in a thing or something?)
+
 
 
 CONVENTIONS 
@@ -111,8 +114,6 @@ TODO babel experiment
 
 
 
-TODO drag
-  https://www.npmjs.com/package/sortablejs
 
 
 
