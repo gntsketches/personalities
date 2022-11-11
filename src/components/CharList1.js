@@ -34,7 +34,7 @@ export default class CharList extends Component {
     newCharacteristics.splice(i, 1);
     setState("characteristics", newCharacteristics);
 
-    const foundCharItem = document.getElementById(`char-item${i}`)
+    const foundCharItem = document.getElementById(`characteristic-item${i}`)
     foundCharItem.remove();
   }
 
@@ -55,7 +55,7 @@ export default class CharList extends Component {
   render() {
     state.characteristics.forEach((characteristic, index) => {
       const DOMCharItem = new CharItem(this.container, "div", {
-        id: `char-item${index}`,
+        id: `characteristic-item${index}`,
         characteristic,
         index,
         charInput: this.charInput,
@@ -65,6 +65,7 @@ export default class CharList extends Component {
 
     const sortable = Sortable.create(this.container, {
       onEnd: (e) => this.handleSortEnd(e),
+      handle: '.characteristic-handle',
     });
   }
 }

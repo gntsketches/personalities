@@ -9,7 +9,7 @@ body
     Y title
     click-to-copy
   options
-    Y textarea 
+    Y textarea
     Y add-me
     dice roller input & fill-in
     toggle: traits ideals bonds flaws quirks trinkets
@@ -17,27 +17,32 @@ body
   characteristics
     Y text editable
     Y remove
-    drag handle
+    Y drag handle
     label for type (small font, ideal bond etc...)
 
 
-TODO drag
-  https://www.npmjs.com/package/sortablejs
-  state callback
-  handle option
+TODO css modules
+  https://blog.logrocket.com/how-to-configure-css-modules-webpack/
+  https://blog.jakoblind.no/css-modules-webpack/
 
-TODO 
+
+TODO
   vim config for vscode https://www.youtube.com/watch?v=Vkm4bc2Y0AA
-  register can only accept one callback per event
+  mobile-first
+  remove should be a button for access
+  add multiple callbacks for register
+  add multiple classnames for props
   differentiate register and storeRegister
   lib structure
-    scope/module for state & registration (hmm "file state"?) 
+    persist
+    scope/module for state & registration (hmm "file state"?)
       (probably you'll apply calls to base Component)
       (but shouldn't you be wrapping everything in a thing or something?)
 
 
 
-CONVENTIONS 
+
+CONVENTIONS
   DOMThing for anything js variable that is a DOM element...
 
   char vs characteristics
@@ -52,17 +57,17 @@ https://betterprogramming.pub/chaining-patterns-in-javascript-df05e3030ee7
 
 
 
-LINTING 
+LINTING
   > might be worth just experimenting with eslint for a bit before u add prettier...
 
 
 Simplistic framework
-    🤣 "User decorators for something" 
+    🤣 "User decorators for something"
 
     ?? maybe what you want here is "register" - something that connects a certain value with state, and receives updates...?
 
     https://stackoverflow.com/questions/56037261/how-to-rerender-single-element-of-a-web-component
-    HTML machine... eg: https://www.youtube.com/watch?v=hYCqhdJiAxM 
+    HTML machine... eg: https://www.youtube.com/watch?v=hYCqhdJiAxM
     state management
     flexible render method (use a templating library?)
     wrapper for listener assignment (to update state)
@@ -74,11 +79,11 @@ Simplistic framework
       best to only call rebuild when you need it
       what you might could do is to still register callbacks based on state field changes though
         (would be nice to define these internally for each component)
-        so eg: in "Characteristic" component your callback updates the field value 
+        so eg: in "Characteristic" component your callback updates the field value
         (note that this requires using array/object overwrites every time...)
         (see notes about reg in component.js)
       BUT, there may still need to be a distinction between "events in general" and "state updates"
-        example: 
+        example:
           AddMe button - this can rebuild the list because loss of focus at that time is ok
           vs updating (via contenteditable) the text of an item in the list
           both will setState('characteristics', [...newCharacteristics])
@@ -89,16 +94,16 @@ Simplistic framework
                 having the hook there is a neat idea (as a feature) but not clear if it will be used...
         but for starters let's try them in the same and see what happens...
         BTW you'll want to register an array of funtions (same event can call multiple things)
-      ...it may take a while (even to end of project) to know how/whether you're going to use 
+      ...it may take a while (even to end of project) to know how/whether you're going to use
         the setState auto-publish & component auto-register features
         let's keep them in for how and watch how the rest of this builds
-      > one reason it might be better to have them separate is that 
+      > one reason it might be better to have them separate is that
           you might accidentally register a key which also a stateField
           so better to have to explicitly register the kye twice for something that you do want to do that
-            
+
         EXAMPLES
           >>> currently setState autoPublish is used for mainInput
-    
+
     Hmm:
       "would be cool to use method chaining here: const mainInput = build(...).register(...)"
 
@@ -111,16 +116,12 @@ TODO babel experiment
       like what are some advanced features that aren't in browsers yet?
     study: what features from what releases?
       https://www.odinschool.com/blog/programming/java-script-versions#:~:text=ES5%20was%20released%20in%202009,release%20of%20its%20previous%20version.
-    fyi: https://babeljs.io/docs/en/babel-preset-typescript 
+    fyi: https://babeljs.io/docs/en/babel-preset-typescript
 
 
 
 
 
-
-TODO css modules
-  https://blog.logrocket.com/how-to-configure-css-modules-webpack/
-  https://blog.jakoblind.no/css-modules-webpack/
 
 
 
@@ -142,7 +143,7 @@ TODO study:
     https://mykindofmeeple.com/dnd-personality-traits/
 
 
-*** HELPERS *** 
+*** HELPERS ***
 function removeAllChildNodes(parent) {
   while (parent.firstChild) {
       parent.removeChild(parent.firstChild);
@@ -173,7 +174,7 @@ function removeAllChildNodes(parent) {
   Object key typing:
     https://bobbyhadz.com/blog/typescript-element-implicitly-has-any-type-expression
     https://bobbyhadz.com/blog/typescript-type-string-is-not-assignable-to-type#:~:text=The%20%22Type%20'string'%20is,const%20or%20a%20type%20assertion.
-    
+
 
 
 

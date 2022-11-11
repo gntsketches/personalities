@@ -1,6 +1,10 @@
+body {
+  background: #333;
+}
 
 .main {
-  background: black;
+  background: #555;
+  padding: 20px;
 
   .header {
     background: lightcoral;
@@ -21,8 +25,30 @@
       background: skyblue;
       display: flex;
       justify-content: space-between;
+      align-items: center;
       padding: 10px;
       margin-bottom: 10px;
+
+      .characteristic-item-left {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+
+        .characteristic-handle {
+          background: green;
+          padding: 10px;
+          cursor: pointer;
+        }
+
+        .characteristic-text {
+          margin-left: 10px;
+        }
+      }
+
+      .characteristic-remove {
+        cursor: pointer;
+        user-select: none;
+      }
 
       &:last-child {
         margin-bottom: 0;
