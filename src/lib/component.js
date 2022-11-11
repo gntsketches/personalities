@@ -23,9 +23,9 @@ export default class Component {
     this.applyContainerOptions();
 
     // WIP...?
-    this.register();
+    // this.register();
 
-    this.render();
+    this.clearAndRender();
   }
 
   applyContainerOptions = () => {
@@ -44,10 +44,6 @@ export default class Component {
     return [];
   }
 
-  render() {
-    console.error("This is the component base, extend it with something...");
-  }
-
   // WIP...
   // ... SO call to render here is bad, but this might be the place where you reg the callbacks
   // ie: you could assign them with a dictionary/dispatch table on the specific component,
@@ -59,8 +55,12 @@ export default class Component {
     });
   }
 
-  reRender() {
-    this.container.innerHTML = "";
-    this.render();
+  clearAndRender() {
+    this.container.innerHTML = ''
+    this.render()
+  }
+
+  render() {
+    console.error("This is the component base, extend it with something...");
   }
 }

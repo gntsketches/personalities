@@ -8,7 +8,7 @@ export default class CharList extends Component {
   constructor(...args) {
     super(...args);
 
-    register('addMe', () => this.render());
+    register('addMe', () => this.clearAndRender());
   }
 
   registered() {
@@ -44,9 +44,6 @@ export default class CharList extends Component {
   }
 
   render() {
-    // HMM render should somehow perform the clearing of the container automatically...
-    this.container.innerHTML = "";
-
     state.characteristics.forEach((characteristic, index) => {
       const DOMCharItem = new CharItem(this.container, "div", {
         id: `char-item${index}`,

@@ -40,10 +40,6 @@ export default class MainOptions extends Component {
   }
 
   render() {
-    console.log("MainOptions this", this);
-    // HMM render should somehow perform the clearing of the container automatically...
-    this.container.innerHTML = "";
-
     const DOMAddMe = this.build(this.container, "button", {
       className: "add-me",
       text: "Add Me",

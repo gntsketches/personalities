@@ -9,10 +9,6 @@ export default class CharItem extends Component {
   }
 
   render() {
-    // console.log("CharItem render props", this.props);
-    // HMM render should somehow perform the clearing of the container automatically...
-    this.container.innerHTML = "";
-
     this.build(this.container, "div", {
       className: "characteristic-text",
       text: this.props.characteristic.text,

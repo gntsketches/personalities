@@ -24,7 +24,7 @@ body
 
 TODO 
   easymotion! u installed it
-  use decorators for render? (to get it to clear innerHTML programatically)
+  vim config for vscode https://www.youtube.com/watch?v=Vkm4bc2Y0AA
   register can only accept one callback per event
   differentiate register and storeRegister
   "main" component
@@ -54,6 +54,7 @@ LINTING
 
 
 Simplistic framework
+    🤣 "User decorators for something" 
 
     ?? maybe what you want here is "register" - something that connects a certain value with state, and receives updates...?
 
