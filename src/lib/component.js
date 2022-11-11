@@ -15,7 +15,7 @@ export default class Component {
   }
 
   init() {
-    // console.log('...init... this:', this);
+    console.log('...init... this:', this);
     const container = document.createElement(this.rootElement);
     this.container = container;
     this.parent.appendChild(container);

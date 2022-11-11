@@ -1,4 +1,4 @@
-import { build } from "./lib/build";
+import Component from "./lib/Component";
 
 import { traits } from "./descriptors/traits";
 import CharList from "./components/CharList1";
@@ -33,21 +33,25 @@ export function register(field, callback) {
   // console.log('REGISTERED', registered);
 }
 
-const render = () => {
-  // console.log('>>> main render <<<');
-  DOMRoot.innerHTML = "";
-  const main = build(DOMRoot, "div", { className: "main" });
+class App extends Component {
+  containerOptions() {
+    return {
+      className: "main",
+    };
+  }
 
-  const DOMHeader = build(main, "h1", {
-    className: "header",
-    text: state.title,
-  });
+  render() {
+    const DOMHeader = this.build(this.container, "h1", {
+      className: "header",
+      text: state.title,
+    });
 
-  const DOMMainOptions = new MainOptions(main, "div");
+    const DOMMainOptions = new MainOptions(this.container, "div");
 
-  const DOMCharList = new CharList(main, "div", {
-    test: "CharList props test",
-  });
-};
+    const DOMCharList = new CharList(this.container, "div", {
+      test: "CharList props test",
+    });
+  }
+}
 
-render();
+const app = new App(DOMRoot, "div");

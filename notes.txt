@@ -27,8 +27,7 @@ TODO
   vim config for vscode https://www.youtube.com/watch?v=Vkm4bc2Y0AA
   register can only accept one callback per event
   differentiate register and storeRegister
-  "main" component
-  lib structure:
+  lib structure
     scope/module for state & registration (hmm "file state"?) 
       (probably you'll apply calls to base Component)
       (but shouldn't you be wrapping everything in a thing or something?)
