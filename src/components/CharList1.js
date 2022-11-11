@@ -1,3 +1,5 @@
+import Sortable from 'sortablejs';
+
 import Component from "../lib/Component";
 import CharItem from "./CharItem";
 
@@ -43,6 +45,13 @@ export default class CharList extends Component {
     };
   }
 
+  handleSortEnd(e) {
+    const newCharacteristics = [...state.characteristics];
+    newCharacteristics.splice(e.newIndex, 0, newCharacteristics.splice(e.oldIndex, 1)[0]);
+    
+    setState("characteristics", newCharacteristics);
+  }
+
   render() {
     state.characteristics.forEach((characteristic, index) => {
       const DOMCharItem = new CharItem(this.container, "div", {
@@ -52,6 +61,10 @@ export default class CharList extends Component {
         charInput: this.charInput,
         removeChar: (index) => this.removeChar(index),
       });
+    });
+
+    const sortable = Sortable.create(this.container, {
+      onEnd: (e) => this.handleSortEnd(e),
     });
   }
 }

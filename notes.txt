@@ -23,7 +23,8 @@ body
 
 TODO drag
   https://www.npmjs.com/package/sortablejs
-
+  state callback
+  handle option
 
 TODO 
   vim config for vscode https://www.youtube.com/watch?v=Vkm4bc2Y0AA
