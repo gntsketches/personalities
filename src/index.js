@@ -8,14 +8,14 @@ import "./styles/style.scss";
 
 const DOMRoot = document.getElementById("root");
 
-const state ={
+const state = {
   title: "Personalities 5e",
   mainInput: "",
   characteristics: [{ text: "test1" }, { text: "test2" }],
-}; 
+};
 
 const store = new Store(state);
-console.log('[[[ store ]]]', store);
+console.log("[[[ store ]]]", store);
 
 class App extends Component {
   containerOptions() {
@@ -25,7 +25,7 @@ class App extends Component {
   }
 
   render() {
-    console.log('render empty for now...');
+    console.log("render empty for now...");
     // const DOMHeader = this.build(this.container, "h1", {
     //   className: "header",
     //   text: state.title,
