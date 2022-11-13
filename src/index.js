@@ -3,7 +3,7 @@ import Component from "./lib/Component";
 
 // import { traits } from "./descriptors/traits";
 // import CharList from "./components/CharList/CharList";
-// import MainOptions from "./components/MainOptions/MainOptions";
+import MainOptions from "./components/MainOptions/MainOptions";
 import "./styles/style.scss";
 
 const DOMRoot = document.getElementById("root");
@@ -25,7 +25,8 @@ class App extends Component {
       text: this.store.state.title,
     });
 
-    // const DOMMainOptions = new MainOptions(this.container, "div");
+    const DOMMainOptions = new MainOptions(this.container, "div");
+    console.log('DOMMAINOPTIONS', DOMMainOptions);
 
     // const DOMCharList = new CharList(this.container, "div", {
     //   test: "CharList props test",

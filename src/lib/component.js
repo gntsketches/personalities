@@ -2,17 +2,11 @@
 import { build } from "./build";
 import Store from "./store";
 
-
-// const state = {
-//   title: "Personalities 5e",
-//   mainInput: "",
-//   characteristics: [{ text: "test1" }, { text: "test2" }],
-// };
-
 const store = new Store();
 
 export default class Component {
-  constructor(parent, rootElement, props) {
+  constructor(parent, rootElement, props={}) {
+    console.log('COMPONENT CONSTRUCTOR');
     this.parent = parent;
     this.rootElement = rootElement;
     this.props = props;
@@ -21,9 +15,10 @@ export default class Component {
 
     this.store = store;
     console.log('this.store', this.store);
-    // console.log('this.store.initState', this.store.initState);
+    console.log('COMPONENT PROPS', this.props);
 
     if (this.props.initialState) {
+      console.log('THiS PROPS INITIALSTATE');
       // TODO only allow once?
       this.store.initState(this.props.initialState);
       console.log('store state initialized:', this.store);

@@ -22,9 +22,10 @@ body
 
 
 
-        
-        
+https://stackoverflow.com/questions/36039146/webpack-dev-server-compiles-files-but-does-not-refresh-or-make-compiled-javascri 
+         
 
+removed open,  "serve": "webpack serve --open",
 
 
 TODO
@@ -39,6 +40,8 @@ TODO
   absolute import paths? (eg: https://adamrackis.dev/blog/css-modules)
 
 
+LOOKOUT component render is called before component constructor
+  because the parent construtor (super) is called first!
 
 
 CONVENTIONS
