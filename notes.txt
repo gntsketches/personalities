@@ -59,7 +59,11 @@ CONVENTIONS
           ALso you'll want to test eg ".left" in two different components
 
 
-https://betterprogramming.pub/chaining-patterns-in-javascript-df05e3030ee7
+Patterns:
+  https://betterprogramming.pub/chaining-patterns-in-javascript-df05e3030ee7
+  https://javascript.plainenglish.io/javascript-design-patterns-the-decorator-pattern-eaf6adc77cb7
+  https://medium.com/geekculture/dependency-injection-in-javascript-2d2e4ad9df49
+
 
 
 
@@ -220,6 +224,24 @@ function removeAllChildNodes(parent) {
       https://stackoverflow.com/questions/6003819/what-is-the-difference-between-properties-and-attributes-in-html
 
 
+  
+
+*** AUTO-REGISTER THINKING ***
+  // WIP...
+  registered() {
+    return [];
+  }
+
+  // WIP...
+  // ... SO call to render here is bad, but this might be the place where you reg the callbacks
+  // ie: you could assign them with a dictionary/dispatch table on the specific component,
+  // and then hook them into global state here
+  register() {
+    this.registered().forEach((e) => {
+      // reg(e, () => this.render());
+      reg(e, () => console.info("component-registered callback:", e));
+    });
+  }
 
 
 

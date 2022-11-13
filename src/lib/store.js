@@ -1,7 +1,11 @@
 export default class Store {
-  constructor(state) {
-    this.state = state;
+  constructor() {
+    this.state = null;
     this.registered = {};
+  }
+
+  initState(initialState) {
+    this.state = initialState;
   }
 
   setState(key, val) {
