@@ -16,7 +16,7 @@ export default class Store {
   }
 
   publish(field) {
-    // console.log('attempt to publish ', field);
+    console.log('attempt to publish ', field);
     if (this.registered[field]) this.registered[field]();
     // console.log('PUBLISHED ', field);
   }
