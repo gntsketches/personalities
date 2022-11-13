@@ -22,72 +22,6 @@ body
 
 
 
-TODO js-store
-  is this dependency injection? https://medium.com/geekculture/dependency-injection-in-javascript-2d2e4ad9df49
-  lib structure
-    call it store instead of state, rebuild instead of render
-    persist
-    scope/module for state & registration (hmm iirc "file state" is an antipattern, perhaps you'll accidentally do that...)
-      (probably you'll apply calls to base Component)
-      (but shouldn't you be wrapping everything in a thing or something?)
-        sure, a Class probably
-      so currently you're: 
-        1 - initialize store methods as class (pass in state)
-        2 - passing it as a prop to the root component
-        and that's it. Should work.
-        Something is not quite satisfying though.
-        It seems like there should be an official ("Setup") call
-          distinct from the creation of a component
-        and though you're blocking duplication it still feels kind of flimsy
-          for one you can still overwrite this.store in a sub componenet
-          (can you do a readonly?)
-          and it's somehow arbitrary
-
-        wanting something like:
-          state = {stuff: stuff}
-          const app = new App(DOMRoot, 'div');
-          const myLibrary = new MyLibrary()
-          myLibrary.initStore(state)
-          myLibrary.initTopComponent(app)
-        ... this is nice but note that currently new App calls render...
-        
-        how about:
-          import { myLibrary }
-          import App
-          state = {stuff: stuff}
-          // const app = new App(DOMRoot, 'div');
-          const myLibrary = new MyLibrary()
-          myLibrary.initStore(state)
-          myLibrary.initTopComponent(DOMRoot, App, 'div')
-            then this method appends the store to the top level
-            this.store can still be overwritten, 
-            but it does limit the arbitrariness and prevent the store duplication attempt
-          MyLibrary could store the various things;
-            build
-            component
-            store
-          ... also, appending a store to an instance only sets it up for that one instance...
-        
-        OR
-          better yet let's treat the component system and the store/pubsub system separate libraries
-          import { Component, Store } from foolsGold
-          import App from './App'
-          const initialStore = { stuff: stuff } 
-          const store = new Store(initialStore)
-          const app = new App
-          app.initStore(store) 
-            ... nowyour issue here is that the auto-render in init will crash it if the store isn't there already
-            what you want is to have to call app.render to kick it off
-            so how do you differentiate between the "top" component which doesn't auto-render, and the rest, which do?
-            you could have a flag in the Component base, "isSetup", to check if it's auto-called
-              but then that flag has to be tripped for each component
-            SO yeah maybe you do need a separate over-system to call your component tree and hold the store reference
-              still how do you actually access the store reference from within the components?
-                chicken/egg situation here, where you can't attach a reference to an uninstantiated class,
-                but instantiating the class without access to store causes it to crash
-              is there a way to automatically send things into the constructors?
-                like a wrapper which calls new Thing
-
         
         
 
@@ -284,3 +218,95 @@ function removeAllChildNodes(parent) {
     3665b82 addMe button and list with call to render
       https://stackoverflow.com/questions/29929797/setattribute-doesnt-work-the-way-i-expect-it-to
       https://stackoverflow.com/questions/6003819/what-is-the-difference-between-properties-and-attributes-in-html
+
+
+
+
+
+****************************************************************************************
+js-store branch THINKING
+  is this dependency injection? https://medium.com/geekculture/dependency-injection-in-javascript-2d2e4ad9df49
+  lib structure
+    call it store instead of state, rebuild instead of render
+    persist
+    scope/module for state & registration (hmm iirc "file state" is an antipattern, perhaps you'll accidentally do that...)
+      (probably you'll apply calls to base Component)
+      (but shouldn't you be wrapping everything in a thing or something?)
+        sure, a Class probably
+      so currently you're: 
+        1 - initialize store methods as class (pass in state)
+        2 - passing it as a prop to the root component
+        and that's it. Should work.
+        Something is not quite satisfying though.
+        It seems like there should be an official ("Setup") call
+          distinct from the creation of a component
+        and though you're blocking duplication it still feels kind of flimsy
+          for one you can still overwrite this.store in a sub componenet
+          (can you do a readonly?)
+          and it's somehow arbitrary
+
+        wanting something like:
+          state = {stuff: stuff}
+          const app = new App(DOMRoot, 'div');
+          const myLibrary = new MyLibrary()
+          myLibrary.initStore(state)
+          myLibrary.initTopComponent(app)
+        ... this is nice but note that currently new App calls render...
+        
+        how about:
+          import { myLibrary }
+          import App
+          state = {stuff: stuff}
+          // const app = new App(DOMRoot, 'div');
+          const myLibrary = new MyLibrary()
+          myLibrary.initStore(state)
+          myLibrary.initTopComponent(DOMRoot, App, 'div')
+            then this method appends the store to the top level
+            this.store can still be overwritten, 
+            but it does limit the arbitrariness and prevent the store duplication attempt
+          MyLibrary could store the various things;
+            build
+            component
+            store
+          ... also, appending a store to an instance only sets it up for that one instance...
+        
+        OR
+          better yet let's treat the component system and the store/pubsub system separate libraries
+          import { Component, Store } from foolsGold
+          import App from './App'
+          const initialStore = { stuff: stuff } 
+          const store = new Store(initialStore)
+          const app = new App
+          app.initStore(store) 
+            ... nowyour issue here is that the auto-render in init will crash it if the store isn't there already
+            what you want is to have to call app.render to kick it off
+            so how do you differentiate between the "top" component which doesn't auto-render, and the rest, which do?
+            you could have a flag in the Component base, "isSetup", to check if it's auto-called
+              but then that flag has to be tripped for each component
+            SO yeah maybe you do need a separate over-system to call your component tree and hold the store reference
+              still how do you actually access the store reference from within the components?
+                chicken/egg situation here, where you can't attach a reference to an uninstantiated class,
+                but instantiating the class without access to store causes it to crash
+              is there a way to automatically send things into the constructors?
+                like a wrapper which calls new Thing
+
+        VUE:
+          const app = createApp(App).use(store)
+          app.mount("#app");
+
+          maybe: 
+            - nothing starts to render until .mount is called
+            - setup prior has a wrapper for new (thing) which passes in store
+            OK: your problem is that components are instantiated during render
+              so that means, if you want to programatically pass in something 
+                (during instantiation or append to instantiation)
+                you need to instantiate components BEFORE they render
+                SO you can also do that Vue-style, 
+                  where you name the used components at the top,
+                  then in your render body you can call a method on them to get them to each render
+                  oof. rendering CharItems tho 😭
+
+        Some luck with referencing store instance in Component,
+          see index.js
+          I think that's "file state" though
+

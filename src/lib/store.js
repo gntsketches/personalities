@@ -6,7 +6,7 @@ export default class Store {
 
   setState(key, val) {
     this.state[key] = val;
-    console.log("NEW STATE", state);
+    console.log("NEW STATE", this.state);
 
     this.publish(key);
   }

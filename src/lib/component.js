@@ -1,5 +1,16 @@
 // import { register as reg } from "../index";
 import { build } from "./build";
+import Store from "./store";
+
+
+const state = {
+  title: "Personalities 5e",
+  mainInput: "",
+  characteristics: [{ text: "test1" }, { text: "test2" }],
+};
+
+const store = new Store(state);
+console.log("[[[ store ]]]", store);
 
 export default class Component {
   constructor(parent, rootElement, props) {
@@ -11,22 +22,32 @@ export default class Component {
 
     this.build = build;
 
-    if (props.store) {
-      this.initStore(props.store);
-    }
+    // if (props.store) {
+    //   this.initStore(props.store);
+    // }
+
+    this.store = store;
 
     this.init();
   }
 
-  initStore(store) {
-    if (this.store) {
-      console.warn('Store is already declared');
-      return;
-    }
-
-    this.store = store;
-    console.log('store initialized:', this.store);
+  getThisStore() {
+    return this.store;
   }
+
+  getStore() {
+    return store;
+  }
+
+  // initStore(store) {
+  //   if (this.store) {
+  //     console.warn('Store is already declared');
+  //     return;
+  //   }
+
+  //   this.store = store;
+  //   console.log('store initialized:', this.store);
+  // }
 
   init() {
     console.log('...init... this:', this);
@@ -70,6 +91,7 @@ export default class Component {
   }
 
   clearAndRender() {
+    console.log('Clear and render');
     this.container.innerHTML = ''
     this.render()
   }
