@@ -47,12 +47,16 @@ export default class Component {
     // console.log("defineContainerOptions options", options);
     if (options?.id) this.container.id = options.id;
     if (options?.className) this.container.classList.add(options.className);
+    if (options?.classNames) {
+      options.classNames.forEach(className => {
+        this.container.classList.add(className);
+      })
+    }
   };
 
   containerOptions() {
     return {}
   }
-
 
   clearAndRender() {
     // console.log('Clear and render');

@@ -32,10 +32,12 @@ TODO
   vim config for vscode https://www.youtube.com/watch?v=Vkm4bc2Y0AA
       
   mobile-first
-  remove should be a button for access
+  $store
   add multiple callbacks for register
-  add multiple classnames for props
+    UNregister?m (return a reference to the function, and search for that?)
+      ooh, return the unsubscribe function! (see jsmanifest)
   differentiate register and storeRegister
+  remove should be a button for access
       
   absolute import paths? (eg: https://adamrackis.dev/blog/css-modules)
 
@@ -62,7 +64,8 @@ CONVENTIONS
           ALso you'll want to test eg ".left" in two different components
 
 
-Patterns:
+Patterns (not necessarily used here):
+  https://jsmanifest.com/the-publish-subscribe-pattern-in-javascript/
   https://betterprogramming.pub/chaining-patterns-in-javascript-df05e3030ee7
   https://javascript.plainenglish.io/javascript-design-patterns-the-decorator-pattern-eaf6adc77cb7
   https://medium.com/geekculture/dependency-injection-in-javascript-2d2e4ad9df49

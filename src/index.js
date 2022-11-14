@@ -1,6 +1,5 @@
 import Component from "./lib/Component";
 
-// import { traits } from "./descriptors/traits";
 import MainOptions from "./components/MainOptions/MainOptions";
 import CharList from "./components/CharList/CharList";
 import "./styles/style.scss";

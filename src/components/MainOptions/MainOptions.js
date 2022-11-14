@@ -1,12 +1,13 @@
 import Component from "../../lib/Component";
 
+// import { traits } from "./descriptors/traits";
 import "./MainOptions.scss";
 
 export default class MainOptions extends Component {
   constructor(...args) {
     super(...args);
     // console.log('MAIN OPTIONS CONSTRUCTOR store', this.store);
-    this.store.setState('mainInput', 'TEST')
+    this.store.setState("mainInput", "TEST");
 
     this.store.register("mainInput", () => {
       this.DOMMainInput.value = this.store.state.mainInput;
@@ -27,7 +28,10 @@ export default class MainOptions extends Component {
     const characteristic = {
       text: this.store.state.mainInput,
     };
-    this.store.setState("characteristics", [...this.store.state.characteristics, characteristic]);
+    this.store.setState("characteristics", [
+      ...this.store.state.characteristics,
+      characteristic,
+    ]);
     this.store.setState("mainInput", "");
     // console.log("addMe state", this.store.state);
     this.store.publish("addMe");
