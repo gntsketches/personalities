@@ -121,6 +121,8 @@ Simplistic framework
       "would be cool to use method chaining here: const mainInput = build(...).register(...)"
 
 
+    // IS THERE ANY REAL NEED to then programatically set the input?
+    // essentially you are keeping state updated for persistence
 
 
 TODO babel experiment

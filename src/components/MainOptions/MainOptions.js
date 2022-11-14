@@ -5,7 +5,7 @@ import "./MainOptions.scss";
 export default class MainOptions extends Component {
   constructor(...args) {
     super(...args);
-    console.log('MAIN OPTIONS CONSTRUCTOR store', this.store);
+    // console.log('MAIN OPTIONS CONSTRUCTOR store', this.store);
     this.store.setState('mainInput', 'TEST')
 
     this.store.register("mainInput", () => {
@@ -22,14 +22,14 @@ export default class MainOptions extends Component {
   };
 
   addMe = () => {
-    console.log('adding the current info to the list!');
+    // console.log('adding the current info to the list!');
     // TS define as interface
     const characteristic = {
       text: this.store.state.mainInput,
     };
     this.store.setState("characteristics", [...this.store.state.characteristics, characteristic]);
     this.store.setState("mainInput", "");
-    console.log("addMe state", this.store.state);
+    // console.log("addMe state", this.store.state);
     this.store.publish("addMe");
   };
 
@@ -41,7 +41,7 @@ export default class MainOptions extends Component {
   }
 
   render() {
-    console.log('MAIN OPTIONS RENDER store', this.store);
+    // console.log('MAIN OPTIONS RENDER store', this.store);
 
     const DOMAddMe = this.build(this.container, "button", {
       className: "add-me",
