@@ -1,6 +1,7 @@
 import { build } from "./build";
 import Store from "./store";
 
+// TODO export instance from store.js
 const store = new Store();
 
 export default class Component {

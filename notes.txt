@@ -21,28 +21,36 @@ body
     label for type (small font, ideal bond etc...)
 
 
-
-https://stackoverflow.com/questions/36039146/webpack-dev-server-compiles-files-but-does-not-refresh-or-make-compiled-javascri 
-         
-
-removed open,  "serve": "webpack serve --open",
+vim config for vscode https://www.youtube.com/watch?v=Vkm4bc2Y0AA
 
 
-TODO
-  vim config for vscode https://www.youtube.com/watch?v=Vkm4bc2Y0AA
-      
+TODO APP
   mobile-first
+  traits ideals bonds flaws trinkets (quirks)
+  how to do background selection?
+    either a foldable list or a multiselect component
+      maybe https://www.npmjs.com/package/slim-select
+  tag list for each item (add, remove, edit)
+
+  accessibility
+    form for main options
+    remove should be a button for access
+  absolute import paths? (eg: https://adamrackis.dev/blog/css-modules)
+      
+TODO LIB
   add multiple callbacks for register
     UNregister?m (return a reference to the function, and search for that?)
       ooh, return the unsubscribe function! (see jsmanifest)
   differentiate register and storeRegister
-  remove should be a button for access
-      
-  absolute import paths? (eg: https://adamrackis.dev/blog/css-modules)
+  LOOKOUT component render is called before component constructor
+    because the parent construtor (super) is called first!
 
 
-LOOKOUT component render is called before component constructor
-  because the parent construtor (super) is called first!
+
+WEBPACK
+  https://stackoverflow.com/questions/36039146/webpack-dev-server-compiles-files-but-does-not-refresh-or-make-compiled-javascri 
+  removed open,  "serve": "webpack serve --open",
+
 
 
 CONVENTIONS
@@ -172,6 +180,11 @@ function removeAllChildNodes(parent) {
       parent.removeChild(parent.firstChild);
   }
 }
+
+
+BROKEN IMAGE FROM
+  https://icon-library.com/icon/20-sided-dice-icon-8.html
+
 
 
 *** TS FYI ****************************************************************************************
@@ -339,3 +352,7 @@ js-store branch THINKING
           see index.js
           I think that's "file state" though
 
+
+        Seo: the Vue approach is the builder pattern: https://refactoring.guru/design-patterns/builder
+          see first code snippet in "Structure"
+          ("Vue uses the builder pattern with a "fluent interface") fluent interface == method chaining

@@ -1,6 +1,6 @@
 import Component from "../../lib/Component";
 
-// import { traits } from "./descriptors/traits";
+import { traits } from "../../descriptors/traits";
 import "./MainOptions.scss";
 
 export default class MainOptions extends Component {
@@ -12,6 +12,12 @@ export default class MainOptions extends Component {
     this.$store.register("mainInput", () => {
       this.DOMMainInput.value = this.$store.state.mainInput;
     });
+  }
+
+  roll = () => {
+    const trait = traits[Math.floor(Math.random() * traits.length)]
+    console.log('trait', trait);
+    this.$store.setState("mainInput", trait.description)
   }
 
   updateMainInput = (e) => {
@@ -46,18 +52,24 @@ export default class MainOptions extends Component {
 
   render() {
     // console.log('MAIN OPTIONS RENDER store', this.$store);
+    const DOMRoll = this.build(this.container, "button", {
+      className: "roll",
+      onClick: () => this.roll(),
+    })
 
-    const DOMAddMe = this.build(this.container, "button", {
-      className: "add-me",
-      text: "Add Me",
-      onClick: () => this.addMe(),
-    });
-
-    const DOMMainInput = this.build(this.container, "input", {
+    // const DOMMainInput = this.build(this.container, "input", {
+    const DOMMainInput = this.build(this.container, "textarea", {
       className: "main-input",
       text: this.$store.state.mainInput,
       onInput: (e) => this.updateMainInput(e),
     });
     this.DOMMainInput = DOMMainInput;
+
+    const DOMAddMe = this.build(this.container, "button", {
+      className: "add-me",
+      text: "Add",
+      onClick: () => this.addMe(),
+    });
+
   }
 }
