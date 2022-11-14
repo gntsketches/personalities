@@ -12,23 +12,14 @@ export default class Component {
 
     this.build = build;
 
-    this.store = store;
-    // console.log('this.store', this.store);
-    // console.log('COMPONENT PROPS', this.props);
+    this.$store = store;
 
     if (this.props.initialState) {
-      // console.log('THiS PROPS INITIALSTATE');
       // TODO only allow once?
-      this.store.initState(this.props.initialState);
-      // console.log('store state initialized:', this.store);
+      this.$store.initState(this.props.initialState);
     }
 
     this.init();
-  }
-
-  // TODO as get store
-  getStore() {
-    return this.store;
   }
 
   init() {

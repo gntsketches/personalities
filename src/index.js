@@ -14,7 +14,7 @@ class App extends Component {
   render() {
     const DOMHeader = this.build(this.container, "h1", {
       className: "header",
-      text: this.store.state.title,
+      text: this.$store.state.title,
     });
 
     const DOMMainOptions = new MainOptions(this.container, "div");

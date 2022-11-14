@@ -32,7 +32,6 @@ TODO
   vim config for vscode https://www.youtube.com/watch?v=Vkm4bc2Y0AA
       
   mobile-first
-  $store
   add multiple callbacks for register
     UNregister?m (return a reference to the function, and search for that?)
       ooh, return the unsubscribe function! (see jsmanifest)
