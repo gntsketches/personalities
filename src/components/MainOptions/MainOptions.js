@@ -1,6 +1,6 @@
 import Component from "../../lib/Component";
 
-import { traits } from "../../descriptors/traits";
+import { traits, ideals, bonds, flaws, trinkets } from "../../descriptors";
 import "./MainOptions.scss";
 
 export default class MainOptions extends Component {
