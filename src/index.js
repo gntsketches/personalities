@@ -30,5 +30,6 @@ const initialState = {
   title: "Personalities 5e",
   mainInput: "",
   characteristics: [{ text: "test1" }, { text: "test2" }],
+  categories: ['traits', 'ideals', 'bonds', 'flaws', 'trinkets'],
 }
 const app = new App(DOMRoot, "div", { initialState });
