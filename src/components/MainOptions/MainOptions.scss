@@ -1,28 +1,51 @@
   .main-options {
     background: lightgreen;
-    padding: 10px;
-    display: flex;
-    align-items: center;
 
-    .roll {
-      width: 40px;
-      height: 40px;
-      background-image: url("../../images/rule-book.svg");
-      margin: 0 5px;
-      border-radius: 8px;;
-      cursor: pointer;
+    .top {
+      // background-color: pink;
+      padding: 10px 20px 5px;;
+      display: flex;
+      align-items: center;
+
+      .roll {
+        width: 40px;
+        height: 40px;
+        background-image: url("../../images/rule-book.svg");
+        margin: 0 5px 0 0;
+        border-radius: 8px;;
+        cursor: pointer;
+      }
+
+      textarea {
+        resize: none;
+        width: calc(100% - 90px);
+      }
+
+      .add-me {
+        width: 40px;
+        height: 40px;
+        margin: 0 0 0 5px;
+        border-radius: 8px;;
+        cursor: pointer;
+      }
     }
 
-    textarea {
-      resize: none;
-      width: calc(100% - 90px);
-    }
+    .categories {
+      // background: lightyellow;
+      display: flex;
+      flex-wrap: wrap;
+      padding: 5px 20px 5px;
 
-    .add-me {
-      width: 40px;
-      height: 40px;
-      margin: 0 5px;
-      border-radius: 8px;;
-      cursor: pointer;
+      .category {
+        background: white;
+        border: 1px solid black;
+        padding: 2px 4px;;
+        margin-right: 10px;
+        margin-bottom: 5px;
+
+        &.unselected {
+          opacity: 0.3;
+        }
+      }
     }
   }

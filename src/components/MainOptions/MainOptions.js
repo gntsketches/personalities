@@ -52,24 +52,54 @@ export default class MainOptions extends Component {
 
   render() {
     // console.log('MAIN OPTIONS RENDER store', this.$store);
-    const DOMRoll = this.build(this.container, "button", {
-      className: "roll",
-      onClick: () => this.roll(),
-    })
+    const DOMTop = this.build(this.container, "div", { className: 'top' });
 
-    // const DOMMainInput = this.build(this.container, "input", {
-    const DOMMainInput = this.build(this.container, "textarea", {
-      className: "main-input",
-      text: this.$store.state.mainInput,
-      onInput: (e) => this.updateMainInput(e),
+      const DOMRoll = this.build(DOMTop, "button", {
+        className: "roll",
+        onClick: () => this.roll(),
+      })
+
+      const DOMMainInput = this.build(DOMTop, "textarea", {
+        className: "main-input",
+        text: this.$store.state.mainInput,
+        onInput: (e) => this.updateMainInput(e),
+      });
+      this.DOMMainInput = DOMMainInput;
+
+      const DOMAddMe = this.build(DOMTop, "button", {
+        className: "add-me",
+        text: "Add",
+        onClick: () => this.addMe(),
+      });
+
+    const DOMCategories = this.build(this.container, 'div', {
+      className: 'categories',
     });
-    this.DOMMainInput = DOMMainInput;
 
-    const DOMAddMe = this.build(this.container, "button", {
-      className: "add-me",
-      text: "Add",
-      onClick: () => this.addMe(),
-    });
+      const DOMTraits = this.build(DOMCategories, 'p', {
+        classNames: ['category'],
+        text: 'Traits',
+      });
 
+      const DOMIdeals = this.build(DOMCategories, 'p', {
+        classNames: ['category'],
+        text: 'Ideals',
+      });
+
+      const DOMBonds = this.build(DOMCategories, 'p', {
+        classNames: ['category'],
+        text: 'Bonds',
+      });
+
+      const DOMFlaws = this.build(DOMCategories, 'p', {
+        classNames: ['category'],
+        text: 'Flaws',
+      });
+
+      const DOMTrinkets = this.build(DOMCategories, 'p', {
+        classNames: ['category'],
+        // className: 'unselected',
+        text: 'Trinkets',
+      });
   }
 }
