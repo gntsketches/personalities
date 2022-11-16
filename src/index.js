@@ -1,6 +1,7 @@
 import Component from "./lib/Component";
 
-import MainOptions from "./components/MainOptions/MainOptions";
+import RollChars from "./components/RollChars/RollChars";
+import CharOptions from "./components/CharOptions/CharOptions";
 import CharList from "./components/CharList/CharList";
 import "./styles/style.scss";
 
@@ -17,7 +18,9 @@ class App extends Component {
       text: this.$store.state.title,
     });
 
-    const DOMMainOptions = new MainOptions(this.container, "div");
+    const DOMRollChars = new RollChars(this.container, "div");
+
+    const DOMCharOptions = new CharOptions(this.container, "div");
 
     const DOMCharList = new CharList(this.container, "div", {
       test: "CharList props test",

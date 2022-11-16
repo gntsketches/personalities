@@ -1,4 +1,4 @@
-  .main-options {
+  .roll-chars {
     background: lightgreen;
 
     .top {
@@ -27,26 +27,6 @@
         margin: 0 0 0 5px;
         border-radius: 8px;;
         cursor: pointer;
-      }
-    }
-
-    .categories {
-      // background: lightyellow;
-      display: flex;
-      flex-wrap: wrap;
-      padding: 5px 20px 5px;
-
-      .category {
-        background: white;
-        border: 1px solid black;
-        padding: 2px 4px;;
-        margin-right: 10px;
-        margin-bottom: 5px;
-        cursor: pointer;
-
-        &.unselected {
-          opacity: 0.3;
-        }
       }
     }
   }

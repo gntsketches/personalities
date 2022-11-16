@@ -26,7 +26,7 @@ vim config for vscode https://www.youtube.com/watch?v=Vkm4bc2Y0AA
 
 TODO APP
   mobile-first
-  traits ideals bonds flaws trinkets (quirks)
+  double-click categories
   how to do background selection?
     either a foldable list or a multiselect component
       maybe https://www.npmjs.com/package/slim-select
@@ -38,10 +38,10 @@ TODO APP
   absolute import paths? (eg: https://adamrackis.dev/blog/css-modules)
       
 TODO LIB
+  differentiate register and storeRegister
   add multiple callbacks for register
     UNregister?m (return a reference to the function, and search for that?)
       ooh, return the unsubscribe function! (see jsmanifest)
-  differentiate register and storeRegister
   LOOKOUT component render is called before component constructor
     because the parent construtor (super) is called first!
 
