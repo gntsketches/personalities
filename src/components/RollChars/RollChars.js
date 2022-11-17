@@ -14,7 +14,7 @@ const mapDescriptors = {
 function getDescriptors(categories) {
   let descriptors = [];
   categories.forEach((category) => {
-    descriptors = [...descriptors, ...mapDescriptors[category]]
+    descriptors = [...descriptors, ...mapDescriptors[category]];
   });
 
   return descriptors;
@@ -25,15 +25,16 @@ export default class RollChars extends Component {
     super(...args);
     this.$store.setState("mainInput", "TEST");
 
-    this.$store.register("mainInput", () => {
+    this.$store.stateRegister("mainInput", () => {
       this.DOMMainInput.value = this.$store.state.mainInput;
     });
   }
 
   roll = () => {
     const descriptors = getDescriptors(this.$store.state.categories);
-    console.log('descriptors', descriptors);
-    const descriptor = descriptors[Math.floor(Math.random() * descriptors.length)];
+    console.log("descriptors", descriptors);
+    const descriptor =
+      descriptors[Math.floor(Math.random() * descriptors.length)];
     console.log("descriptor", descriptor);
     this.$store.setState("mainInput", descriptor.description);
   };
