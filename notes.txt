@@ -25,17 +25,26 @@ vim config for vscode https://www.youtube.com/watch?v=Vkm4bc2Y0AA
 
 
 TODO APP
-  mobile-first
-  double-click categories
-  how to do background selection?
-    either a foldable list or a multiselect component
-      maybe https://www.npmjs.com/package/slim-select
-  tag list for each item (add, remove, edit)
-
+  mobile checks
+  bug editing test2 when test is removed:
+    Cannot set properties of undefined (setting 'text')
+      at CharList.charInput (CharList.js:16:31)
+  line wrap & weird border for contenteditable
+  drag handles
+  remove icon
+  copy-to-clipboard
+  export file
+  absolute import paths? (eg: https://adamrackis.dev/blog/css-modules)
+  
   accessibility
     form for main options
     remove should be a button for access
-  absolute import paths? (eg: https://adamrackis.dev/blog/css-modules)
+
+TODO BONUS FEATURES for TYPESCRIPT
+  tag list for each item (add, remove, edit) for category, background, source
+  foldable background list for backgrounds & sources
+
+
       
 TODO LIB
   add multiple callbacks for register

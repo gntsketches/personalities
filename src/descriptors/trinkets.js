@@ -1,3 +1,5 @@
+// Are these actually phb?
+
 export const trinkets = [
   {
     "description": "A mummified goblin hand",

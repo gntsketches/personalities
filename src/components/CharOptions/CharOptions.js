@@ -6,20 +6,31 @@ export default class CharOptions extends Component {
   constructor(...args) {
     super(...args);
 
+    this.categoriesTimeout = null;
+
     this.$store.stateRegister("categories", () => this.clearAndRender());
   }
 
-  updateCategories = (category) => {
-    const newCategories = [...this.$store.state.categories];
-    if (newCategories.includes(category)) {
-      if (this.$store.state.categories.length === 1) return;
-      const i = newCategories.findIndex((e) => e === category);
-      newCategories.splice(i, 1);
-    } else {
-      newCategories.push(category);
-    }
+  updateCategories = (e, category) => {
+    if (e.detail === 1) {
+      this.categoriesTimeout = setTimeout(() => {
+        const newCategories = [...this.$store.state.categories];
+        if (newCategories.includes(category)) {
+          if (this.$store.state.categories.length === 1) return;
+          const i = newCategories.findIndex((e) => e === category);
+          newCategories.splice(i, 1);
+        } else {
+          newCategories.push(category);
+        }
 
-    this.$store.setState("categories", newCategories);
+        this.$store.setState("categories", newCategories);
+      }, 200);
+    } else if (e.detail === 2) {
+      clearTimeout(this.categoriesTimeout);
+      const newCategories = [category];
+
+      this.$store.setState("categories", newCategories);
+    }
   };
 
   containerOptions() {
@@ -39,28 +50,28 @@ export default class CharOptions extends Component {
       className: !categories.includes("traits") ? "unselected" : "",
       classNames: ["category"],
       text: "Traits",
-      onClick: () => this.updateCategories("traits"),
+      onClick: (e) => this.updateCategories(e, "traits"),
     });
 
     const DOMIdeals = this.build(DOMCategories, "p", {
       className: !categories.includes("ideals") ? "unselected" : "",
       classNames: ["category"],
       text: "Ideals",
-      onClick: () => this.updateCategories("ideals"),
+      onClick: (e) => this.updateCategories(e, "ideals"),
     });
 
     const DOMBonds = this.build(DOMCategories, "p", {
       className: !categories.includes("bonds") ? "unselected" : "",
       classNames: ["category"],
       text: "Bonds",
-      onClick: () => this.updateCategories("bonds"),
+      onClick: (e) => this.updateCategories(e, "bonds"),
     });
 
     const DOMFlaws = this.build(DOMCategories, "p", {
       className: !categories.includes("flaws") ? "unselected" : "",
       classNames: ["category"],
       text: "Flaws",
-      onClick: () => this.updateCategories("flaws"),
+      onClick: (e) => this.updateCategories(e, "flaws"),
     });
 
     const DOMTrinkets = this.build(DOMCategories, "p", {
@@ -68,7 +79,7 @@ export default class CharOptions extends Component {
       classNames: ["category"],
       // className: 'unselected',
       text: "Trinkets",
-      onClick: () => this.updateCategories("trinkets"),
+      onClick: (e) => this.updateCategories(e, "trinkets"),
     });
   }
 }
