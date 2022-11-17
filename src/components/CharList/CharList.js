@@ -11,18 +11,24 @@ export default class CharList extends Component {
     this.$store.register("addMe", () => this.clearAndRender());
   }
 
-  charInput(e, i) {
+  charInput(e, key) {
+    console.log('charInput key', key);
+
+    const index = this.$store.state.characteristics.findIndex(e => e.id === key);
+    console.log('index', index);
     const newCharacteristics = [...this.$store.state.characteristics];
-    newCharacteristics[i].text = e.target.innerText;
+    newCharacteristics[index].text = e.target.innerText;
     this.$store.setState("characteristics", newCharacteristics);
   }
 
-  removeChar(i) {
+  removeChar(key) {
+    const index = this.$store.state.characteristics.findIndex(e => e.id === key);
+    console.log('index', index);
     const newCharacteristics = [...this.$store.state.characteristics];
-    newCharacteristics.splice(i, 1);
+    newCharacteristics.splice(index, 1);
     this.$store.setState("characteristics", newCharacteristics);
 
-    const foundCharItem = document.getElementById(`characteristic-item${i}`);
+    const foundCharItem = document.getElementById(`characteristic-item${key}`);
     foundCharItem.remove();
   }
 
@@ -34,6 +40,7 @@ export default class CharList extends Component {
   }
 
   handleSortEnd(e) {
+    // TODO check for state compatability with use of key
     const newCharacteristics = [...this.$store.state.characteristics];
     newCharacteristics.splice(
       e.newIndex,
@@ -46,12 +53,13 @@ export default class CharList extends Component {
 
   render() {
     this.$store.state.characteristics.forEach((characteristic, index) => {
+      const key =  characteristic.id;
       const DOMCharItem = new CharItem(this.container, "div", {
-        id: `characteristic-item${index}`,
+        id: `characteristic-item${key}`,
         characteristic,
-        index,
+        key,
         charInput: (e, i) => this.charInput(e, i),
-        removeChar: (index) => this.removeChar(index),
+        removeChar: (key) => this.removeChar(key),
       });
     });
 

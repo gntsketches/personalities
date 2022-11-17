@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import Component from "../../lib/Component";
 
 import { traits, ideals, bonds, flaws, trinkets } from "../../descriptors";
@@ -50,8 +51,11 @@ export default class RollChars extends Component {
   addMe = () => {
     // console.log('adding the current info to the list!');
     // TS define as interface
+    const newId = uuidv4();
+    console.log('newId', newId);
     const characteristic = {
       text: this.$store.state.mainInput,
+      id: newId,
     };
     this.$store.setState("characteristics", [
       ...this.$store.state.characteristics,

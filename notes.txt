@@ -26,10 +26,8 @@ vim config for vscode https://www.youtube.com/watch?v=Vkm4bc2Y0AA
 
 TODO APP
   mobile checks
-  bug editing test2 when test is removed:
-    Cannot set properties of undefined (setting 'text')
-      at CharList.charInput (CharList.js:16:31)
   line wrap & weird border for contenteditable
+    ? https://stackoverflow.com/questions/21701908/css-contenteditable-span-ugly-border
   drag handles
   remove icon
   copy-to-clipboard
@@ -53,6 +51,8 @@ TODO LIB
   LOOKOUT component render is called before component constructor
     because the parent construtor (super) is called first!
 
+TODO study
+  review the flow of "this" definitions in a method like charInput
 
 
 WEBPACK

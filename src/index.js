@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import Component from "./lib/Component";
 
 import RollChars from "./components/RollChars/RollChars";
@@ -32,7 +33,10 @@ const DOMRoot = document.getElementById("root");
 const initialState = {
   title: "Personalities 5e",
   mainInput: "",
-  characteristics: [{ text: "test1" }, { text: "test2" }],
-  categories: ["traits", "ideals", "bonds", "flaws", "trinkets"],
+  characteristics: [
+    { text: "test1", id: uuidv4() }, 
+    { text: "test2", id: uuidv4() }
+  ],
+  categories: ["traits", "ideals", "bonds", "flaws"],
 };
 const app = new App(DOMRoot, "div", { initialState });

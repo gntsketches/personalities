@@ -20,17 +20,17 @@ export default class CharItem extends Component {
       text: "=",
     });
 
-    this.build(DOMLeft, "div", {
+    this.build(DOMLeft, "span", {
       className: "text",
       text: this.props.characteristic.text,
       contentEditable: true,
-      onInput: (e) => this.props.charInput(e, this.props.index),
+      onInput: (e) => this.props.charInput(e, this.props.key),
     });
 
     this.build(this.container, "div", {
       className: "remove",
       text: "X",
-      onClick: () => this.props.removeChar(this.props.index),
+      onClick: () => this.props.removeChar(this.props.key),
     });
   }
 }
