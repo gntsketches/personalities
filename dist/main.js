@@ -53,19 +53,19 @@ var CharItem = /*#__PURE__*/function (_Component) {
         className: "char-item-drag-handle",
         text: "="
       });
-      this.build(DOMLeft, "div", {
+      this.build(DOMLeft, "span", {
         className: "text",
         text: this.props.characteristic.text,
         contentEditable: true,
         onInput: function onInput(e) {
-          return _this.props.charInput(e, _this.props.index);
+          return _this.props.charInput(e, _this.props.key);
         }
       });
       this.build(this.container, "div", {
         className: "remove",
         text: "X",
         onClick: function onClick() {
-          return _this.props.removeChar(_this.props.index);
+          return _this.props.removeChar(_this.props.key);
         }
       });
     }
@@ -128,18 +128,27 @@ var CharList = /*#__PURE__*/function (_Component) {
   }
   _createClass(CharList, [{
     key: "charInput",
-    value: function charInput(e, i) {
+    value: function charInput(e, key) {
+      console.log('charInput key', key);
+      var index = this.$store.state.characteristics.findIndex(function (e) {
+        return e.id === key;
+      });
+      console.log('index', index);
       var newCharacteristics = _toConsumableArray(this.$store.state.characteristics);
-      newCharacteristics[i].text = e.target.innerText;
+      newCharacteristics[index].text = e.target.innerText;
       this.$store.setState("characteristics", newCharacteristics);
     }
   }, {
     key: "removeChar",
-    value: function removeChar(i) {
+    value: function removeChar(key) {
+      var index = this.$store.state.characteristics.findIndex(function (e) {
+        return e.id === key;
+      });
+      console.log('index', index);
       var newCharacteristics = _toConsumableArray(this.$store.state.characteristics);
-      newCharacteristics.splice(i, 1);
+      newCharacteristics.splice(index, 1);
       this.$store.setState("characteristics", newCharacteristics);
-      var foundCharItem = document.getElementById("characteristic-item".concat(i));
+      var foundCharItem = document.getElementById("characteristic-item".concat(key));
       foundCharItem.remove();
     }
   }, {
@@ -153,6 +162,7 @@ var CharList = /*#__PURE__*/function (_Component) {
   }, {
     key: "handleSortEnd",
     value: function handleSortEnd(e) {
+      // TODO check for state compatability with use of key
       var newCharacteristics = _toConsumableArray(this.$store.state.characteristics);
       newCharacteristics.splice(e.newIndex, 0, newCharacteristics.splice(e.oldIndex, 1)[0]);
       this.$store.setState("characteristics", newCharacteristics);
@@ -162,15 +172,16 @@ var CharList = /*#__PURE__*/function (_Component) {
     value: function render() {
       var _this2 = this;
       this.$store.state.characteristics.forEach(function (characteristic, index) {
+        var key = characteristic.id;
         var DOMCharItem = new _CharItem_CharItem__WEBPACK_IMPORTED_MODULE_2__["default"](_this2.container, "div", {
-          id: "characteristic-item".concat(index),
+          id: "characteristic-item".concat(key),
           characteristic: characteristic,
-          index: index,
+          key: key,
           charInput: function charInput(e, i) {
             return _this2.charInput(e, i);
           },
-          removeChar: function removeChar(index) {
-            return _this2.removeChar(index);
+          removeChar: function removeChar(key) {
+            return _this2.removeChar(key);
           }
         });
       });
@@ -188,19 +199,18 @@ var CharList = /*#__PURE__*/function (_Component) {
 
 /***/ }),
 
-/***/ "./src/components/MainOptions/MainOptions.js":
+/***/ "./src/components/CharOptions/CharOptions.js":
 /*!***************************************************!*\
-  !*** ./src/components/MainOptions/MainOptions.js ***!
+  !*** ./src/components/CharOptions/CharOptions.js ***!
   \***************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ MainOptions)
+/* harmony export */   "default": () => (/* binding */ CharOptions)
 /* harmony export */ });
 /* harmony import */ var _lib_Component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../lib/Component */ "./src/lib/Component.js");
-/* harmony import */ var _descriptors_traits__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../descriptors/traits */ "./src/descriptors/traits.js");
-/* harmony import */ var _MainOptions_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./MainOptions.scss */ "./src/components/MainOptions/MainOptions.scss");
+/* harmony import */ var _CharOptions_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CharOptions.scss */ "./src/components/CharOptions/CharOptions.scss");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -221,21 +231,174 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
-
-var MainOptions = /*#__PURE__*/function (_Component) {
-  _inherits(MainOptions, _Component);
-  var _super = _createSuper(MainOptions);
-  function MainOptions() {
+var CharOptions = /*#__PURE__*/function (_Component) {
+  _inherits(CharOptions, _Component);
+  var _super = _createSuper(CharOptions);
+  function CharOptions() {
     var _this;
-    _classCallCheck(this, MainOptions);
+    _classCallCheck(this, CharOptions);
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
     _this = _super.call.apply(_super, [this].concat(args));
-    // console.log('MAIN OPTIONS CONSTRUCTOR store', this.$store);
+    _defineProperty(_assertThisInitialized(_this), "updateCategories", function (e, category) {
+      if (e.detail === 1) {
+        _this.categoriesTimeout = setTimeout(function () {
+          var newCategories = _toConsumableArray(_this.$store.state.categories);
+          if (newCategories.includes(category)) {
+            if (_this.$store.state.categories.length === 1) return;
+            var i = newCategories.findIndex(function (e) {
+              return e === category;
+            });
+            newCategories.splice(i, 1);
+          } else {
+            newCategories.push(category);
+          }
+          _this.$store.setState("categories", newCategories);
+        }, 200);
+      } else if (e.detail === 2) {
+        clearTimeout(_this.categoriesTimeout);
+        var newCategories = [category];
+        _this.$store.setState("categories", newCategories);
+      }
+    });
+    _this.categoriesTimeout = null;
+    _this.$store.stateRegister("categories", function () {
+      return _this.clearAndRender();
+    });
+    return _this;
+  }
+  _createClass(CharOptions, [{
+    key: "containerOptions",
+    value: function containerOptions() {
+      return {
+        id: "char-options",
+        className: "char-options"
+      };
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+      var categories = this.$store.state.categories;
+      var DOMCategories = this.build(this.container, "div", {
+        className: "categories"
+      });
+      var DOMTraits = this.build(DOMCategories, "p", {
+        className: !categories.includes("traits") ? "unselected" : "",
+        classNames: ["category"],
+        text: "Traits",
+        onClick: function onClick(e) {
+          return _this2.updateCategories(e, "traits");
+        }
+      });
+      var DOMIdeals = this.build(DOMCategories, "p", {
+        className: !categories.includes("ideals") ? "unselected" : "",
+        classNames: ["category"],
+        text: "Ideals",
+        onClick: function onClick(e) {
+          return _this2.updateCategories(e, "ideals");
+        }
+      });
+      var DOMBonds = this.build(DOMCategories, "p", {
+        className: !categories.includes("bonds") ? "unselected" : "",
+        classNames: ["category"],
+        text: "Bonds",
+        onClick: function onClick(e) {
+          return _this2.updateCategories(e, "bonds");
+        }
+      });
+      var DOMFlaws = this.build(DOMCategories, "p", {
+        className: !categories.includes("flaws") ? "unselected" : "",
+        classNames: ["category"],
+        text: "Flaws",
+        onClick: function onClick(e) {
+          return _this2.updateCategories(e, "flaws");
+        }
+      });
+      var DOMTrinkets = this.build(DOMCategories, "p", {
+        className: !categories.includes("trinkets") ? "unselected" : "",
+        classNames: ["category"],
+        // className: 'unselected',
+        text: "Trinkets",
+        onClick: function onClick(e) {
+          return _this2.updateCategories(e, "trinkets");
+        }
+      });
+    }
+  }]);
+  return CharOptions;
+}(_lib_Component__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+
+/***/ }),
+
+/***/ "./src/components/RollChars/RollChars.js":
+/*!***********************************************!*\
+  !*** ./src/components/RollChars/RollChars.js ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ RollChars)
+/* harmony export */ });
+/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! uuid */ "./node_modules/uuid/dist/esm-browser/v4.js");
+/* harmony import */ var _lib_Component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../lib/Component */ "./src/lib/Component.js");
+/* harmony import */ var _descriptors__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../descriptors */ "./src/descriptors/index.js");
+/* harmony import */ var _RollChars_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./RollChars.scss */ "./src/components/RollChars/RollChars.scss");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+
+
+
+var mapDescriptors = {
+  traits: _descriptors__WEBPACK_IMPORTED_MODULE_1__.traits,
+  ideals: _descriptors__WEBPACK_IMPORTED_MODULE_1__.ideals,
+  bonds: _descriptors__WEBPACK_IMPORTED_MODULE_1__.bonds,
+  flaws: _descriptors__WEBPACK_IMPORTED_MODULE_1__.flaws,
+  trinkets: _descriptors__WEBPACK_IMPORTED_MODULE_1__.trinkets
+};
+function getDescriptors(categories) {
+  var descriptors = [];
+  categories.forEach(function (category) {
+    descriptors = [].concat(_toConsumableArray(descriptors), _toConsumableArray(mapDescriptors[category]));
+  });
+  return descriptors;
+}
+var RollChars = /*#__PURE__*/function (_Component) {
+  _inherits(RollChars, _Component);
+  var _super = _createSuper(RollChars);
+  function RollChars() {
+    var _this;
+    _classCallCheck(this, RollChars);
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+    _this = _super.call.apply(_super, [this].concat(args));
     _defineProperty(_assertThisInitialized(_this), "roll", function () {
-      var trait = _descriptors_traits__WEBPACK_IMPORTED_MODULE_1__.traits[Math.floor(Math.random() * _descriptors_traits__WEBPACK_IMPORTED_MODULE_1__.traits.length)];
-      console.log('trait', trait);
+      var descriptors = getDescriptors(_this.$store.state.categories);
+      console.log("descriptors", descriptors);
+      var descriptor = descriptors[Math.floor(Math.random() * descriptors.length)];
+      console.log("descriptor", descriptor);
+      _this.$store.setState("mainInput", descriptor.description);
     });
     _defineProperty(_assertThisInitialized(_this), "updateMainInput", function (e) {
       // console.log("updateMainInput e", e);
@@ -247,8 +410,11 @@ var MainOptions = /*#__PURE__*/function (_Component) {
     _defineProperty(_assertThisInitialized(_this), "addMe", function () {
       // console.log('adding the current info to the list!');
       // TS define as interface
+      var newId = (0,uuid__WEBPACK_IMPORTED_MODULE_3__["default"])();
+      console.log('newId', newId);
       var characteristic = {
-        text: _this.$store.state.mainInput
+        text: _this.$store.state.mainInput,
+        id: newId
       };
       _this.$store.setState("characteristics", [].concat(_toConsumableArray(_this.$store.state.characteristics), [characteristic]));
       _this.$store.setState("mainInput", "");
@@ -256,31 +422,32 @@ var MainOptions = /*#__PURE__*/function (_Component) {
       _this.$store.publish("addMe");
     });
     _this.$store.setState("mainInput", "TEST");
-    _this.$store.register("mainInput", function () {
+    _this.$store.stateRegister("mainInput", function () {
       _this.DOMMainInput.value = _this.$store.state.mainInput;
     });
     return _this;
   }
-  _createClass(MainOptions, [{
+  _createClass(RollChars, [{
     key: "containerOptions",
     value: function containerOptions() {
       return {
-        id: "main-options",
-        className: "main-options"
+        id: "roll-chars",
+        className: "roll-chars"
       };
     }
   }, {
     key: "render",
     value: function render() {
       var _this2 = this;
-      // console.log('MAIN OPTIONS RENDER store', this.$store);
+      // const DOMTop = this.build(this.container, "div", { className: "top" });
+
       var DOMRoll = this.build(this.container, "button", {
         className: "roll",
         onClick: function onClick() {
           return _this2.roll();
         }
       });
-      var DOMMainInput = this.build(this.container, "input", {
+      var DOMMainInput = this.build(this.container, "textarea", {
         className: "main-input",
         text: this.$store.state.mainInput,
         onInput: function onInput(e) {
@@ -290,15 +457,156 @@ var MainOptions = /*#__PURE__*/function (_Component) {
       this.DOMMainInput = DOMMainInput;
       var DOMAddMe = this.build(this.container, "button", {
         className: "add-me",
-        text: "Add Me",
+        text: "Add",
         onClick: function onClick() {
           return _this2.addMe();
         }
       });
     }
   }]);
-  return MainOptions;
+  return RollChars;
 }(_lib_Component__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+
+/***/ }),
+
+/***/ "./src/descriptors/bonds.js":
+/*!**********************************!*\
+  !*** ./src/descriptors/bonds.js ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "bonds": () => (/* binding */ bonds)
+/* harmony export */ });
+var bonds = [{
+  "description": "I would die to recover an ancient relic of my faith that was lost long ago.",
+  "background": "alcolyte",
+  "source": "phb"
+}, {
+  "description": "I will someday get revenge on the corrupt temple hierarchy who branded me a heretic.",
+  "background": "alcolyte",
+  "source": "phb"
+}, {
+  "description": "I owe my life to the priest who took me in when my parents died.",
+  "background": "alcolyte",
+  "source": "phb"
+}, {
+  "description": "Everything I do is for the common people.",
+  "background": "alcolyte",
+  "source": "phb"
+}, {
+  "description": "I will do anything to protect the temple where I served.",
+  "background": "alcolyte",
+  "source": "phb"
+}, {
+  "description": "I seek to preserve a sacred text that my enemies consider heretical and seek to destroy",
+  "background": "alcolyte",
+  "source": "phb"
+}];
+
+/***/ }),
+
+/***/ "./src/descriptors/flaws.js":
+/*!**********************************!*\
+  !*** ./src/descriptors/flaws.js ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "flaws": () => (/* binding */ flaws)
+/* harmony export */ });
+var flaws = [{
+  "description": "I judge others harshly, and myself even more severely.",
+  "background": "alcolyte",
+  "source": "phb"
+}, {
+  "description": "I put too much trust in those who wield power within my temple’s hierarchy.",
+  "background": "alcolyte",
+  "source": "phb"
+}, {
+  "description": "My piety sometimes leads me to blindly trust those that profess faith in my god.",
+  "background": "alcolyte",
+  "source": "phb"
+}, {
+  "description": "I am inflexible in my thinking.",
+  "background": "alcolyte",
+  "source": "phb"
+}, {
+  "description": "I am suspicious of strangers and expect the worst of them.",
+  "background": "alcolyte",
+  "source": "phb"
+}, {
+  "description": "Once I pick a goal, I become obsessed with it to the detriment of everything else in my life",
+  "background": "alcolyte",
+  "source": "phb"
+}];
+
+/***/ }),
+
+/***/ "./src/descriptors/ideals.js":
+/*!***********************************!*\
+  !*** ./src/descriptors/ideals.js ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ideals": () => (/* binding */ ideals)
+/* harmony export */ });
+var ideals = [{
+  "description": "Tradition. The ancient traditions of worship and sacrifice must be preserved and upheld. (Lawful)",
+  "background": "alcolyte",
+  "source": "phb"
+}, {
+  "description": "Charity. I always try to help those in need, no matter what the personal cost. (Good)",
+  "background": "alcolyte",
+  "source": "phb"
+}, {
+  "description": "Change. We must help bring about the changes the gods are constantly working in the world. (Chaotic)",
+  "background": "alcolyte",
+  "source": "phb"
+}, {
+  "description": "Power. I hope to one day rise to the top of my faith’s religious hierarchy. (Lawful)",
+  "background": "alcolyte",
+  "source": "phb"
+}, {
+  "description": "Faith. I trust that my deity will guide my actions. I have faith that if I work hard, things will go well. (Lawful)",
+  "background": "alcolyte",
+  "source": "phb"
+}, {
+  "description": "Aspiration. I seek to prove myself worthy of my god’s favor by matching my actions against his or her teachings. (Any)",
+  "background": "alcolyte",
+  "source": "phb"
+}];
+
+/***/ }),
+
+/***/ "./src/descriptors/index.js":
+/*!**********************************!*\
+  !*** ./src/descriptors/index.js ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "bonds": () => (/* reexport safe */ _bonds__WEBPACK_IMPORTED_MODULE_2__.bonds),
+/* harmony export */   "flaws": () => (/* reexport safe */ _flaws__WEBPACK_IMPORTED_MODULE_3__.flaws),
+/* harmony export */   "ideals": () => (/* reexport safe */ _ideals__WEBPACK_IMPORTED_MODULE_1__.ideals),
+/* harmony export */   "traits": () => (/* reexport safe */ _traits__WEBPACK_IMPORTED_MODULE_0__.traits),
+/* harmony export */   "trinkets": () => (/* reexport safe */ _trinkets__WEBPACK_IMPORTED_MODULE_4__.trinkets)
+/* harmony export */ });
+/* harmony import */ var _traits__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./traits */ "./src/descriptors/traits.js");
+/* harmony import */ var _ideals__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ideals */ "./src/descriptors/ideals.js");
+/* harmony import */ var _bonds__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./bonds */ "./src/descriptors/bonds.js");
+/* harmony import */ var _flaws__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./flaws */ "./src/descriptors/flaws.js");
+/* harmony import */ var _trinkets__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./trinkets */ "./src/descriptors/trinkets.js");
+
+
+
+
 
 
 /***/ }),
@@ -349,6 +657,322 @@ var traits = [{
 
 /***/ }),
 
+/***/ "./src/descriptors/trinkets.js":
+/*!*************************************!*\
+  !*** ./src/descriptors/trinkets.js ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "trinkets": () => (/* binding */ trinkets)
+/* harmony export */ });
+// Are these actually phb?
+
+var trinkets = [{
+  "description": "A mummified goblin hand",
+  "source": "phb"
+}, {
+  "description": "A piece of crystal that faintly glows in the moonlight",
+  "source": "phb"
+}, {
+  "description": "A gold coin minted in an unknown land",
+  "source": "phb"
+}, {
+  "description": "A diary written in a language you don't know",
+  "source": "phb"
+}, {
+  "description": "A brass ring that never tarnishes",
+  "source": "phb"
+}, {
+  "description": "An old chess piece made from glass",
+  "source": "phb"
+}, {
+  "description": "A pair of knucklebone dice, each with a skull symbol on the side that would normally show six pips",
+  "source": "phb"
+}, {
+  "description": "A small idol depicting a nightmarish creature that gives you unsettling dreams when you sleep near it",
+  "source": "phb"
+}, {
+  "description": "A rope necklace from which dangles four mummified elf fingers",
+  "source": "phb"
+}, {
+  "description": "The deed for a parcel of land in a realm unknown to you",
+  "source": "phb"
+}, {
+  "description": "A 1-ounce block made from an unknown material",
+  "source": "phb"
+}, {
+  "description": "A small cloth doll skewered with needles",
+  "source": "phb"
+}, {
+  "description": "A tooth from an unknown beast",
+  "source": "phb"
+}, {
+  "description": "An enormous scale, perhaps from a dragon",
+  "source": "phb"
+}, {
+  "description": "A bright green feather",
+  "source": "phb"
+}, {
+  "description": "An old divination card bearing your likeness",
+  "source": "phb"
+}, {
+  "description": "A glass orb filled with moving smoke",
+  "source": "phb"
+}, {
+  "description": "A 1-pound egg with a bright red shell",
+  "source": "phb"
+}, {
+  "description": "A pipe that blows bubbles",
+  "source": "phb"
+}, {
+  "description": "A glass jar containing a weird bit of flesh floating in pickling fluid",
+  "source": "phb"
+}, {
+  "description": "A tiny gnome-crafted music box that plays a song you dimly remember from your childhood",
+  "source": "phb"
+}, {
+  "description": "A small wooden statuette of a smug halfling",
+  "source": "phb"
+}, {
+  "description": "A brass orb etched with strange runes",
+  "source": "phb"
+}, {
+  "description": "A multicolored stone disk",
+  "source": "phb"
+}, {
+  "description": "A tiny silver icon of a raven",
+  "source": "phb"
+}, {
+  "description": "A bag containing forty-seven humanoid teeth, one of which is rotten",
+  "source": "phb"
+}, {
+  "description": "A shard of obsidian that always feels warm to the touch",
+  "source": "phb"
+}, {
+  "description": "A dragon's bony talon hanging from a plain leather necklace",
+  "source": "phb"
+}, {
+  "description": "A pair of old socks",
+  "source": "phb"
+}, {
+  "description": "A blank book whose pages refuse to hold ink, chalk, graphite, or any other substance or marking",
+  "source": "phb"
+}, {
+  "description": "A silver badge in the shape of a five-pointed star",
+  "source": "phb"
+}, {
+  "description": "A knife that belonged to a relative",
+  "source": "phb"
+}, {
+  "description": "A glass vial filled with nail clippings",
+  "source": "phb"
+}, {
+  "description": "A rectangular metal device with two tiny metal cups on one end that throws sparks when wet",
+  "source": "phb"
+}, {
+  "description": "A white, sequined glove sized for a human",
+  "source": "phb"
+}, {
+  "description": "A vest with one hundred tiny pockets",
+  "source": "phb"
+}, {
+  "description": "A small, weightless stone block",
+  "source": "phb"
+}, {
+  "description": "A tiny sketch portrait of a goblin",
+  "source": "phb"
+}, {
+  "description": "An empty glass vial that smells of perfume when opened",
+  "source": "phb"
+}, {
+  "description": "A gemstone that looks like a lump of coal when examined by anyone but you",
+  "source": "phb"
+}, {
+  "description": "A scrap of cloth from an old banner",
+  "source": "phb"
+}, {
+  "description": "A rank insignia from a lost legionnaire",
+  "source": "phb"
+}, {
+  "description": "A tiny silver bell without a clapper",
+  "source": "phb"
+}, {
+  "description": "A mechanical canary inside a gnomish lamp",
+  "source": "phb"
+}, {
+  "description": "A tiny chest carved to look like it has numerous feet on the bottom",
+  "source": "phb"
+}, {
+  "description": "A dead sprite inside a clear glass bottle",
+  "source": "phb"
+}, {
+  "description": "A metal can that has no opening but sounds as if it is filled with liquid, sand, spiders, or broken glass (your choice)",
+  "source": "phb"
+}, {
+  "description": "A glass orb filled with water, in which swims a clockwork goldfish",
+  "source": "phb"
+}, {
+  "description": "A silver spoon with an 'M' engraved on the handle",
+  "source": "phb"
+}, {
+  "description": "A whistle made from gold-colored wood",
+  "source": "phb"
+}, {
+  "description": "A dead scarab beetle the size of your hand",
+  "source": "phb"
+}, {
+  "description": "Two toy soldiers, one with a missing head",
+  "source": "phb"
+}, {
+  "description": "A small box filled with different-sized buttons",
+  "source": "phb"
+}, {
+  "description": "A candle that can't be lit",
+  "source": "phb"
+}, {
+  "description": "A tiny cage with no door",
+  "source": "phb"
+}, {
+  "description": "An old key",
+  "source": "phb"
+}, {
+  "description": "An indecipherable treasure map",
+  "source": "phb"
+}, {
+  "description": "A hilt from a broken sword",
+  "source": "phb"
+}, {
+  "description": "A rabbit's foot",
+  "source": "phb"
+}, {
+  "description": "A glass eye",
+  "source": "phb"
+}, {
+  "description": "A cameo carved in the likeness of a hideous person",
+  "source": "phb"
+}, {
+  "description": "A silver skull the size of a coin",
+  "source": "phb"
+}, {
+  "description": "An alabaster mask",
+  "source": "phb"
+}, {
+  "description": "A pyramid of sticky black incense that smells very bad",
+  "source": "phb"
+}, {
+  "description": "A nightcap that, when worn, gives you pleasant dreams",
+  "source": "phb"
+}, {
+  "description": "A single caltrop made from bone",
+  "source": "phb"
+}, {
+  "description": "A gold monocle frame without the lens",
+  "source": "phb"
+}, {
+  "description": "A 1-inch cube, each side painted a different color",
+  "source": "phb"
+}, {
+  "description": "A crystal knob from a door",
+  "source": "phb"
+}, {
+  "description": "A small packet filled with pink dust",
+  "source": "phb"
+}, {
+  "description": "A fragment of a beautiful song, written as musical notes on two pieces of parchment",
+  "source": "phb"
+}, {
+  "description": "A silver teardrop earring made from a real teardrop",
+  "source": "phb"
+}, {
+  "description": "The shell of an egg painted with scenes of human misery in disturbing detail",
+  "source": "phb"
+}, {
+  "description": "A fan that, when unfolded, shows a sleeping cat",
+  "source": "phb"
+}, {
+  "description": "A set of bone pipes",
+  "source": "phb"
+}, {
+  "description": "A four-leaf clover pressed inside a book discussing manners and etiquette",
+  "source": "phb"
+}, {
+  "description": "A sheet of parchment upon which is drawn a complex mechanical contraption",
+  "source": "phb"
+}, {
+  "description": "An ornate scabbard that fits no blade you have found so far",
+  "source": "phb"
+}, {
+  "description": "An invitation to a party where a murder happened",
+  "source": "phb"
+}, {
+  "description": "A bronze pentacle with an etching of a rat's head in its center",
+  "source": "phb"
+}, {
+  "description": "A purple handkerchief embroidered with the name of a powerful archmage",
+  "source": "phb"
+}, {
+  "description": "Half of a floorplan for a temple, castle, or some other structure",
+  "source": "phb"
+}, {
+  "description": "A bit of folded cloth that, when unfolded, turns into a stylish cap",
+  "source": "phb"
+}, {
+  "description": "A receipt of deposit at a bank in a far-flung city",
+  "source": "phb"
+}, {
+  "description": "A diary with seven missing pages",
+  "source": "phb"
+}, {
+  "description": "An empty silver snuffbox bearing an inscription on the surface that says \"dreams\"",
+  "source": "phb"
+}, {
+  "description": "An iron holy symbol devoted to an unknown god",
+  "source": "phb"
+}, {
+  "description": "A book that tells the story of a legendary hero's rise and fall, with the last chapter missing",
+  "source": "phb"
+}, {
+  "description": "A vial of dragon blood",
+  "source": "phb"
+}, {
+  "description": "An ancient arrow of elven design",
+  "source": "phb"
+}, {
+  "description": "A needle that never bends",
+  "source": "phb"
+}, {
+  "description": "An ornate brooch of dwarven design",
+  "source": "phb"
+}, {
+  "description": "An empty wine bottle bearing a pretty label that says, \"The Wizard of Wines Winery, Red Dragon Crush, 331422-W\"",
+  "source": "phb"
+}, {
+  "description": "A mosaic tile with a multicolored, glazed surface",
+  "source": "phb"
+}, {
+  "description": "A petrified mouse",
+  "source": "phb"
+}, {
+  "description": "A black pirate flag adorned with a dragon's skull and crossbones",
+  "source": "phb"
+}, {
+  "description": "A tiny mechanical crab or spider that moves about when it's not being observed",
+  "source": "phb"
+}, {
+  "description": "A glass jar containing lard with a label that reads, \"Griffon Grease\"",
+  "source": "phb"
+}, {
+  "description": "A wooden box with a ceramic bottom that holds a living worm with a head on each end of its body",
+  "source": "phb"
+}, {
+  "description": "A metal urn containing the ashes of a her",
+  "source": "phb"
+}];
+
+/***/ }),
+
 /***/ "./src/lib/Component.js":
 /*!******************************!*\
   !*** ./src/lib/Component.js ***!
@@ -367,6 +991,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
+
+// TODO export instance from store.js
 var store = new _store__WEBPACK_IMPORTED_MODULE_1__["default"]();
 var Component = /*#__PURE__*/function () {
   function Component(parent, rootElement) {
@@ -479,6 +1105,7 @@ var Store = /*#__PURE__*/function () {
   function Store() {
     _classCallCheck(this, Store);
     this.state = null;
+    this.stateRegistered = {};
     this.registered = {};
   }
   _createClass(Store, [{
@@ -491,7 +1118,28 @@ var Store = /*#__PURE__*/function () {
     value: function setState(key, val) {
       this.state[key] = val;
       console.log("NEW STATE", this.state);
-      this.publish(key);
+
+      // this.publish(key);
+      this.statePublish(key);
+    }
+  }, {
+    key: "stateRegister",
+    value: function stateRegister(field, callback) {
+      this.stateRegistered[field] = callback;
+      // console.log('STATE REGISTERED', this.stateRegistered);
+    }
+  }, {
+    key: "statePublish",
+    value: function statePublish(field) {
+      // console.log('attempt to statePublish ', field);
+      if (this.stateRegistered[field]) this.stateRegistered[field]();
+      // console.log('STATE PUBLISHED ', field);
+    }
+  }, {
+    key: "register",
+    value: function register(field, callback) {
+      this.registered[field] = callback;
+      // console.log('REGISTERED', registered);
     }
   }, {
     key: "publish",
@@ -499,12 +1147,6 @@ var Store = /*#__PURE__*/function () {
       // console.log('attempt to publish ', field);
       if (this.registered[field]) this.registered[field]();
       // console.log('PUBLISHED ', field);
-    }
-  }, {
-    key: "register",
-    value: function register(field, callback) {
-      this.registered[field] = callback;
-      // console.log('REGISTERED', registered);
     }
   }]);
   return Store;
@@ -532,7 +1174,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".char-item {\n  background: skyblue;\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  padding: 10px;\n  margin-bottom: 10px;\n}\n.char-item .left {\n  display: flex;\n  justify-content: flex-start;\n  align-items: center;\n}\n.char-item .left .char-item-drag-handle {\n  background: green;\n  padding: 10px;\n  cursor: pointer;\n}\n.char-item .left .text {\n  margin-left: 10px;\n}\n.char-item .remove {\n  cursor: pointer;\n  user-select: none;\n}\n.char-item:last-child {\n  margin-bottom: 0;\n}", "",{"version":3,"sources":["webpack://./src/components/CharItem/CharItem.scss"],"names":[],"mappings":"AAAA;EACE,mBAAA;EACA,aAAA;EACA,8BAAA;EACA,mBAAA;EACA,aAAA;EACA,mBAAA;AACF;AACE;EACE,aAAA;EACA,2BAAA;EACA,mBAAA;AACJ;AACI;EACE,iBAAA;EACA,aAAA;EACA,eAAA;AACN;AAEI;EACE,iBAAA;AAAN;AAIE;EACE,eAAA;EACA,iBAAA;AAFJ;AAKE;EACE,gBAAA;AAHJ","sourcesContent":[".char-item {\n  background: skyblue;\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  padding: 10px;\n  margin-bottom: 10px;\n\n  .left {\n    display: flex;\n    justify-content: flex-start;\n    align-items: center;\n\n    .char-item-drag-handle {\n      background: green;\n      padding: 10px;\n      cursor: pointer;\n    }\n\n    .text {\n      margin-left: 10px;\n    }\n  }\n\n  .remove {\n    cursor: pointer;\n    user-select: none;\n  }\n\n  &:last-child {\n    margin-bottom: 0;\n  }\n}"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ".char-item {\n  background: skyblue;\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  padding: 5px;\n  margin-bottom: 10px;\n  overflow: auto;\n}\n@media only screen and (min-width: 600px) {\n  .char-item {\n    padding: 10px;\n  }\n}\n.char-item .left {\n  display: flex;\n  justify-content: flex-start;\n  align-items: center;\n}\n.char-item .left .char-item-drag-handle {\n  background: green;\n  padding: 10px;\n  cursor: pointer;\n  user-select: none;\n}\n.char-item .left .text {\n  margin-left: 10px;\n  padding: 3px;\n  min-width: 100px;\n}\n.char-item .remove {\n  cursor: pointer;\n  user-select: none;\n  margin: 0 10px;\n}\n.char-item:last-child {\n  margin-bottom: 0;\n}", "",{"version":3,"sources":["webpack://./src/components/CharItem/CharItem.scss"],"names":[],"mappings":"AAAA;EACE,mBAAA;EACA,aAAA;EACA,8BAAA;EACA,mBAAA;EACA,YAAA;EACA,mBAAA;EACA,cAAA;AACF;AACE;EATF;IAUI,aAAA;EAEF;AACF;AAAE;EACE,aAAA;EACA,2BAAA;EACA,mBAAA;AAEJ;AAAI;EACE,iBAAA;EACA,aAAA;EACA,eAAA;EACA,iBAAA;AAEN;AACI;EACE,iBAAA;EACA,YAAA;EACA,gBAAA;AACN;AAGE;EACE,eAAA;EACA,iBAAA;EACA,cAAA;AADJ;AAIE;EACE,gBAAA;AAFJ","sourcesContent":[".char-item {\n  background: skyblue;\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  padding: 5px;\n  margin-bottom: 10px;\n  overflow: auto;\n\n  @media only screen and (min-width: 600px) {\n    padding: 10px;\n  }\n\n  .left {\n    display: flex;\n    justify-content: flex-start;\n    align-items: center;\n\n    .char-item-drag-handle {\n      background: green;\n      padding: 10px;\n      cursor: pointer;\n      user-select: none;\n    }\n\n    .text {\n      margin-left: 10px;\n      padding: 3px;\n      min-width: 100px;\n    }\n  }\n\n  .remove {\n    cursor: pointer;\n    user-select: none;\n    margin: 0 10px;\n  }\n\n  &:last-child {\n    margin-bottom: 0;\n  }\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -558,17 +1200,43 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".char-list {\n  background: lightblue;\n  padding: 10px;\n}", "",{"version":3,"sources":["webpack://./src/components/CharList/CharList.scss"],"names":[],"mappings":"AAAE;EACE,qBAAA;EACA,aAAA;AACJ","sourcesContent":["  .char-list {\n    background: lightblue;\n    padding: 10px;\n  }"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ".char-list {\n  background: lightblue;\n  padding: 10px 5px;\n}\n@media only screen and (min-width: 600px) {\n  .char-list {\n    padding: 10px;\n  }\n}", "",{"version":3,"sources":["webpack://./src/components/CharList/CharList.scss"],"names":[],"mappings":"AAAE;EACE,qBAAA;EACA,iBAAA;AACJ;AACI;EAJF;IAKI,aAAA;EAEJ;AACF","sourcesContent":["  .char-list {\n    background: lightblue;\n    padding: 10px 5px;\n\n    @media only screen and (min-width: 600px) {\n      padding: 10px;\n    }\n  }"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/components/MainOptions/MainOptions.scss":
+/***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/components/CharOptions/CharOptions.scss":
 /*!**********************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/components/MainOptions/MainOptions.scss ***!
+  !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/components/CharOptions/CharOptions.scss ***!
   \**********************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/sourceMaps.js */ "./node_modules/css-loader/dist/runtime/sourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, ".char-options {\n  background: lightgreen;\n  padding: 5px 10px 5px;\n}\n@media only screen and (min-width: 600px) {\n  .char-options {\n    padding: 5px 20px 5px;\n  }\n}\n.char-options .categories {\n  display: flex;\n  flex-wrap: wrap;\n}\n.char-options .categories .category {\n  background: white;\n  border: 1px solid black;\n  padding: 2px 4px;\n  margin-right: 10px;\n  margin-bottom: 5px;\n  cursor: pointer;\n  user-select: none;\n}\n.char-options .categories .category.unselected {\n  opacity: 0.3;\n}", "",{"version":3,"sources":["webpack://./src/components/CharOptions/CharOptions.scss"],"names":[],"mappings":"AAAE;EACE,sBAAA;EACA,qBAAA;AACJ;AACI;EAJF;IAKI,qBAAA;EAEJ;AACF;AAAI;EAEE,aAAA;EACA,eAAA;AACN;AACM;EACE,iBAAA;EACA,uBAAA;EACA,gBAAA;EACA,kBAAA;EACA,kBAAA;EACA,eAAA;EACA,iBAAA;AACR;AACQ;EACE,YAAA;AACV","sourcesContent":["  .char-options {\n    background: lightgreen;\n    padding: 5px 10px 5px;\n\n    @media only screen and (min-width: 600px) {\n      padding: 5px 20px 5px;\n    }\n\n    .categories {\n      // background: lightyellow;\n      display: flex;\n      flex-wrap: wrap;\n\n      .category {\n        background: white;\n        border: 1px solid black;\n        padding: 2px 4px;;\n        margin-right: 10px;\n        margin-bottom: 5px;\n        cursor: pointer;\n        user-select: none;\n\n        &.unselected {\n          opacity: 0.3;\n        }\n      }\n    }\n  }\n"],"sourceRoot":""}]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/components/RollChars/RollChars.scss":
+/*!******************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/components/RollChars/RollChars.scss ***!
+  \******************************************************************************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -585,11 +1253,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var ___CSS_LOADER_URL_IMPORT_0___ = new URL(/* asset import */ __webpack_require__(/*! ../../images/20-sided-dice-icon-8.jpg */ "./src/images/20-sided-dice-icon-8.jpg"), __webpack_require__.b);
+var ___CSS_LOADER_URL_IMPORT_0___ = new URL(/* asset import */ __webpack_require__(/*! ../../images/rule-book.svg */ "./src/images/rule-book.svg"), __webpack_require__.b);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 var ___CSS_LOADER_URL_REPLACEMENT_0___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_0___);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".main-options {\n  background: lightgreen;\n  padding: 10px;\n}\n.main-options .roll {\n  width: 30px;\n  height: 30px;\n  background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ");\n}", "",{"version":3,"sources":["webpack://./src/components/MainOptions/MainOptions.scss"],"names":[],"mappings":"AAAE;EACE,sBAAA;EACA,aAAA;AACJ;AACI;EACE,WAAA;EACA,YAAA;EACA,yDAAA;AACN","sourcesContent":["  .main-options {\n    background: lightgreen;\n    padding: 10px;\n\n    .roll {\n      width: 30px;\n      height: 30px;\n      background-image: url(\"../../images/20-sided-dice-icon-8.jpg\");\n    }\n  }"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ".roll-chars {\n  background: lightgreen;\n  padding: 10px 10px 5px;\n  display: flex;\n  align-items: center;\n}\n@media only screen and (min-width: 600px) {\n  .roll-chars {\n    padding: 10px 20px 5px;\n  }\n}\n.roll-chars .roll {\n  width: 40px;\n  height: 40px;\n  background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ");\n  margin: 0 5px 0 0;\n  border-radius: 8px;\n  cursor: pointer;\n}\n.roll-chars textarea {\n  resize: vertical;\n  width: calc(100% - 90px);\n}\n.roll-chars .add-me {\n  width: 40px;\n  height: 40px;\n  margin: 0 0 0 5px;\n  border-radius: 8px;\n  cursor: pointer;\n  font-family: Times;\n  font-size: 16px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}", "",{"version":3,"sources":["webpack://./src/components/RollChars/RollChars.scss"],"names":[],"mappings":"AAAE;EACE,sBAAA;EACA,sBAAA;EACA,aAAA;EACA,mBAAA;AACJ;AACI;EANF;IAOI,sBAAA;EAEJ;AACF;AAAI;EACE,WAAA;EACA,YAAA;EACA,yDAAA;EACA,iBAAA;EACA,kBAAA;EACA,eAAA;AAEN;AACI;EACE,gBAAA;EACA,wBAAA;AACN;AAEI;EACE,WAAA;EACA,YAAA;EACA,iBAAA;EACA,kBAAA;EACA,eAAA;EACA,kBAAA;EACA,eAAA;EACA,aAAA;EACA,uBAAA;EACA,mBAAA;AAAN","sourcesContent":["  .roll-chars {\n    background: lightgreen;\n    padding: 10px 10px 5px;;\n    display: flex;\n    align-items: center;\n\n    @media only screen and (min-width: 600px) {\n      padding: 10px 20px 5px;;\n    }\n\n    .roll {\n      width: 40px;\n      height: 40px;\n      background-image: url(\"../../images/rule-book.svg\");\n      margin: 0 5px 0 0;\n      border-radius: 8px;\n      cursor: pointer;\n    }\n\n    textarea {\n      resize: vertical;\n      width: calc(100% - 90px);\n    }\n\n    .add-me {\n      width: 40px;\n      height: 40px;\n      margin: 0 0 0 5px;\n      border-radius: 8px;;\n      cursor: pointer;\n      font-family: Times;\n      font-size: 16px;\n      display: flex;\n      justify-content: center;\n      align-items: center;\n    }\n  }\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -615,7 +1283,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "body {\n  background: #333;\n}\n\n.main {\n  background: #555;\n  padding: 20px;\n}\n.main .header {\n  background: lightcoral;\n  padding: 20px 10px;\n  font-size: 30px;\n}", "",{"version":3,"sources":["webpack://./src/styles/style.scss"],"names":[],"mappings":"AAAA;EACE,gBAAA;AACF;;AAEA;EACE,gBAAA;EACA,aAAA;AACF;AACE;EACE,sBAAA;EACA,kBAAA;EACA,eAAA;AACJ","sourcesContent":["body {\n  background: #333;\n}\n\n.main {\n  background: #555;\n  padding: 20px;\n\n  .header {\n    background: lightcoral;\n    padding: 20px 10px;\n    font-size: 30px;\n  }\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, "body {\n  background: #333;\n}\n\n.main {\n  background: #555;\n  padding: 0px;\n  max-width: 620px;\n  margin: 0 auto;\n}\n@media only screen and (min-width: 600px) {\n  .main {\n    padding: 20px;\n  }\n}\n.main .header {\n  background: lightcoral;\n  padding: 20px 10px;\n  font-size: 30px;\n}\n@media only screen and (min-width: 600px) {\n  .main .header {\n    padding: 20px;\n  }\n}", "",{"version":3,"sources":["webpack://./src/styles/style.scss"],"names":[],"mappings":"AAAA;EACE,gBAAA;AACF;;AAEA;EACE,gBAAA;EACA,YAAA;EACA,gBAAA;EACA,cAAA;AACF;AACE;EANF;IAOI,aAAA;EAEF;AACF;AAAE;EACE,sBAAA;EACA,kBAAA;EACA,eAAA;AAEJ;AAAI;EALF;IAMI,aAAA;EAGJ;AACF","sourcesContent":["body {\n  background: #333;\n}\n\n.main {\n  background: #555;\n  padding: 0px;\n  max-width: 620px;\n  margin: 0 auto;\n\n  @media only screen and (min-width: 600px) {\n    padding: 20px;\n  }\n\n  .header {\n    background: lightcoral;\n    padding: 20px 10px;\n    font-size: 30px;\n\n    @media only screen and (min-width: 600px) {\n      padding: 20px;\n    }\n  }\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -4711,9 +5379,9 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
-/***/ "./src/components/MainOptions/MainOptions.scss":
+/***/ "./src/components/CharOptions/CharOptions.scss":
 /*!*****************************************************!*\
-  !*** ./src/components/MainOptions/MainOptions.scss ***!
+  !*** ./src/components/CharOptions/CharOptions.scss ***!
   \*****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -4733,7 +5401,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleTagTransform.js */ "./node_modules/style-loader/dist/runtime/styleTagTransform.js");
 /* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_node_modules_sass_loader_dist_cjs_js_MainOptions_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js!./MainOptions.scss */ "./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/components/MainOptions/MainOptions.scss");
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_node_modules_sass_loader_dist_cjs_js_CharOptions_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js!./CharOptions.scss */ "./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/components/CharOptions/CharOptions.scss");
 
       
       
@@ -4755,12 +5423,66 @@ options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWi
 options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
 options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
 
-var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_node_modules_sass_loader_dist_cjs_js_MainOptions_scss__WEBPACK_IMPORTED_MODULE_6__["default"], options);
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_node_modules_sass_loader_dist_cjs_js_CharOptions_scss__WEBPACK_IMPORTED_MODULE_6__["default"], options);
 
 
 
 
-       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_node_modules_sass_loader_dist_cjs_js_MainOptions_scss__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_node_modules_sass_loader_dist_cjs_js_MainOptions_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_node_modules_sass_loader_dist_cjs_js_MainOptions_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
+       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_node_modules_sass_loader_dist_cjs_js_CharOptions_scss__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_node_modules_sass_loader_dist_cjs_js_CharOptions_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_node_modules_sass_loader_dist_cjs_js_CharOptions_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
+
+
+/***/ }),
+
+/***/ "./src/components/RollChars/RollChars.scss":
+/*!*************************************************!*\
+  !*** ./src/components/RollChars/RollChars.scss ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleDomAPI.js */ "./node_modules/style-loader/dist/runtime/styleDomAPI.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertBySelector.js */ "./node_modules/style-loader/dist/runtime/insertBySelector.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js */ "./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertStyleElement.js */ "./node_modules/style-loader/dist/runtime/insertStyleElement.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleTagTransform.js */ "./node_modules/style-loader/dist/runtime/styleTagTransform.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_node_modules_sass_loader_dist_cjs_js_RollChars_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js!./RollChars.scss */ "./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/components/RollChars/RollChars.scss");
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var options = {};
+
+options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());
+options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());
+
+      options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
+    
+options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
+options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_node_modules_sass_loader_dist_cjs_js_RollChars_scss__WEBPACK_IMPORTED_MODULE_6__["default"], options);
+
+
+
+
+       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_node_modules_sass_loader_dist_cjs_js_RollChars_scss__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_node_modules_sass_loader_dist_cjs_js_RollChars_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_node_modules_sass_loader_dist_cjs_js_RollChars_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
 
 
 /***/ }),
@@ -5125,13 +5847,189 @@ module.exports = styleTagTransform;
 
 /***/ }),
 
-/***/ "./src/images/20-sided-dice-icon-8.jpg":
-/*!*********************************************!*\
-  !*** ./src/images/20-sided-dice-icon-8.jpg ***!
-  \*********************************************/
+/***/ "./node_modules/uuid/dist/esm-browser/native.js":
+/*!******************************************************!*\
+  !*** ./node_modules/uuid/dist/esm-browser/native.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+const randomUUID = typeof crypto !== 'undefined' && crypto.randomUUID && crypto.randomUUID.bind(crypto);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  randomUUID
+});
+
+/***/ }),
+
+/***/ "./node_modules/uuid/dist/esm-browser/regex.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/uuid/dist/esm-browser/regex.js ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (/^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i);
+
+/***/ }),
+
+/***/ "./node_modules/uuid/dist/esm-browser/rng.js":
+/*!***************************************************!*\
+  !*** ./node_modules/uuid/dist/esm-browser/rng.js ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ rng)
+/* harmony export */ });
+// Unique ID creation requires a high quality random # generator. In the browser we therefore
+// require the crypto API and do not support built-in fallback to lower quality random number
+// generators (like Math.random()).
+let getRandomValues;
+const rnds8 = new Uint8Array(16);
+function rng() {
+  // lazy load so that environments that need to polyfill have a chance to do so
+  if (!getRandomValues) {
+    // getRandomValues needs to be invoked in a context where "this" is a Crypto implementation.
+    getRandomValues = typeof crypto !== 'undefined' && crypto.getRandomValues && crypto.getRandomValues.bind(crypto);
+
+    if (!getRandomValues) {
+      throw new Error('crypto.getRandomValues() not supported. See https://github.com/uuidjs/uuid#getrandomvalues-not-supported');
+    }
+  }
+
+  return getRandomValues(rnds8);
+}
+
+/***/ }),
+
+/***/ "./node_modules/uuid/dist/esm-browser/stringify.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/uuid/dist/esm-browser/stringify.js ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   "unsafeStringify": () => (/* binding */ unsafeStringify)
+/* harmony export */ });
+/* harmony import */ var _validate_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./validate.js */ "./node_modules/uuid/dist/esm-browser/validate.js");
+
+/**
+ * Convert array of 16 byte values to UUID string format of the form:
+ * XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+ */
+
+const byteToHex = [];
+
+for (let i = 0; i < 256; ++i) {
+  byteToHex.push((i + 0x100).toString(16).slice(1));
+}
+
+function unsafeStringify(arr, offset = 0) {
+  // Note: Be careful editing this code!  It's been tuned for performance
+  // and works in ways you may not expect. See https://github.com/uuidjs/uuid/pull/434
+  return (byteToHex[arr[offset + 0]] + byteToHex[arr[offset + 1]] + byteToHex[arr[offset + 2]] + byteToHex[arr[offset + 3]] + '-' + byteToHex[arr[offset + 4]] + byteToHex[arr[offset + 5]] + '-' + byteToHex[arr[offset + 6]] + byteToHex[arr[offset + 7]] + '-' + byteToHex[arr[offset + 8]] + byteToHex[arr[offset + 9]] + '-' + byteToHex[arr[offset + 10]] + byteToHex[arr[offset + 11]] + byteToHex[arr[offset + 12]] + byteToHex[arr[offset + 13]] + byteToHex[arr[offset + 14]] + byteToHex[arr[offset + 15]]).toLowerCase();
+}
+
+function stringify(arr, offset = 0) {
+  const uuid = unsafeStringify(arr, offset); // Consistency check for valid UUID.  If this throws, it's likely due to one
+  // of the following:
+  // - One or more input array values don't map to a hex octet (leading to
+  // "undefined" in the uuid)
+  // - Invalid input values for the RFC `version` or `variant` fields
+
+  if (!(0,_validate_js__WEBPACK_IMPORTED_MODULE_0__["default"])(uuid)) {
+    throw TypeError('Stringified UUID is invalid');
+  }
+
+  return uuid;
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (stringify);
+
+/***/ }),
+
+/***/ "./node_modules/uuid/dist/esm-browser/v4.js":
+/*!**************************************************!*\
+  !*** ./node_modules/uuid/dist/esm-browser/v4.js ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _native_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./native.js */ "./node_modules/uuid/dist/esm-browser/native.js");
+/* harmony import */ var _rng_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./rng.js */ "./node_modules/uuid/dist/esm-browser/rng.js");
+/* harmony import */ var _stringify_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./stringify.js */ "./node_modules/uuid/dist/esm-browser/stringify.js");
+
+
+
+
+function v4(options, buf, offset) {
+  if (_native_js__WEBPACK_IMPORTED_MODULE_0__["default"].randomUUID && !buf && !options) {
+    return _native_js__WEBPACK_IMPORTED_MODULE_0__["default"].randomUUID();
+  }
+
+  options = options || {};
+  const rnds = options.random || (options.rng || _rng_js__WEBPACK_IMPORTED_MODULE_1__["default"])(); // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
+
+  rnds[6] = rnds[6] & 0x0f | 0x40;
+  rnds[8] = rnds[8] & 0x3f | 0x80; // Copy bytes to buffer, if provided
+
+  if (buf) {
+    offset = offset || 0;
+
+    for (let i = 0; i < 16; ++i) {
+      buf[offset + i] = rnds[i];
+    }
+
+    return buf;
+  }
+
+  return (0,_stringify_js__WEBPACK_IMPORTED_MODULE_2__.unsafeStringify)(rnds);
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (v4);
+
+/***/ }),
+
+/***/ "./node_modules/uuid/dist/esm-browser/validate.js":
+/*!********************************************************!*\
+  !*** ./node_modules/uuid/dist/esm-browser/validate.js ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _regex_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./regex.js */ "./node_modules/uuid/dist/esm-browser/regex.js");
+
+
+function validate(uuid) {
+  return typeof uuid === 'string' && _regex_js__WEBPACK_IMPORTED_MODULE_0__["default"].test(uuid);
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (validate);
+
+/***/ }),
+
+/***/ "./src/images/rule-book.svg":
+/*!**********************************!*\
+  !*** ./src/images/rule-book.svg ***!
+  \**********************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-module.exports = __webpack_require__.p + "4296beace52b935f495e.jpg";
+module.exports = __webpack_require__.p + "6551e8394c16c2f610c1.svg";
 
 /***/ })
 
@@ -5276,10 +6174,12 @@ var __webpack_exports__ = {};
   !*** ./src/index.js ***!
   \**********************/
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! uuid */ "./node_modules/uuid/dist/esm-browser/v4.js");
 /* harmony import */ var _lib_Component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./lib/Component */ "./src/lib/Component.js");
-/* harmony import */ var _components_MainOptions_MainOptions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/MainOptions/MainOptions */ "./src/components/MainOptions/MainOptions.js");
-/* harmony import */ var _components_CharList_CharList__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/CharList/CharList */ "./src/components/CharList/CharList.js");
-/* harmony import */ var _styles_style_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./styles/style.scss */ "./src/styles/style.scss");
+/* harmony import */ var _components_RollChars_RollChars__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/RollChars/RollChars */ "./src/components/RollChars/RollChars.js");
+/* harmony import */ var _components_CharOptions_CharOptions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/CharOptions/CharOptions */ "./src/components/CharOptions/CharOptions.js");
+/* harmony import */ var _components_CharList_CharList__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/CharList/CharList */ "./src/components/CharList/CharList.js");
+/* harmony import */ var _styles_style_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./styles/style.scss */ "./src/styles/style.scss");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -5291,6 +6191,8 @@ function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) ===
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
 
 
 
@@ -5316,8 +6218,9 @@ var App = /*#__PURE__*/function (_Component) {
         className: "header",
         text: this.$store.state.title
       });
-      var DOMMainOptions = new _components_MainOptions_MainOptions__WEBPACK_IMPORTED_MODULE_1__["default"](this.container, "div");
-      var DOMCharList = new _components_CharList_CharList__WEBPACK_IMPORTED_MODULE_2__["default"](this.container, "div", {
+      var DOMRollChars = new _components_RollChars_RollChars__WEBPACK_IMPORTED_MODULE_1__["default"](this.container, "div");
+      var DOMCharOptions = new _components_CharOptions_CharOptions__WEBPACK_IMPORTED_MODULE_2__["default"](this.container, "div");
+      var DOMCharList = new _components_CharList_CharList__WEBPACK_IMPORTED_MODULE_3__["default"](this.container, "div", {
         test: "CharList props test"
       });
     }
@@ -5329,10 +6232,13 @@ var initialState = {
   title: "Personalities 5e",
   mainInput: "",
   characteristics: [{
-    text: "test1"
+    text: "test1",
+    id: (0,uuid__WEBPACK_IMPORTED_MODULE_5__["default"])()
   }, {
-    text: "test2"
-  }]
+    text: "test2",
+    id: (0,uuid__WEBPACK_IMPORTED_MODULE_5__["default"])()
+  }],
+  categories: ["traits", "ideals", "bonds", "flaws"]
 };
 var app = new App(DOMRoot, "div", {
   initialState: initialState

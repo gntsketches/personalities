@@ -1,4 +1,8 @@
   .char-list {
     background: lightblue;
-    padding: 10px;
+    padding: 10px 5px;
+
+    @media only screen and (min-width: 600px) {
+      padding: 10px;
+    }
   }

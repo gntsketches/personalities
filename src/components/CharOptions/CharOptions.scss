@@ -1,11 +1,15 @@
   .char-options {
     background: lightgreen;
+    padding: 5px 10px 5px;
+
+    @media only screen and (min-width: 600px) {
+      padding: 5px 20px 5px;
+    }
 
     .categories {
       // background: lightyellow;
       display: flex;
       flex-wrap: wrap;
-      padding: 5px 20px 5px;
 
       .category {
         background: white;

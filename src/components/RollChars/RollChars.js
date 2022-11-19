@@ -74,21 +74,21 @@ export default class RollChars extends Component {
   }
 
   render() {
-    const DOMTop = this.build(this.container, "div", { className: "top" });
+    // const DOMTop = this.build(this.container, "div", { className: "top" });
 
-    const DOMRoll = this.build(DOMTop, "button", {
+    const DOMRoll = this.build(this.container, "button", {
       className: "roll",
       onClick: () => this.roll(),
     });
 
-    const DOMMainInput = this.build(DOMTop, "textarea", {
+    const DOMMainInput = this.build(this.container, "textarea", {
       className: "main-input",
       text: this.$store.state.mainInput,
       onInput: (e) => this.updateMainInput(e),
     });
     this.DOMMainInput = DOMMainInput;
 
-    const DOMAddMe = this.build(DOMTop, "button", {
+    const DOMAddMe = this.build(this.container, "button", {
       className: "add-me",
       text: "Add",
       onClick: () => this.addMe(),

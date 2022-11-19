@@ -1,32 +1,37 @@
   .roll-chars {
     background: lightgreen;
+    padding: 10px 10px 5px;;
+    display: flex;
+    align-items: center;
 
-    .top {
-      // background-color: pink;
+    @media only screen and (min-width: 600px) {
       padding: 10px 20px 5px;;
+    }
+
+    .roll {
+      width: 40px;
+      height: 40px;
+      background-image: url("../../images/rule-book.svg");
+      margin: 0 5px 0 0;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    textarea {
+      resize: vertical;
+      width: calc(100% - 90px);
+    }
+
+    .add-me {
+      width: 40px;
+      height: 40px;
+      margin: 0 0 0 5px;
+      border-radius: 8px;;
+      cursor: pointer;
+      font-family: Times;
+      font-size: 16px;
       display: flex;
+      justify-content: center;
       align-items: center;
-
-      .roll {
-        width: 40px;
-        height: 40px;
-        background-image: url("../../images/rule-book.svg");
-        margin: 0 5px 0 0;
-        border-radius: 8px;;
-        cursor: pointer;
-      }
-
-      textarea {
-        resize: vertical;
-        width: calc(100% - 90px);
-      }
-
-      .add-me {
-        width: 40px;
-        height: 40px;
-        margin: 0 0 0 5px;
-        border-radius: 8px;;
-        cursor: pointer;
-      }
     }
   }
