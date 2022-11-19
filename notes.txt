@@ -25,10 +25,9 @@ vim config for vscode https://www.youtube.com/watch?v=Vkm4bc2Y0AA
 
 
 TODO APP
-  drag handles
-  remove icon
   copy-to-clipboard
   export file
+  persist
   absolute import paths? (eg: https://adamrackis.dev/blog/css-modules)
   
   accessibility

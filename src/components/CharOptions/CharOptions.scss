@@ -1,6 +1,8 @@
   .char-options {
     background: lightgreen;
     padding: 5px 10px 5px;
+    display: flex;
+    justify-content: center;
 
     @media only screen and (min-width: 600px) {
       padding: 5px 20px 5px;
