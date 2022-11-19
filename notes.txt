@@ -26,8 +26,6 @@ vim config for vscode https://www.youtube.com/watch?v=Vkm4bc2Y0AA
 
 TODO APP
   mobile checks
-  line wrap & weird border for contenteditable
-    ? https://stackoverflow.com/questions/21701908/css-contenteditable-span-ugly-border
   drag handles
   remove icon
   copy-to-clipboard

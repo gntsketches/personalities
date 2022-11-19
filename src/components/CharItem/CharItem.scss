@@ -5,6 +5,7 @@
   align-items: center;
   padding: 10px;
   margin-bottom: 10px;
+  overflow: auto;
 
   .left {
     display: flex;
@@ -20,13 +21,14 @@
 
     .text {
       margin-left: 10px;
-      text-overflow: ellipsis;
+      padding: 3px;
     }
   }
 
   .remove {
     cursor: pointer;
     user-select: none;
+    margin-left: 10px;
   }
 
   &:last-child {
