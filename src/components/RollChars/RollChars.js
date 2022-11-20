@@ -51,6 +51,8 @@ export default class RollChars extends Component {
   addMe = () => {
     // console.log('adding the current info to the list!');
     // TS define as interface
+    if (this.$store.state.mainInput === '') return;
+
     const newId = uuidv4();
     console.log('newId', newId);
     const characteristic = {

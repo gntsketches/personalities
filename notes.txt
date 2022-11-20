@@ -28,7 +28,6 @@ vim config for vscode https://www.youtube.com/watch?v=Vkm4bc2Y0AA
 
 TODO APP
   persist
-  block adding empty char
   absolute import paths? (eg: https://adamrackis.dev/blog/css-modules)
   user-select vs contenteditable
     https://stackoverflow.com/questions/4777860/highlight-select-multiple-divs-with-ranges-w-contenteditable
