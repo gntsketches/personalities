@@ -17,6 +17,7 @@ export default class Component {
 
     if (this.props.initialState) {
       // TODO only allow once?
+      // console.log('SET INITIAL STATE');
       this.$store.initState(this.props.initialState);
     }
 

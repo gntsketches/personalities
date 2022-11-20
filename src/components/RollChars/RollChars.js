@@ -24,7 +24,6 @@ function getDescriptors(categories) {
 export default class RollChars extends Component {
   constructor(...args) {
     super(...args);
-    this.$store.setState("mainInput", "TEST");
 
     this.$store.stateRegister("mainInput", () => {
       this.DOMMainInput.value = this.$store.state.mainInput;

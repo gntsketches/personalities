@@ -13,7 +13,6 @@ export default class Store {
     this.state[key] = val;
     console.log("NEW STATE", this.state);
 
-    // this.publish(key);
     this.statePublish(key);
   }
 

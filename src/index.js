@@ -8,6 +8,25 @@ import CharList from "./components/CharList/CharList";
 import "./styles/style.scss";
 
 class App extends Component {
+  constructor(...args) {
+    super(...args);
+
+    const storedCharacteristics = localStorage.getItem("chars");
+    if (storedCharacteristics) {
+      const parsedCharacteristics = JSON.parse(storedCharacteristics);
+      this.$store.setState("characteristics", parsedCharacteristics);
+    }
+
+    this.$store.stateRegister("characteristics", () => {
+      const characteristicsString = JSON.stringify(
+        this.$store.state.characteristics
+      );
+      localStorage.setItem("chars", characteristicsString);
+    });
+
+    this.clearAndRender();
+  }
+
   containerOptions() {
     return {
       className: "main",
@@ -32,8 +51,8 @@ const initialState = {
   title: "Personalities 5e",
   mainInput: "",
   characteristics: [
-    { text: "test1", id: uuidv4() },
-    { text: "test2", id: uuidv4() },
+    // { text: "test1", id: uuidv4() },
+    // { text: "test2", id: uuidv4() },
   ],
   categories: ["traits", "ideals", "bonds", "flaws"],
 };
