@@ -13,6 +13,7 @@ export function build(parent, el, options) {
     else element.innerText = options.text;
   }
   if (options?.contentEditable) element.contentEditable = true;
+  if (options?.title) element.title = options.title;
 
   if (options?.onClick) element.addEventListener("click", options.onClick);
   if (options?.onInput) element.addEventListener("input", options.onInput);

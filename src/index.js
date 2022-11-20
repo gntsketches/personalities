@@ -1,6 +1,7 @@
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 import Component from "./lib/Component";
 
+import Header from "./components/Header/Header";
 import RollChars from "./components/RollChars/RollChars";
 import CharOptions from "./components/CharOptions/CharOptions";
 import CharList from "./components/CharList/CharList";
@@ -14,10 +15,7 @@ class App extends Component {
   }
 
   render() {
-    const DOMHeader = this.build(this.container, "h1", {
-      className: "header",
-      text: this.$store.state.title,
-    });
+    const DOMHeader = new Header(this.container, "div");
 
     const DOMRollChars = new RollChars(this.container, "div");
 
@@ -34,8 +32,8 @@ const initialState = {
   title: "Personalities 5e",
   mainInput: "",
   characteristics: [
-    { text: "test1", id: uuidv4() }, 
-    { text: "test2", id: uuidv4() }
+    { text: "test1", id: uuidv4() },
+    { text: "test2", id: uuidv4() },
   ],
   categories: ["traits", "ideals", "bonds", "flaws"],
 };

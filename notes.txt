@@ -7,12 +7,14 @@ body
   main
   header
     Y title
-    click-to-copy
+    Y click-to-copy
   options
     Y textarea
     Y add-me
-    dice roller input & fill-in
-    toggle: traits ideals bonds flaws quirks trinkets
+    Y dice roller input & fill-in
+    Y toggle: traits ideals bonds flaws trinkets 
+    quirks
+    fold menu for background & source selection
     trait-searchbar (& selection popup)
   characteristics
     Y text editable
@@ -25,10 +27,15 @@ vim config for vscode https://www.youtube.com/watch?v=Vkm4bc2Y0AA
 
 
 TODO APP
-  copy-to-clipboard
-  export file
   persist
+  block adding empty char
   absolute import paths? (eg: https://adamrackis.dev/blog/css-modules)
+  user-select vs contenteditable
+    https://stackoverflow.com/questions/4777860/highlight-select-multiple-divs-with-ranges-w-contenteditable
+    might need to make your own ranges: https://javascript.info/selection-range
+  favicon
+
+  add all the personality stuff!
   
   accessibility
     form for main options

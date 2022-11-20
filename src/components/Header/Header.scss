@@ -1,0 +1,33 @@
+  .header {
+    background: lightcoral;
+    padding: 20px 10px;
+    font-size: 30px;
+    display: flex;
+    justify-content: space-between;
+
+    @media only screen and (min-width: 600px) {
+      padding: 20px;
+    }
+
+    .right {
+
+      button {
+        background: transparent;
+        background-size: cover;
+        width: 30px;
+        height: 30px;
+        border: none;
+        cursor: pointer;
+      }
+
+      .copy {
+        background-image: url('../../images/icons8-copy-96.png');
+      }
+
+      .file {
+        background-image: url('../../images/load.svg');
+        margin-left: 8px;
+      }
+    }
+
+  }

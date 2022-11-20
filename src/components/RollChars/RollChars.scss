@@ -12,8 +12,11 @@
       width: 40px;
       height: 40px;
       background-image: url("../../images/rule-book.svg");
+      background-size: cover;
       margin: 0 5px 0 0;
       border-radius: 8px;
+      border: 1px solid black;
+      border-right: 2px solid black;
       cursor: pointer;
     }
 

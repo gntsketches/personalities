@@ -79,6 +79,7 @@ export default class RollChars extends Component {
     const DOMRoll = this.build(this.container, "button", {
       className: "roll",
       onClick: () => this.roll(),
+      title: "Roll a new personality characteristic",
     });
 
     const DOMMainInput = this.build(this.container, "textarea", {

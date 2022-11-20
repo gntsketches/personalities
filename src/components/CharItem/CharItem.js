@@ -17,7 +17,7 @@ export default class CharItem extends Component {
 
     this.build(DOMLeft, "div", {
       className: "char-item-drag-handle",
-      // text: "=",
+      title: "Drag to reorder",
     });
 
     this.build(DOMLeft, "span", {
@@ -29,8 +29,8 @@ export default class CharItem extends Component {
 
     this.build(this.container, "div", {
       className: "remove",
-      // text: "X",
       onClick: () => this.props.removeChar(this.props.key),
+      title: "Remove",
     });
   }
 }
