@@ -28,10 +28,9 @@ vim config for vscode https://www.youtube.com/watch?v=Vkm4bc2Y0AA
 
 
 TODO APP
-  favicon
-  add all the personality stuff!
   absolute import paths? (eg: https://adamrackis.dev/blog/css-modules)
     https://medium.com/@etherealm/getting-rid-of-relative-paths-in-imports-using-webpack-alias-78d4bf15bb42
+    https://webpack.js.org/configuration/resolve/
   
   accessibility
     form for main options
@@ -45,7 +44,7 @@ TODO BONUS FEATURES for TYPESCRIPT
       
 TODO LIB
   add multiple callbacks for register
-    UNregister?m (return a reference to the function, and search for that?)
+    Unregister? (return a reference to the function, and search for that?)
       ooh, return the unsubscribe function! (see jsmanifest)
   LOOKOUT component render is called before component constructor
     because the parent construtor (super) is called first!

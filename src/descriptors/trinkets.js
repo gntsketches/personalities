@@ -1,4 +1,4 @@
-// Are these actually phb?
+// http://dnd5e.wikidot.com/trinkets
 
 export const trinkets = [
   {
@@ -398,7 +398,7 @@ export const trinkets = [
     "source": "phb",
   },
   {
-    "description": "A metal urn containing the ashes of a her",
+    "description": "A metal urn containing the ashes of a hero",
     "source": "phb",
   },
 ]
