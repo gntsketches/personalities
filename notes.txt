@@ -24,16 +24,14 @@ body
 
 
 vim config for vscode https://www.youtube.com/watch?v=Vkm4bc2Y0AA
+  https://mail.google.com/mail/u/0/#inbox/FMfcgzGqRZlvKwlvprrZQfCLwmKLRcXq
 
 
 TODO APP
-  absolute import paths? (eg: https://adamrackis.dev/blog/css-modules)
-  user-select vs contenteditable
-    https://stackoverflow.com/questions/4777860/highlight-select-multiple-divs-with-ranges-w-contenteditable
-    might need to make your own ranges: https://javascript.info/selection-range
   favicon
-
   add all the personality stuff!
+  absolute import paths? (eg: https://adamrackis.dev/blog/css-modules)
+    https://medium.com/@etherealm/getting-rid-of-relative-paths-in-imports-using-webpack-alias-78d4bf15bb42
   
   accessibility
     form for main options
@@ -175,6 +173,10 @@ TODO study:
     https://css-tricks.com/css-modules-part-1-need/
     https://adamrackis.dev/blog/css-modules
 
+  
+  user-select vs contenteditable
+    https://stackoverflow.com/questions/4777860/highlight-select-multiple-divs-with-ranges-w-contenteditable
+    might need to make your own ranges: https://javascript.info/selection-range
 
 
 *** Personalities *********************************************************
