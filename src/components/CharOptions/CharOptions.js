@@ -1,8 +1,9 @@
-import Component from "../../lib/Component";
+// import Component from "../../lib/Component";
+import Foolsgold from "foolsgold";
 
 import "./CharOptions.scss";
 
-export default class CharOptions extends Component {
+export default class CharOptions extends Foolsgold {
   constructor(...args) {
     super(...args);
 

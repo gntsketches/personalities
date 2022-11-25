@@ -1,9 +1,10 @@
-import Component from "../../lib/Component";
+// import Component from "../../lib/Component";
+import Foolsgold from "foolsgold";
 
 import { copyToClipboard, download } from "../../utils/export";
 import "./Header.scss";
 
-export default class Header extends Component {
+export default class Header extends Foolsgold {
   containerOptions() {
     return {
       className: "header",

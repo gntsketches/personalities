@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
-import Component from "./lib/Component";
+// import Component from "./lib/Component";
+import Foolsgold from "foolsgold";
 
 import Header from "./components/Header/Header";
 import RollChars from "./components/RollChars/RollChars";
@@ -7,7 +8,7 @@ import CharOptions from "./components/CharOptions/CharOptions";
 import CharList from "./components/CharList/CharList";
 import "./styles/style.scss";
 
-class App extends Component {
+class App extends Foolsgold {
   constructor(...args) {
     super(...args);
 

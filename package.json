@@ -24,6 +24,7 @@
     "webpack-dev-server": "^4.11.1"
   },
   "dependencies": {
+    "foolsgold": "^0.1.0",
     "sortablejs": "^1.15.0",
     "uuid": "^9.0.0"
   }

@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
-import Component from "../../lib/Component";
+// import Component from "../../lib/Component";
+import Foolsgold from "foolsgold";
 
 import { traits, ideals, bonds, flaws, trinkets } from "../../descriptors";
 import "./RollChars.scss";
@@ -21,7 +22,7 @@ function getDescriptors(categories) {
   return descriptors;
 }
 
-export default class RollChars extends Component {
+export default class RollChars extends Foolsgold {
   constructor(...args) {
     super(...args);
 

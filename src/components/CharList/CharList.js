@@ -1,10 +1,11 @@
 import Sortable from "sortablejs";
+// import Component from "../../lib/Component";
+import Foolsgold from "foolsgold";
 
-import Component from "../../lib/Component";
 import CharItem from "../CharItem/CharItem";
 import "./CharList.scss";
 
-export default class CharList extends Component {
+export default class CharList extends Foolsgold {
   constructor(...args) {
     super(...args);
 

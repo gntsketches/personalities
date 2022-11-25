@@ -3,11 +3,11 @@ https://spin.atomicobject.com/2016/06/26/parallelize-development-git-worktrees/
 
 
 
-PUBLISH
-  following this
-    https://www.youtube.com/watch?v=J4b_T-qH3BY
-  but also using es6 modules. this helped:
-    https://bobbyhadz.com/blog/javascript-error-err-module-not-found-cannot-find-module
+
+
+
+foolsgold published!  
+
 
 
 
