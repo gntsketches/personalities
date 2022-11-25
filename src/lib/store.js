@@ -1,4 +1,4 @@
-export default class Store {
+class Store {
   constructor() {
     this.state = null;
     this.stateRegistered = {};
@@ -38,3 +38,6 @@ export default class Store {
     // console.log('PUBLISHED ', field);
   }
 }
+
+const store = new Store();
+export default store;
