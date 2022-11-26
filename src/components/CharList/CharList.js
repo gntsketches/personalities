@@ -31,6 +31,11 @@ export default class CharList extends Foolsgold {
 
     const foundCharItem = document.getElementById(`characteristic-item${key}`);
     foundCharItem.remove();
+
+    if (newCharacteristics.length === 0) {
+      console.log('char length is 0');
+      this.clearAndRender();
+    }
   }
 
   containerOptions() {
@@ -53,6 +58,16 @@ export default class CharList extends Foolsgold {
   }
 
   render() {
+    if (this.$store.state.characteristics.length === 0) {
+      console.log('CharList char length', this.$store.state.characteristics.length);
+      this.build(this.container, "div", {
+        className: "no-characteristics-text",
+        text: "No characteristics yet...",
+      });
+
+      return;
+    }
+
     this.$store.state.characteristics.forEach((characteristic, index) => {
       const key =  characteristic.id;
       const DOMCharItem = new CharItem(this.container, "div", {
