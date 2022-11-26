@@ -12,7 +12,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ CharItem)
 /* harmony export */ });
-/* harmony import */ var _lib_Component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../lib/Component */ "./src/lib/Component.js");
+/* harmony import */ var foolsgold__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! foolsgold */ "./node_modules/foolsgold/index.js");
 /* harmony import */ var _CharItem_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CharItem.scss */ "./src/components/CharItem/CharItem.scss");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -25,10 +25,11 @@ function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) ===
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+// import Component from "../../lib/Component";
 
 
-var CharItem = /*#__PURE__*/function (_Component) {
-  _inherits(CharItem, _Component);
+var CharItem = /*#__PURE__*/function (_Foolsgold) {
+  _inherits(CharItem, _Foolsgold);
   var _super = _createSuper(CharItem);
   function CharItem() {
     _classCallCheck(this, CharItem);
@@ -51,7 +52,7 @@ var CharItem = /*#__PURE__*/function (_Component) {
       });
       this.build(DOMLeft, "div", {
         className: "char-item-drag-handle",
-        text: "="
+        title: "Drag to reorder"
       });
       this.build(DOMLeft, "span", {
         className: "text",
@@ -63,15 +64,15 @@ var CharItem = /*#__PURE__*/function (_Component) {
       });
       this.build(this.container, "div", {
         className: "remove",
-        text: "X",
         onClick: function onClick() {
           return _this.props.removeChar(_this.props.key);
-        }
+        },
+        title: "Remove"
       });
     }
   }]);
   return CharItem;
-}(_lib_Component__WEBPACK_IMPORTED_MODULE_0__["default"]);
+}(foolsgold__WEBPACK_IMPORTED_MODULE_0__["default"]);
 
 
 /***/ }),
@@ -87,7 +88,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ CharList)
 /* harmony export */ });
 /* harmony import */ var sortablejs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sortablejs */ "./node_modules/sortablejs/modular/sortable.esm.js");
-/* harmony import */ var _lib_Component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../lib/Component */ "./src/lib/Component.js");
+/* harmony import */ var foolsgold__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! foolsgold */ "./node_modules/foolsgold/index.js");
 /* harmony import */ var _CharItem_CharItem__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../CharItem/CharItem */ "./src/components/CharItem/CharItem.js");
 /* harmony import */ var _CharList_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./CharList.scss */ "./src/components/CharList/CharList.scss");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
@@ -108,11 +109,12 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
+// import Component from "../../lib/Component";
 
 
 
-var CharList = /*#__PURE__*/function (_Component) {
-  _inherits(CharList, _Component);
+var CharList = /*#__PURE__*/function (_Foolsgold) {
+  _inherits(CharList, _Foolsgold);
   var _super = _createSuper(CharList);
   function CharList() {
     var _this;
@@ -150,6 +152,10 @@ var CharList = /*#__PURE__*/function (_Component) {
       this.$store.setState("characteristics", newCharacteristics);
       var foundCharItem = document.getElementById("characteristic-item".concat(key));
       foundCharItem.remove();
+      if (newCharacteristics.length === 0) {
+        console.log('char length is 0');
+        this.clearAndRender();
+      }
     }
   }, {
     key: "containerOptions",
@@ -171,6 +177,14 @@ var CharList = /*#__PURE__*/function (_Component) {
     key: "render",
     value: function render() {
       var _this2 = this;
+      if (this.$store.state.characteristics.length === 0) {
+        console.log('CharList char length', this.$store.state.characteristics.length);
+        this.build(this.container, "div", {
+          className: "no-characteristics-text",
+          text: "No characteristics yet..."
+        });
+        return;
+      }
       this.$store.state.characteristics.forEach(function (characteristic, index) {
         var key = characteristic.id;
         var DOMCharItem = new _CharItem_CharItem__WEBPACK_IMPORTED_MODULE_2__["default"](_this2.container, "div", {
@@ -194,7 +208,7 @@ var CharList = /*#__PURE__*/function (_Component) {
     }
   }]);
   return CharList;
-}(_lib_Component__WEBPACK_IMPORTED_MODULE_1__["default"]);
+}(foolsgold__WEBPACK_IMPORTED_MODULE_1__["default"]);
 
 
 /***/ }),
@@ -209,7 +223,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ CharOptions)
 /* harmony export */ });
-/* harmony import */ var _lib_Component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../lib/Component */ "./src/lib/Component.js");
+/* harmony import */ var foolsgold__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! foolsgold */ "./node_modules/foolsgold/index.js");
 /* harmony import */ var _CharOptions_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CharOptions.scss */ "./src/components/CharOptions/CharOptions.scss");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
@@ -229,10 +243,11 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+// import Component from "../../lib/Component";
 
 
-var CharOptions = /*#__PURE__*/function (_Component) {
-  _inherits(CharOptions, _Component);
+var CharOptions = /*#__PURE__*/function (_Foolsgold) {
+  _inherits(CharOptions, _Foolsgold);
   var _super = _createSuper(CharOptions);
   function CharOptions() {
     var _this;
@@ -328,7 +343,106 @@ var CharOptions = /*#__PURE__*/function (_Component) {
     }
   }]);
   return CharOptions;
-}(_lib_Component__WEBPACK_IMPORTED_MODULE_0__["default"]);
+}(foolsgold__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+
+/***/ }),
+
+/***/ "./src/components/Header/Header.js":
+/*!*****************************************!*\
+  !*** ./src/components/Header/Header.js ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Header)
+/* harmony export */ });
+/* harmony import */ var foolsgold__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! foolsgold */ "./node_modules/foolsgold/index.js");
+/* harmony import */ var _utils_export__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utils/export */ "./src/utils/export.js");
+/* harmony import */ var _Header_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Header.scss */ "./src/components/Header/Header.scss");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+// import Component from "../../lib/Component";
+
+
+
+var Header = /*#__PURE__*/function (_Foolsgold) {
+  _inherits(Header, _Foolsgold);
+  var _super = _createSuper(Header);
+  function Header() {
+    _classCallCheck(this, Header);
+    return _super.apply(this, arguments);
+  }
+  _createClass(Header, [{
+    key: "containerOptions",
+    value: function containerOptions() {
+      return {
+        className: "header"
+      };
+    }
+  }, {
+    key: "getPersonalityText",
+    value: function getPersonalityText() {
+      var text = "";
+      this.$store.state.characteristics.forEach(function (e) {
+        text += e.text;
+        text += "\n";
+        text += "\n";
+      });
+      return text;
+    }
+  }, {
+    key: "copy",
+    value: function copy() {
+      (0,_utils_export__WEBPACK_IMPORTED_MODULE_1__.copyToClipboard)(this.getPersonalityText());
+    }
+  }, {
+    key: "createFile",
+    value: function createFile() {
+      var file = new File([this.getPersonalityText()], "personality.txt", {
+        type: "text/plain"
+      });
+      (0,_utils_export__WEBPACK_IMPORTED_MODULE_1__.download)(file);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this = this;
+      var DOMTitle = this.build(this.container, "h1", {
+        className: "title",
+        text: this.$store.state.title
+      });
+      var DOMRight = this.build(this.container, "div", {
+        className: "right"
+      });
+      var DOMCopy = this.build(DOMRight, "button", {
+        className: "copy",
+        title: "Copy Personality Text",
+        onClick: function onClick() {
+          return _this.copy();
+        }
+      });
+      var DOMFile = this.build(DOMRight, "button", {
+        className: "file",
+        title: "Download Personality Text",
+        onClick: function onClick() {
+          return _this.createFile();
+        }
+      });
+    }
+  }]);
+  return Header;
+}(foolsgold__WEBPACK_IMPORTED_MODULE_0__["default"]);
 
 
 /***/ }),
@@ -344,7 +458,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ RollChars)
 /* harmony export */ });
 /* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! uuid */ "./node_modules/uuid/dist/esm-browser/v4.js");
-/* harmony import */ var _lib_Component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../lib/Component */ "./src/lib/Component.js");
+/* harmony import */ var foolsgold__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! foolsgold */ "./node_modules/foolsgold/index.js");
 /* harmony import */ var _descriptors__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../descriptors */ "./src/descriptors/index.js");
 /* harmony import */ var _RollChars_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./RollChars.scss */ "./src/components/RollChars/RollChars.scss");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
@@ -366,6 +480,7 @@ function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symb
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
+// import Component from "../../lib/Component";
 
 
 
@@ -383,8 +498,8 @@ function getDescriptors(categories) {
   });
   return descriptors;
 }
-var RollChars = /*#__PURE__*/function (_Component) {
-  _inherits(RollChars, _Component);
+var RollChars = /*#__PURE__*/function (_Foolsgold) {
+  _inherits(RollChars, _Foolsgold);
   var _super = _createSuper(RollChars);
   function RollChars() {
     var _this;
@@ -410,6 +525,7 @@ var RollChars = /*#__PURE__*/function (_Component) {
     _defineProperty(_assertThisInitialized(_this), "addMe", function () {
       // console.log('adding the current info to the list!');
       // TS define as interface
+      if (_this.$store.state.mainInput === '') return;
       var newId = (0,uuid__WEBPACK_IMPORTED_MODULE_3__["default"])();
       console.log('newId', newId);
       var characteristic = {
@@ -421,7 +537,6 @@ var RollChars = /*#__PURE__*/function (_Component) {
       // console.log("addMe state", this.$store.state);
       _this.$store.publish("addMe");
     });
-    _this.$store.setState("mainInput", "TEST");
     _this.$store.stateRegister("mainInput", function () {
       _this.DOMMainInput.value = _this.$store.state.mainInput;
     });
@@ -445,7 +560,8 @@ var RollChars = /*#__PURE__*/function (_Component) {
         className: "roll",
         onClick: function onClick() {
           return _this2.roll();
-        }
+        },
+        title: "Roll a new personality characteristic"
       });
       var DOMMainInput = this.build(this.container, "textarea", {
         className: "main-input",
@@ -465,7 +581,7 @@ var RollChars = /*#__PURE__*/function (_Component) {
     }
   }]);
   return RollChars;
-}(_lib_Component__WEBPACK_IMPORTED_MODULE_0__["default"]);
+}(foolsgold__WEBPACK_IMPORTED_MODULE_0__["default"]);
 
 
 /***/ }),
@@ -480,7 +596,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "bonds": () => (/* binding */ bonds)
 /* harmony export */ });
-var bonds = [{
+var bonds = [
+// ALCOLYTE ****************************************************************************************
+{
   "description": "I would die to recover an ancient relic of my faith that was lost long ago.",
   "background": "alcolyte",
   "source": "phb"
@@ -504,6 +622,319 @@ var bonds = [{
   "description": "I seek to preserve a sacred text that my enemies consider heretical and seek to destroy",
   "background": "alcolyte",
   "source": "phb"
+},
+// CHARLATAN ****************************************************************************************
+{
+  "description": "I fleeced the wrong person and must work to ensure that this individual never crosses paths with me or those I care about.",
+  "background": "charlatan",
+  "source": "phb"
+}, {
+  "description": "I owe everything to my mentor – a horrible person who's probably rotting in jail somewhere.",
+  "background": "charlatan",
+  "source": "phb"
+}, {
+  "description": "Somewhere out there, I have a child who doesn't know me. I'm making the world better for him or her.",
+  "background": "charlatan",
+  "source": "phb"
+}, {
+  "description": "I come from a noble family, and one day I'll reclaim my lands and title from those who stole them from me.",
+  "background": "charlatan",
+  "source": "phb"
+}, {
+  "description": "A powerful person killed someone I love. Some day soon, I'll have my revenge.",
+  "background": "charlatan",
+  "source": "phb"
+}, {
+  "description": "I swindled and ruined a person who didn't deserve it. I seek to atone for my misdeeds but might never be able to forgive myself.",
+  "background": "charlatan",
+  "source": "phb"
+},
+// CRIMINAL ****************************************************************************************
+{
+  "description": "I’m trying to pay off an old debt I owe to a generous benefactor.",
+  "background": "criminal",
+  "source": "phb"
+}, {
+  "description": "My ill-gotten gains go to support my family.",
+  "background": "criminal",
+  "source": "phb"
+}, {
+  "description": "Something important was taken from me, and I aim to steal it back.",
+  "background": "criminal",
+  "source": "phb"
+}, {
+  "description": "I will become the greatest thief that ever lived.",
+  "background": "criminal",
+  "source": "phb"
+}, {
+  "description": "I’m guilty of a terrible crime. I hope I can redeem myself for it.",
+  "background": "criminal",
+  "source": "phb"
+}, {
+  "description": "Someone I loved died because of I mistake I made. That will never happen again",
+  "background": "criminal",
+  "source": "phb"
+},
+// ENTERTAINER ****************************************************************************************
+{
+  "description": "My instrument is my most treasured possession, and it reminds me of someone I love.",
+  "background": "entertainer",
+  "source": "phb"
+}, {
+  "description": "Someone stole my precious instrument, and someday I'll get it back.",
+  "background": "entertainer",
+  "source": "phb"
+}, {
+  "description": "I want to be famous, whatever it takes.",
+  "background": "entertainer",
+  "source": "phb"
+}, {
+  "description": "I idolize a hero of the old tales and measure my deeds against that person's.",
+  "background": "entertainer",
+  "source": "phb"
+}, {
+  "description": "I will do anything to prove myself superior to my hated rival.",
+  "background": "entertainer",
+  "source": "phb"
+}, {
+  "description": "I would do anything for the other members of my old troupe.",
+  "background": "entertainer",
+  "source": "phb"
+},
+// FOLK HERO ****************************************************************************************
+{
+  "description": "I have a family, but I have no idea where they are. One day, I hope to see them again.",
+  "background": "folk_hero",
+  "source": "phb"
+}, {
+  "description": "I worked the land, I love the land, and I will protect the land.",
+  "background": "folk_hero",
+  "source": "phb"
+}, {
+  "description": "A proud noble once gave me a horrible beating, and I will take my revenge on any bully I encounter.",
+  "background": "folk_hero",
+  "source": "phb"
+}, {
+  "description": "My tools are symbols of my past life, and I carry them so that I will never forget my roots.",
+  "background": "folk_hero",
+  "source": "phb"
+}, {
+  "description": "I protect those who cannot protect themselves.",
+  "background": "folk_hero",
+  "source": "phb"
+}, {
+  "description": "I wish my childhood sweetheart had come with me to pursue my destiny.",
+  "background": "folk_hero",
+  "source": "phb"
+},
+// GUILD ARTISAN ****************************************************************************************
+
+{
+  "description": "The workshop where I learned my trade is the most important place in the world to me.",
+  "background": "guild_artisan",
+  "source": "phb"
+}, {
+  "description": "I created a great work for someone, and then found them unworthy to receive it. I'm still looking for someone worthy.",
+  "background": "guild_artisan",
+  "source": "phb"
+}, {
+  "description": "I owe my guild a great debt for forging me into the person I am today.",
+  "background": "guild_artisan",
+  "source": "phb"
+}, {
+  "description": "I pursue wealth to secure someone's love.",
+  "background": "guild_artisan",
+  "source": "phb"
+}, {
+  "description": "One day I will return to my guild and prove that I am the greatest artisan of them all.",
+  "background": "guild_artisan",
+  "source": "phb"
+}, {
+  "description": "I will get revenge on the evil forces that destroyed my place of business and ruined my livelihood.",
+  "background": "guild_artisan",
+  "source": "phb"
+},
+// HERMIT ****************************************************************************************
+{
+  "description": "Nothing is more important than the other members of my hermitage, order, or association.",
+  "background": "hermit",
+  "source": "phb"
+}, {
+  "description": "I entered seclusion to hide from the ones who might still be hunting me. I must someday confront them.",
+  "background": "hermit",
+  "source": "phb"
+}, {
+  "description": "I'm still seeking the enlightenment I pursued in my seclusion, and it still eludes me.",
+  "background": "hermit",
+  "source": "phb"
+}, {
+  "description": "I entered seclusion because I loved someone I could not have.",
+  "background": "hermit",
+  "source": "phb"
+}, {
+  "description": "Should my discovery come to light, it could bring ruin to the world.",
+  "background": "hermit",
+  "source": "phb"
+}, {
+  "description": "My isolation gave me great insight into a great evil that only I can destroy.",
+  "background": "hermit",
+  "source": "phb"
+},
+// NOBLE ****************************************************************************************
+{
+  "description": "I will face any challenge to win the approval of my family.",
+  "background": "noble",
+  "source": "phb"
+}, {
+  "description": "My house’s alliance with another noble family must be sustained at all costs.",
+  "background": "noble",
+  "source": "phb"
+}, {
+  "description": "Nothing is more important than the other members of my family.",
+  "background": "noble",
+  "source": "phb"
+}, {
+  "description": "I am in love with the heir of a family that my family despises.",
+  "background": "noble",
+  "source": "phb"
+}, {
+  "description": "My loyalty to my sovereign is unwavering.",
+  "background": "noble",
+  "source": "phb"
+}, {
+  "description": "The common folk must see me as a hero of the people",
+  "background": "noble",
+  "source": "phb"
+},
+// OUTLANDER ****************************************************************************************
+{
+  "description": "My family, clan, or tribe is the most important thing in my life, even when they are far from me.",
+  "background": "outlander",
+  "source": "phb"
+}, {
+  "description": "An injury to the unspoiled wilderness of my home is an injury to me.",
+  "background": "outlander",
+  "source": "phb"
+}, {
+  "description": "I will bring terrible wrath down on the evildoers who destroyed my homeland.",
+  "background": "outlander",
+  "source": "phb"
+}, {
+  "description": "I am the last of my tribe, and it is up to me to ensure their names enter legend.",
+  "background": "outlander",
+  "source": "phb"
+}, {
+  "description": "I suffer awful visions of a coming disaster and will do anything to prevent it.",
+  "background": "outlander",
+  "source": "phb"
+}, {
+  "description": "It is my duty to provide children to sustain my tribe.",
+  "background": "outlander",
+  "source": "phb"
+},
+// SAGE ****************************************************************************************
+{
+  "description": "1	It is my duty to protect my students.",
+  "background": "sage",
+  "source": "phb"
+}, {
+  "description": "I have an ancient text that holds terrible secrets that must not fall into the wrong hands.",
+  "background": "sage",
+  "source": "phb"
+}, {
+  "description": "I work to preserve a library, university, scriptorium, or monastery.",
+  "background": "sage",
+  "source": "phb"
+}, {
+  "description": "My life’s work is a series of tomes related to a specific field of lore.",
+  "background": "sage",
+  "source": "phb"
+}, {
+  "description": "I’ve been searching my whole life for the answer to a certain question.",
+  "background": "sage",
+  "source": "phb"
+}, {
+  "description": "I sold my soul for knowledge. I hope to do great deeds and win it back.",
+  "background": "sage",
+  "source": "phb"
+},
+// SAILOR ****************************************************************************************
+{
+  "description": "I'm loyal to my captain first, everything else second.",
+  "background": "sailor",
+  "source": "phb"
+}, {
+  "description": "The ship is most important – crewmates and captains come and go.",
+  "background": "sailor",
+  "source": "phb"
+}, {
+  "description": "I'll always remember my first ship.",
+  "background": "sailor",
+  "source": "phb"
+}, {
+  "description": "In a harbor town, I have a paramour whose eyes nearly stole me from the sea.",
+  "background": "sailor",
+  "source": "phb"
+}, {
+  "description": "I was cheated out of my fair share of the profits, and I want to get my due.",
+  "background": "sailor",
+  "source": "phb"
+}, {
+  "description": "Ruthless pirates murdered my captain and crewmates, plundered our ship, and left me to die. Vengeance will be mine.",
+  "background": "sailor",
+  "source": "phb"
+},
+// SOLDIER ****************************************************************************************
+{
+  "description": "I would still lay down my life for the people I served with.",
+  "background": "soldier",
+  "source": "phb"
+}, {
+  "description": "Someone saved my life on the battlefield. To this day, I will never leave a friend behind.",
+  "background": "soldier",
+  "source": "phb"
+}, {
+  "description": "My honor is my life.",
+  "background": "soldier",
+  "source": "phb"
+}, {
+  "description": "I’ll never forget the crushing defeat my company suffered or the enemies who dealt it.",
+  "background": "soldier",
+  "source": "phb"
+}, {
+  "description": "Those who fight beside me are those worth dying for.",
+  "background": "soldier",
+  "source": "phb"
+}, {
+  "description": "I fight for those who cannot fight for themselves.",
+  "background": "soldier",
+  "source": "phb"
+},
+// URCHIN ****************************************************************************************
+{
+  "description": "My town or city is my home, and I'll fight to defend it.",
+  "background": "urchin",
+  "source": "phb"
+}, {
+  "description": "I sponsor an orphanage to keep others from enduring what I was forced to endure.",
+  "background": "urchin",
+  "source": "phb"
+}, {
+  "description": "I owe my survival to another urchin who taught me to live on the streets.",
+  "background": "urchin",
+  "source": "phb"
+}, {
+  "description": "I owe a debt I can never repay to the person who took pity on me.",
+  "background": "urchin",
+  "source": "phb"
+}, {
+  "description": "I escaped my life of poverty by robbing an important person, and I'm wanted for it.",
+  "background": "urchin",
+  "source": "phb"
+}, {
+  "description": "No one else should have to endure the hardships I've been through.",
+  "background": "urchin",
+  "source": "phb"
 }];
 
 /***/ }),
@@ -518,12 +949,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "flaws": () => (/* binding */ flaws)
 /* harmony export */ });
-var flaws = [{
+var flaws = [
+// ALCOLYTE ****************************************************************************************
+{
   "description": "I judge others harshly, and myself even more severely.",
   "background": "alcolyte",
   "source": "phb"
 }, {
-  "description": "I put too much trust in those who wield power within my temple’s hierarchy.",
+  "description": "I put too much trust in those who wield power within my temple's hierarchy.",
   "background": "alcolyte",
   "source": "phb"
 }, {
@@ -542,6 +975,318 @@ var flaws = [{
   "description": "Once I pick a goal, I become obsessed with it to the detriment of everything else in my life",
   "background": "alcolyte",
   "source": "phb"
+},
+// CHARLATAN ****************************************************************************************
+{
+  "description": "I can't resist a pretty face.",
+  "background": "charlatan",
+  "source": "phb"
+}, {
+  "description": "I'm always in debt. I spend my ill-gotten gains on decadent luxuries faster than I bring them in.",
+  "background": "charlatan",
+  "source": "phb"
+}, {
+  "description": "I'm convinced that no one could ever fool me the way I fool others.",
+  "background": "charlatan",
+  "source": "phb"
+}, {
+  "description": "I'm too greedy for my own good. I can't resist taking a risk if there's money involved.",
+  "background": "charlatan",
+  "source": "phb"
+}, {
+  "description": "I can't resist swindling people who are more powerful than me.",
+  "background": "charlatan",
+  "source": "phb"
+}, {
+  "description": "I hate to admit it and will hate myself for it, but I'll run and preserve my own hide if the going gets tough.",
+  "background": "charlatan",
+  "source": "phb"
+},
+// CRIMINAL ****************************************************************************************
+{
+  "description": "When I see something valuable, I can't think about anything but how to steal it.",
+  "background": "criminal",
+  "source": "phb"
+}, {
+  "description": "When faced with a choice between money and my friends, I usually choose the money.",
+  "background": "criminal",
+  "source": "phb"
+}, {
+  "description": "If there's a plan, I'll forget it. If I don't forget it, I'll ignore it.",
+  "background": "criminal",
+  "source": "phb"
+}, {
+  "description": "I have a “tell” that reveals when I'm lying.",
+  "background": "criminal",
+  "source": "phb"
+}, {
+  "description": "I turn tail and run when things look bad.",
+  "background": "criminal",
+  "source": "phb"
+}, {
+  "description": "An innocent person is in prison for a crime that I committed. I'm okay with that",
+  "background": "criminal",
+  "source": "phb"
+},
+// ENTERTAINER ****************************************************************************************
+{
+  "description": "I'll do anything to win fame and renown.",
+  "background": "entertainer",
+  "source": "phb"
+}, {
+  "description": "I'm a sucker for a pretty face.",
+  "background": "entertainer",
+  "source": "phb"
+}, {
+  "description": "A scandal prevents me from ever going home again. That kind of trouble seems to follow me around.",
+  "background": "entertainer",
+  "source": "phb"
+}, {
+  "description": "I once satirized a noble who still wants my head. It was a mistake that I will likely repeat.",
+  "background": "entertainer",
+  "source": "phb"
+}, {
+  "description": "I have trouble keeping my true feelings hidden. My sharp tongue lands me in trouble.",
+  "background": "entertainer",
+  "source": "phb"
+}, {
+  "description": "Despite my best efforts, I am unreliable to my friends.",
+  "background": "entertainer",
+  "source": "phb"
+},
+// FOLK HERO ****************************************************************************************
+{
+  "description": "The tyrant who rules my land will stop at nothing to see me killed.",
+  "background": "folk_hero",
+  "source": "phb"
+}, {
+  "description": "I’m convinced of the significance of my destiny, and blind to my shortcomings and the risk of failure.",
+  "background": "folk_hero",
+  "source": "phb"
+}, {
+  "description": "The people who knew me when I was young know my shameful secret, so I can never go home again.",
+  "background": "folk_hero",
+  "source": "phb"
+}, {
+  "description": "I have a weakness for the vices of the city, especially hard drink.",
+  "background": "folk_hero",
+  "source": "phb"
+}, {
+  "description": "Secretly, I believe that things would be better if I were a tyrant lording over the land.",
+  "background": "folk_hero",
+  "source": "phb"
+}, {
+  "description": "I have trouble trusting in my allies",
+  "background": "folk_hero",
+  "source": "phb"
+},
+// GUILD ARTISAN ****************************************************************************************
+{
+  "description": "I'll do anything to get my hands on something rare or priceless.",
+  "background": "guild_artisan",
+  "source": "phb"
+}, {
+  "description": "I'm quick to assume that someone is trying to cheat me.",
+  "background": "guild_artisan",
+  "source": "phb"
+}, {
+  "description": "No one must ever learn that I once stole money from guild coffers.",
+  "background": "guild_artisan",
+  "source": "phb"
+}, {
+  "description": "I'm never satisfied with what I have – I always want more.",
+  "background": "guild_artisan",
+  "source": "phb"
+}, {
+  "description": "I would kill to acquire a noble title.",
+  "background": "guild_artisan",
+  "source": "phb"
+}, {
+  "description": "I'm horribly jealous of anyone who can outshine my handiwork. Everywhere I go, I'm surrounded by rivals.",
+  "background": "guild_artisan",
+  "source": "phb"
+},
+// HERMIT ****************************************************************************************
+{
+  "description": "Now that I've returned to the world, I enjoy its delights a little too much.",
+  "background": "hermit",
+  "source": "phb"
+}, {
+  "description": "I harbor dark, bloodthirsty thoughts that my isolation and meditation failed to quell.",
+  "background": "hermit",
+  "source": "phb"
+}, {
+  "description": "I am dogmatic in my thoughts and philosophy.",
+  "background": "hermit",
+  "source": "phb"
+}, {
+  "description": "I let my need to win arguments overshadow friendships and harmony.",
+  "background": "hermit",
+  "source": "phb"
+}, {
+  "description": "I'd risk too much to uncover a lost bit of knowledge.",
+  "background": "hermit",
+  "source": "phb"
+}, {
+  "description": "I like keeping secrets and won't share them with anyone.",
+  "background": "hermit",
+  "source": "phb"
+},
+// NOBLE ****************************************************************************************
+{
+  "description": "I secretly believe that everyone is beneath me.",
+  "background": "noble",
+  "source": "phb"
+}, {
+  "description": "I hide a truly scandalous secret that could ruin my family forever.",
+  "background": "noble",
+  "source": "phb"
+}, {
+  "description": "I too often hear veiled insults and threats in every word addressed to me, and I’m quick to anger.",
+  "background": "noble",
+  "source": "phb"
+}, {
+  "description": "I have an insatiable desire for carnal pleasures.",
+  "background": "noble",
+  "source": "phb"
+}, {
+  "description": "In fact, the world does revolve around me.",
+  "background": "noble",
+  "source": "phb"
+}, {
+  "description": "By my words and actions, I often bring shame to my family.",
+  "background": "noble",
+  "source": "phb"
+},
+// OUTLANDER ****************************************************************************************
+{
+  "description": "I am too enamored of ale, wine, and other intoxicants.",
+  "background": "outlander",
+  "source": "phb"
+}, {
+  "description": "There's no room for caution in a life lived to the fullest.",
+  "background": "outlander",
+  "source": "phb"
+}, {
+  "description": "I remember every insult I've received and nurse a silent resentment toward anyone who's ever wronged me.",
+  "background": "outlander",
+  "source": "phb"
+}, {
+  "description": "I am slow to trust members of other races, tribes, and societies.",
+  "background": "outlander",
+  "source": "phb"
+}, {
+  "description": "Violence is my answer to almost any challenge.",
+  "background": "outlander",
+  "source": "phb"
+}, {
+  "description": "Don't expect me to save those who can't save themselves. It is nature's way that the strong thrive and the weak perish.",
+  "background": "outlander",
+  "source": "phb"
+},
+// SAGE ****************************************************************************************
+{
+  "description": "I am easily distracted by the promise of information.",
+  "background": "sage",
+  "source": "phb"
+}, {
+  "description": "Most people scream and run when they see a demon. I stop and take notes on its anatomy.",
+  "background": "sage",
+  "source": "phb"
+}, {
+  "description": "Unlocking an ancient mystery is worth the price of a civilization.",
+  "background": "sage",
+  "source": "phb"
+}, {
+  "description": "I overlook obvious solutions in favor of complicated ones.",
+  "background": "sage",
+  "source": "phb"
+}, {
+  "description": "I speak without really thinking through my words, invariably insulting others.",
+  "background": "sage",
+  "source": "phb"
+}, {
+  "description": "I can’t keep a secret to save my life, or anyone else’s.",
+  "background": "sage",
+  "source": "phb"
+},
+// SAILOR ****************************************************************************************
+{
+  "description": "I follow orders, even if I think they're wrong.",
+  "background": "sailor",
+  "source": "phb"
+}, {
+  "description": "I'll say anything to avoid having to do extra work.",
+  "background": "sailor",
+  "source": "phb"
+}, {
+  "description": "Once someone questions my courage, I never back down no matter how dangerous the situation.",
+  "background": "sailor",
+  "source": "phb"
+}, {
+  "description": "Once I start drinking, it's hard for me to stop.",
+  "background": "sailor",
+  "source": "phb"
+}, {
+  "description": "I can't help but pocket loose coins and other trinkets I come across.",
+  "background": "sailor",
+  "source": "phb"
+}, {
+  "description": "My pride will probably lead to my destruction.",
+  "background": "sailor",
+  "source": "phb"
+},
+// SOLDIER ****************************************************************************************
+{
+  "description": "The monstrous enemy we faced in battle still leaves me quivering with fear.",
+  "background": "soldier",
+  "source": "phb"
+}, {
+  "description": "I have little respect for anyone who is not a proven warrior.",
+  "background": "soldier",
+  "source": "phb"
+}, {
+  "description": "I made a terrible mistake in battle that cost many lives, and I would do anything to keep that mistake secret.",
+  "background": "soldier",
+  "source": "phb"
+}, {
+  "description": "My hatred of my enemies is blind and unreasoning.",
+  "background": "soldier",
+  "source": "phb"
+}, {
+  "description": "I obey the law, even if the law causes misery.",
+  "background": "soldier",
+  "source": "phb"
+}, {
+  "description": "I’d rather eat my armor than admit when I’m wrong.",
+  "background": "soldier",
+  "source": "phb"
+},
+// URCHIN ****************************************************************************************
+{
+  "description": "If I'm outnumbered, I will run away from a fight.",
+  "background": "urchin",
+  "source": "phb"
+}, {
+  "description": "Gold seems like a lot of money to me, and I'll do just about anything for more of it.",
+  "background": "urchin",
+  "source": "phb"
+}, {
+  "description": "I will never fully trust anyone other than myself.",
+  "background": "urchin",
+  "source": "phb"
+}, {
+  "description": "I'd rather kill someone in their sleep then fight fair.",
+  "background": "urchin",
+  "source": "phb"
+}, {
+  "description": "It's not stealing if I need it more than someone else.",
+  "background": "urchin",
+  "source": "phb"
+}, {
+  "description": "People who can't take care of themselves get what they deserve.",
+  "background": "urchin",
+  "source": "phb"
 }];
 
 /***/ }),
@@ -556,7 +1301,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "ideals": () => (/* binding */ ideals)
 /* harmony export */ });
-var ideals = [{
+var ideals = [
+// ALCOLYTE ****************************************************************************************
+{
   "description": "Tradition. The ancient traditions of worship and sacrifice must be preserved and upheld. (Lawful)",
   "background": "alcolyte",
   "source": "phb"
@@ -579,6 +1326,318 @@ var ideals = [{
 }, {
   "description": "Aspiration. I seek to prove myself worthy of my god’s favor by matching my actions against his or her teachings. (Any)",
   "background": "alcolyte",
+  "source": "phb"
+},
+// CHARLATAN ****************************************************************************************
+{
+  "description": "Independence. I am a free spirit – no one tells me what to do. (Chaotic)",
+  "background": "charlatan",
+  "source": "phb"
+}, {
+  "description": "Fairness. I never target people who can't afford to lose a few coins. (Lawful)",
+  "background": "charlatan",
+  "source": "phb"
+}, {
+  "description": "Charity. I distribute the money I acquire to the people who really need it. (Good)",
+  "background": "charlatan",
+  "source": "phb"
+}, {
+  "description": "Creativity. I never run the same con twice. (Chaotic)",
+  "background": "charlatan",
+  "source": "phb"
+}, {
+  "description": "Friendship. Material goods come and go. Bonds of friendship last forever. (Good)",
+  "background": "charlatan",
+  "source": "phb"
+}, {
+  "description": "Aspiration. I'm determined to make something of myself. (Any)",
+  "background": "charlatan",
+  "source": "phb"
+},
+// CRIMINAL ****************************************************************************************
+{
+  "description": "Honor. I don’t steal from others in the trade. (Lawful)",
+  "background": "criminal",
+  "source": "phb"
+}, {
+  "description": "Freedom. Chains are meant to be broken, as are those who would forge them. (Chaotic)",
+  "background": "criminal",
+  "source": "phb"
+}, {
+  "description": "Charity. I steal from the wealthy so that I can help people in need. (Good)",
+  "background": "criminal",
+  "source": "phb"
+}, {
+  "description": "Greed. I will do whatever it takes to become wealthy. (Evil)",
+  "background": "criminal",
+  "source": "phb"
+}, {
+  "description": "People. I’m loyal to my friends, not to any ideals, and everyone else can take a trip down the Styx for all I care. (Neutral)",
+  "background": "criminal",
+  "source": "phb"
+}, {
+  "description": "Redemption. There’s a spark of good in everyone. (Good",
+  "background": "criminal",
+  "source": "phb"
+},
+// ENTERTAINER ****************************************************************************************
+{
+  "description": "Beauty. When I perform, I make the world better than it was. (Good)",
+  "background": "entertainer",
+  "source": "phb"
+}, {
+  "description": "Tradition. The stories, legends, and songs of the past must never be forgotten, for they teach us who we are. (Lawful)",
+  "background": "entertainer",
+  "source": "phb"
+}, {
+  "description": "Creativity. The world is in need of new ideas and bold action. (Chaotic)",
+  "background": "entertainer",
+  "source": "phb"
+}, {
+  "description": "Greed. I'm only in it for the money and fame. (Evil)",
+  "background": "entertainer",
+  "source": "phb"
+}, {
+  "description": "People. I like seeing the smiles on people's faces when I perform. That's all that matters. (Neutral)",
+  "background": "entertainer",
+  "source": "phb"
+}, {
+  "description": "Honesty. Art should reflect the soul; it should come from within and reveal who we really are. (Any)",
+  "background": "entertainer",
+  "source": "phb"
+},
+// FOLK HERO ****************************************************************************************
+{
+  "description": "Respect. People deserve to be treated with dignity and respect. (Good)",
+  "background": "folk_hero",
+  "source": "phb"
+}, {
+  "description": "Fairness. No one should get preferential treatment before the law, and no one is above the law. (Lawful)",
+  "background": "folk_hero",
+  "source": "phb"
+}, {
+  "description": "Freedom. Tyrants must not be allowed to oppress the people. (Chaotic)",
+  "background": "folk_hero",
+  "source": "phb"
+}, {
+  "description": "Might. If I become strong, I can take what I want — what I deserve. (Evil)",
+  "background": "folk_hero",
+  "source": "phb"
+}, {
+  "description": "Sincerity. There’s no good in pretending to be something I’m not. (Neutral)",
+  "background": "folk_hero",
+  "source": "phb"
+}, {
+  "description": "Destiny. Nothing and no one can steer me away from my higher calling. (Any)",
+  "background": "folk_hero",
+  "source": "phb"
+},
+// GUILD ARTISAN ****************************************************************************************
+{
+  "description": "Community. It is the duty of all civilized people to strengthen the bonds of community and the security of civilization. (Lawful)",
+  "background": "guild_artisan",
+  "source": "phb"
+}, {
+  "description": "Generosity. My talents were given to me so that I could use them to benefit the world. (Good)",
+  "background": "guild_artisan",
+  "source": "phb"
+}, {
+  "description": "Freedom. Everyone should be free to pursue his or her own livelihood. (Chaotic)",
+  "background": "guild_artisan",
+  "source": "phb"
+}, {
+  "description": "Greed. I'm only in it for the money. (Evil)",
+  "background": "guild_artisan",
+  "source": "phb"
+}, {
+  "description": "People. I'm committed to the people I care about, not to ideals. (Neutral)",
+  "background": "guild_artisan",
+  "source": "phb"
+}, {
+  "description": "Aspiration. I work hard to be the best there is at my craft.",
+  "background": "guild_artisan",
+  "source": "phb"
+},
+// HERMIT ****************************************************************************************
+{
+  "description": "Greater Good. My gifts are meant to be shared with all, not used for my own benefit. (Good)",
+  "background": "hermit",
+  "source": "phb"
+}, {
+  "description": "Logic. Emotions must not cloud our sense of what is right and true, or our logical thinking. (Lawful)",
+  "background": "hermit",
+  "source": "phb"
+}, {
+  "description": "Free Thinking. Inquiry and curiosity are the pillars of progress. (Chaotic)",
+  "background": "hermit",
+  "source": "phb"
+}, {
+  "description": "Power. Solitude and contemplation are paths toward mystical or magical power. (Evil)",
+  "background": "hermit",
+  "source": "phb"
+}, {
+  "description": "Live and Let Live. Meddling in the affairs of others only causes trouble. (Neutral)",
+  "background": "hermit",
+  "source": "phb"
+}, {
+  "description": "Self-Knowledge. If you know yourself, there's nothing left to know. (Any)",
+  "background": "hermit",
+  "source": "phb"
+},
+// NOBLE ****************************************************************************************
+{
+  "description": "Respect. Respect is due to me because of my position, but all people regardless of station deserve to be treated with dignity. (Good)",
+  "background": "noble",
+  "source": "phb"
+}, {
+  "description": "Responsibility. It is my duty to respect the authority of those above me, just as those below me must respect mine. (Lawful)",
+  "background": "noble",
+  "source": "phb"
+}, {
+  "description": "Independence. I must prove that I can handle myself without the coddling of my family. (Chaotic)",
+  "background": "noble",
+  "source": "phb"
+}, {
+  "description": "Power. If I can attain more power, no one will tell me what to do. (Evil)",
+  "background": "noble",
+  "source": "phb"
+}, {
+  "description": "Family. Blood runs thicker than water. (Any)",
+  "background": "noble",
+  "source": "phb"
+}, {
+  "description": "Noble Obligation. It is my duty to protect and care for the people beneath me. (Good",
+  "background": "noble",
+  "source": "phb"
+},
+// OUTLANDER ****************************************************************************************
+{
+  "description": "Change. Life is like the seasons, in constant change, and we must change with it. (Chaotic)",
+  "background": "outlander",
+  "source": "phb"
+}, {
+  "description": "Greater Good. It is each person's responsibility to make the most happiness for the whole tribe. (Good)",
+  "background": "outlander",
+  "source": "phb"
+}, {
+  "description": "Honor. If I dishonor myself, I dishonor my whole clan. (Lawful)",
+  "background": "outlander",
+  "source": "phb"
+}, {
+  "description": "Might. The strongest are meant to rule. (Evil)",
+  "background": "outlander",
+  "source": "phb"
+}, {
+  "description": "Nature. The natural world is more important than all the constructs of civilization. (Neutral)",
+  "background": "outlander",
+  "source": "phb"
+}, {
+  "description": "Glory. I must earn glory in battle, for myself and my clan. (Any)",
+  "background": "outlander",
+  "source": "phb"
+},
+// SAGE ****************************************************************************************
+{
+  "description": "Knowledge. The path to power and self-improvement is through knowledge. (Neutral)",
+  "background": "sage",
+  "source": "phb"
+}, {
+  "description": "Beauty. What is beautiful points us beyond itself toward what is true. (Good)",
+  "background": "sage",
+  "source": "phb"
+}, {
+  "description": "Logic. Emotions must not cloud our logical thinking. (Lawful)",
+  "background": "sage",
+  "source": "phb"
+}, {
+  "description": "No Limits. Nothing should fetter the infinite possibility inherent in all existence. (Chaotic)",
+  "background": "sage",
+  "source": "phb"
+}, {
+  "description": "Power. Knowledge is the path to power and domination. (Evil)",
+  "background": "sage",
+  "source": "phb"
+}, {
+  "description": "Self-Improvement. The goal of a life of study is the betterment of oneself. (Any)",
+  "background": "sage",
+  "source": "phb"
+},
+// SAILOR ****************************************************************************************
+{
+  "description": "Respect. The thing that keeps a ship together is mutual respect between captain and crew. (Good)",
+  "background": "sailor",
+  "source": "phb"
+}, {
+  "description": "Fairness. We all do the work, so we all share in the rewards. (Lawful)",
+  "background": "sailor",
+  "source": "phb"
+}, {
+  "description": "Freedom. The sea is freedom-the freedom to go anywhere and do anything. (Chaotic)",
+  "background": "sailor",
+  "source": "phb"
+}, {
+  "description": "Mastery. I'm a predator, and the other ships on the sea are my prey. (Evil)",
+  "background": "sailor",
+  "source": "phb"
+}, {
+  "description": "People. I'm committed to my crewmates, not to ideals. (Neutral)",
+  "background": "sailor",
+  "source": "phb"
+}, {
+  "description": "Aspiration. Someday I'll own my own ship and chart my own destiny. (Any)",
+  "background": "sailor",
+  "source": "phb"
+},
+// SOLDIER ****************************************************************************************
+{
+  "description": "Greater Good. Our lot is to lay down our lives in defense of others. (Good)",
+  "background": "soldier",
+  "source": "phb"
+}, {
+  "description": "Responsibility. I do what I must and obey just authority. (Lawful)",
+  "background": "soldier",
+  "source": "phb"
+}, {
+  "description": "Independence. When people follow orders blindly, they embrace a kind of tyranny. (Chaotic)",
+  "background": "soldier",
+  "source": "phb"
+}, {
+  "description": "Might. In life as in war, the stronger force wins. (Evil)",
+  "background": "soldier",
+  "source": "phb"
+}, {
+  "description": "Live and Let Live. Ideals aren’t worth killing over or going to war for. (Neutral)",
+  "background": "soldier",
+  "source": "phb"
+}, {
+  "description": "Nation. My city, nation, or people are all that matter. (Any)",
+  "background": "soldier",
+  "source": "phb"
+},
+// URCHIN ****************************************************************************************
+{
+  "description": "Respect. All people, rich or poor, deserve respect. (Good)",
+  "background": "urchin",
+  "source": "phb"
+}, {
+  "description": "Community. We have to take care of each other, because no one else is going to do it. (Lawful)",
+  "background": "urchin",
+  "source": "phb"
+}, {
+  "description": "Change. The low are lifted up, and the high and mighty are brought down. Change is the nature of things. (Chaotic)",
+  "background": "urchin",
+  "source": "phb"
+}, {
+  "description": "Retribution. The rich need to be shown what life and death are like in the gutters. (Evil)",
+  "background": "urchin",
+  "source": "phb"
+}, {
+  "description": "People. I help the people who help me-that's what keeps us alive. (Neutral)",
+  "background": "urchin",
+  "source": "phb"
+}, {
+  "description": "Aspiration. I'm going to prove that I'm worthy of a better life. (Any)",
+  "background": "urchin",
   "source": "phb"
 }];
 
@@ -621,7 +1680,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "traits": () => (/* binding */ traits)
 /* harmony export */ });
-var traits = [{
+var traits = [
+// ALCOLYTE ****************************************************************************************
+{
   "description": "I idolize a particular hero of my faith, and constantly refer to that person's deeds and example.",
   "background": "alcolyte",
   "source": "phb"
@@ -653,6 +1714,414 @@ var traits = [{
   "description": "I've spent so long in the temple that I have little practical experience dealing with people in the outside world.",
   "background": "alcolyte",
   "source": "phb"
+},
+// CHARLATAN ****************************************************************************************
+{
+  "description": "I fall in and out of love easily, and am always pursuing someone.",
+  "background": "charlatan",
+  "source": "phb"
+}, {
+  "description": "I have a joke for every occasion, especially occasions where humor is inappropriate.",
+  "background": "charlatan",
+  "source": "phb"
+}, {
+  "description": "Flattery is my preferred trick for getting what I want.",
+  "background": "charlatan",
+  "source": "phb"
+}, {
+  "description": "I'm a born gambler who can't resist taking a risk for a potential payoff.",
+  "background": "charlatan",
+  "source": "phb"
+}, {
+  "description": "I lie about almost everything, even when there's no good reason to.",
+  "background": "charlatan",
+  "source": "phb"
+}, {
+  "description": "Sarcasm and insults are my weapons of choice.",
+  "background": "charlatan",
+  "source": "phb"
+}, {
+  "description": "I keep multiple holy symbols on me and invoke whatever deity might come in useful at any given moment.",
+  "background": "charlatan",
+  "source": "phb"
+}, {
+  "description": "I pocket anything I see that might have some value.",
+  "background": "charlatan",
+  "source": "phb"
+},
+// CRIMINAL ****************************************************************************************
+{
+  "description": "I always have a plan for what to do when things go wrong.",
+  "background": "criminal",
+  "source": "phb"
+}, {
+  "description": "I am always calm, no matter what the situation. I never raise my voice or let my emotions control me.",
+  "background": "criminal",
+  "source": "phb"
+}, {
+  "description": "The first thing I do in a new place is note the locations of everything valuable — or where such things could be hidden.",
+  "background": "criminal",
+  "source": "phb"
+}, {
+  "description": "I would rather make a new friend than a new enemy.",
+  "background": "criminal",
+  "source": "phb"
+}, {
+  "description": "I am incredibly slow to trust. Those who seem the fairest often have the most to hide.",
+  "background": "criminal",
+  "source": "phb"
+}, {
+  "description": "I don’t pay attention to the risks in a situation. Never tell me the odds.",
+  "background": "criminal",
+  "source": "phb"
+}, {
+  "description": "The best way to get me to do something is to tell me I can’t do it.",
+  "background": "criminal",
+  "source": "phb"
+}, {
+  "description": "I blow up at the slightest insult",
+  "background": "criminal",
+  "source": "phb"
+},
+// ENTERTAINER ****************************************************************************************
+{
+  "description": "I know a story relevant to almost every situation.",
+  "background": "entertainer",
+  "source": "phb"
+}, {
+  "description": "Whenever I come to a new place, I collect local rumors and spread gossip.",
+  "background": "entertainer",
+  "source": "phb"
+}, {
+  "description": "I'm a hopeless romantic, always searching for that \"special someone.\"",
+  "background": "entertainer",
+  "source": "phb"
+}, {
+  "description": "Nobody stays angry at me or around me for long, since I can defuse any amount of tension.",
+  "background": "entertainer",
+  "source": "phb"
+}, {
+  "description": "I love a good insult, even one directed at me.",
+  "background": "entertainer",
+  "source": "phb"
+}, {
+  "description": "I get bitter if I'm not the center of attention.",
+  "background": "entertainer",
+  "source": "phb"
+}, {
+  "description": "I'll settle for nothing less than perfection.",
+  "background": "entertainer",
+  "source": "phb"
+}, {
+  "description": "I change my mood or my mind as quickly as I change key in a song.",
+  "background": "entertainer",
+  "source": "phb"
+},
+// FOLK HERO ****************************************************************************************
+{
+  "description": "I judge people by their actions, not their words.",
+  "background": "folk_hero",
+  "source": "phb"
+}, {
+  "description": "If someone is in trouble, I’m always ready to lend help.",
+  "background": "folk_hero",
+  "source": "phb"
+}, {
+  "description": "When I set my mind to something, I follow through no matter what gets in my way.",
+  "background": "folk_hero",
+  "source": "phb"
+}, {
+  "description": "I have a strong sense of fair play and always try to find the most equitable solution to arguments.",
+  "background": "folk_hero",
+  "source": "phb"
+}, {
+  "description": "I’m confident in my own abilities and do what I can to instill confidence in others.",
+  "background": "folk_hero",
+  "source": "phb"
+}, {
+  "description": "Thinking is for other people. I prefer action.",
+  "background": "folk_hero",
+  "source": "phb"
+}, {
+  "description": "I misuse long words in an attempt to sound smarter.",
+  "background": "folk_hero",
+  "source": "phb"
+}, {
+  "description": "I get bored easily. When am I going to get on with my destiny?",
+  "background": "folk_hero",
+  "source": "phb"
+},
+// GUILD ARTISAN ****************************************************************************************
+{
+  "description": "I believe that anything worth doing is worth doing right. I can't help it – I'm a perfectionist.",
+  "background": "guild_artisan",
+  "source": "phb"
+}, {
+  "description": "I'm a snob who looks down on those who can't appreciate fine art.",
+  "background": "guild_artisan",
+  "source": "phb"
+}, {
+  "description": "I always want to know how things work and what makes people tick.",
+  "background": "guild_artisan",
+  "source": "phb"
+}, {
+  "description": "I'm full of witty aphorisms and have a proverb for every occasion.",
+  "background": "guild_artisan",
+  "source": "phb"
+}, {
+  "description": "I'm rude to people who lack my commitment to hard work and fair play.",
+  "background": "guild_artisan",
+  "source": "phb"
+}, {
+  "description": "I like to talk at length about my profession.",
+  "background": "guild_artisan",
+  "source": "phb"
+}, {
+  "description": "I don't part with my money easily and will haggle tirelessly to get the best deal possible.",
+  "background": "guild_artisan",
+  "source": "phb"
+}, {
+  "description": "I'm well known for my work, and I want to make sure everyone appreciates it. I'm always taken aback when people haven't heard of me.",
+  "background": "guild_artisan",
+  "source": "phb"
+},
+// HERMIT ****************************************************************************************
+{
+  "description": "I've been isolated for so long that I rarely speak, preferring gestures and the occasional grunt.",
+  "background": "hermit",
+  "source": "phb"
+}, {
+  "description": "I am utterly serene, even in the face of disaster.",
+  "background": "hermit",
+  "source": "phb"
+}, {
+  "description": "The leader of my community had something wise to say on every topic, and I am eager to share that wisdom.",
+  "background": "hermit",
+  "source": "phb"
+}, {
+  "description": "I feel tremendous empathy for all who suffer.",
+  "background": "hermit",
+  "source": "phb"
+}, {
+  "description": "I'm oblivious to etiquette and social expectations.",
+  "background": "hermit",
+  "source": "phb"
+}, {
+  "description": "I connect everything that happens to me to a grand, cosmic plan.",
+  "background": "hermit",
+  "source": "phb"
+}, {
+  "description": "I often get lost in my own thoughts and contemplation, becoming oblivious to my surroundings.",
+  "background": "hermit",
+  "source": "phb"
+}, {
+  "description": "I am working on a grand philosophical theory and love sharing my ideas.",
+  "background": "hermit",
+  "source": "phb"
+},
+// NOBLE ****************************************************************************************
+{
+  "description": "My eloquent flattery makes everyone I talk to feel like the most wonderful and important person in the world.",
+  "background": "noble",
+  "source": "phb"
+}, {
+  "description": "The common folk love me for my kindness and generosity.",
+  "background": "noble",
+  "source": "phb"
+}, {
+  "description": "No one could doubt by looking at my regal bearing that I am a cut above the unwashed masses.",
+  "background": "noble",
+  "source": "phb"
+}, {
+  "description": "I take great pains to always look my best and follow the latest fashions.",
+  "background": "noble",
+  "source": "phb"
+}, {
+  "description": "I don’t like to get my hands dirty, and I won’t be caught dead in unsuitable accommodations.",
+  "background": "noble",
+  "source": "phb"
+}, {
+  "description": "Despite my noble birth, I do not place myself above other folk. We all have the same blood.",
+  "background": "noble",
+  "source": "phb"
+}, {
+  "description": "My favor, once lost, is lost forever.",
+  "background": "noble",
+  "source": "phb"
+}, {
+  "description": "If you do me an injury, I will crush you, ruin your name, and salt your fields.",
+  "background": "noble",
+  "source": "phb"
+},
+// OUTLANDER ****************************************************************************************
+{
+  "description": "I'm driven by a wanderlust that led me away from home.",
+  "background": "outlander",
+  "source": "phb"
+}, {
+  "description": "I watch over my friends as if they were a litter of newborn pups.",
+  "background": "outlander",
+  "source": "phb"
+}, {
+  "description": "I once ran twenty-five miles without stopping to warn my clan of an approaching orc horde. I'd do it again if I had to.",
+  "background": "outlander",
+  "source": "phb"
+}, {
+  "description": "I have a lesson for every situation, drawn from observing nature.",
+  "background": "outlander",
+  "source": "phb"
+}, {
+  "description": "I place no stock in wealthy or well-mannered folk. Money and manners won't save you from a hungry owlbear.",
+  "background": "outlander",
+  "source": "phb"
+}, {
+  "description": "I'm always picking things up, absently fiddling with them, and sometimes accidentally breaking them.",
+  "background": "outlander",
+  "source": "phb"
+}, {
+  "description": "I feel far more comfortable around animals than people.",
+  "background": "outlander",
+  "source": "phb"
+}, {
+  "description": "I was, in fact, raised by wolves.",
+  "background": "outlander",
+  "source": "phb"
+},
+// SAGE ****************************************************************************************
+{
+  "description": "I use polysyllabic words that convey the impression of great erudition.",
+  "background": "sage",
+  "source": "phb"
+}, {
+  "description": "I’ve read every book in the world’s greatest libraries — or I like to boast that I have.",
+  "background": "sage",
+  "source": "phb"
+}, {
+  "description": "I’m used to helping out those who aren’t as smart as I am, and I patiently explain anything and everything to others.",
+  "background": "sage",
+  "source": "phb"
+}, {
+  "description": "There’s nothing I like more than a good mystery.",
+  "background": "sage",
+  "source": "phb"
+}, {
+  "description": "I’m willing to listen to every side of an argument before I make my own judgment.",
+  "background": "sage",
+  "source": "phb"
+}, {
+  "description": "I . . . speak . . . slowly . . . when talking . . . to idiots, . . . which . . . almost . . . everyone . . . is . . . compared . . . to me.",
+  "background": "sage",
+  "source": "phb"
+}, {
+  "description": "I am horribly, horribly awkward in social situations.",
+  "background": "sage",
+  "source": "phb"
+}, {
+  "description": "I’m convinced that people are always trying to steal my secrets.",
+  "background": "sage",
+  "source": "phb"
+},
+// SAILOR ****************************************************************************************
+{
+  "description": "My friends know they can rely on me, no matter what.",
+  "background": "sailor",
+  "source": "phb"
+}, {
+  "description": "I work hard so that I can play hard when the work is done.",
+  "background": "sailor",
+  "source": "phb"
+}, {
+  "description": "I enjoy sailing into new ports and making new friends over a flagon of ale.",
+  "background": "sailor",
+  "source": "phb"
+}, {
+  "description": "I stretch the truth for the sake of a good story.",
+  "background": "sailor",
+  "source": "phb"
+}, {
+  "description": "To me, a tavern brawl is a nice way to get to know a new city.",
+  "background": "sailor",
+  "source": "phb"
+}, {
+  "description": "I never pass up a friendly wager.",
+  "background": "sailor",
+  "source": "phb"
+}, {
+  "description": "My language is as foul as an otyugh nest.",
+  "background": "sailor",
+  "source": "phb"
+}, {
+  "description": "I like a job well done, especially if I can convince someone else to do it.",
+  "background": "sailor",
+  "source": "phb"
+},
+// SOLDIER ****************************************************************************************
+{
+  "description": "I’m always polite and respectful.",
+  "background": "soldier",
+  "source": "phb"
+}, {
+  "description": "I’m haunted by memories of war. I can’t get the images of violence out of my mind.",
+  "background": "soldier",
+  "source": "phb"
+}, {
+  "description": "I’ve lost too many friends, and I’m slow to make new ones.",
+  "background": "soldier",
+  "source": "phb"
+}, {
+  "description": "I’m full of inspiring and cautionary tales from my military experience relevant to almost every combat situation.",
+  "background": "soldier",
+  "source": "phb"
+}, {
+  "description": "I can stare down a hell hound without flinching.",
+  "background": "soldier",
+  "source": "phb"
+}, {
+  "description": "I enjoy being strong and like breaking things.",
+  "background": "soldier",
+  "source": "phb"
+}, {
+  "description": "I have a crude sense of humor.",
+  "background": "soldier",
+  "source": "phb"
+}, {
+  "description": "I face problems head-on. A simple, direct solution is the best path to success.",
+  "background": "soldier",
+  "source": "phb"
+},
+// URCHIN ****************************************************************************************
+{
+  "description": "I hide scraps of food and trinkets away in my pockets.",
+  "background": "urchin",
+  "source": "phb"
+}, {
+  "description": "I ask a lot of questions.",
+  "background": "urchin",
+  "source": "phb"
+}, {
+  "description": "I like to squeeze into small places where no one else can get to me.",
+  "background": "urchin",
+  "source": "phb"
+}, {
+  "description": "I sleep with my back to a wall or tree, with everything I own wrapped in a bundle in my arms.",
+  "background": "urchin",
+  "source": "phb"
+}, {
+  "description": "I eat like a pig and have bad manners.",
+  "background": "urchin",
+  "source": "phb"
+}, {
+  "description": "I think anyone who's nice to me is hiding evil intent.",
+  "background": "urchin",
+  "source": "phb"
+}, {
+  "description": "I don't like to bathe.",
+  "background": "urchin",
+  "source": "phb"
+}, {
+  "description": "I bluntly say what other people are hinting at or hiding.",
+  "background": "urchin",
+  "source": "phb"
 }];
 
 /***/ }),
@@ -667,7 +2136,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "trinkets": () => (/* binding */ trinkets)
 /* harmony export */ });
-// Are these actually phb?
+// http://dnd5e.wikidot.com/trinkets
 
 var trinkets = [{
   "description": "A mummified goblin hand",
@@ -967,191 +2436,38 @@ var trinkets = [{
   "description": "A wooden box with a ceramic bottom that holds a living worm with a head on each end of its body",
   "source": "phb"
 }, {
-  "description": "A metal urn containing the ashes of a her",
+  "description": "A metal urn containing the ashes of a hero",
   "source": "phb"
 }];
 
 /***/ }),
 
-/***/ "./src/lib/Component.js":
-/*!******************************!*\
-  !*** ./src/lib/Component.js ***!
-  \******************************/
+/***/ "./src/utils/export.js":
+/*!*****************************!*\
+  !*** ./src/utils/export.js ***!
+  \*****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ Component)
+/* harmony export */   "copyToClipboard": () => (/* binding */ copyToClipboard),
+/* harmony export */   "download": () => (/* binding */ download)
 /* harmony export */ });
-/* harmony import */ var _build__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./build */ "./src/lib/build.js");
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./store */ "./src/lib/store.js");
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-
-
-// TODO export instance from store.js
-var store = new _store__WEBPACK_IMPORTED_MODULE_1__["default"]();
-var Component = /*#__PURE__*/function () {
-  function Component(parent, rootElement) {
-    var _this = this;
-    var props = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-    _classCallCheck(this, Component);
-    _defineProperty(this, "applyContainerOptions", function () {
-      var options = _this.containerOptions();
-      // console.log("defineContainerOptions options", options);
-      if (options !== null && options !== void 0 && options.id) _this.container.id = options.id;
-      if (options !== null && options !== void 0 && options.className) _this.container.classList.add(options.className);
-      if (options !== null && options !== void 0 && options.classNames) {
-        options.classNames.forEach(function (className) {
-          _this.container.classList.add(className);
-        });
-      }
-    });
-    // console.log('COMPONENT CONSTRUCTOR');
-    this.parent = parent;
-    this.rootElement = rootElement;
-    this.props = props;
-    this.build = _build__WEBPACK_IMPORTED_MODULE_0__.build;
-    this.$store = store;
-    if (this.props.initialState) {
-      // TODO only allow once?
-      this.$store.initState(this.props.initialState);
-    }
-    this.init();
-  }
-  _createClass(Component, [{
-    key: "init",
-    value: function init() {
-      // console.log('...init... this:', this);
-      var container = document.createElement(this.rootElement);
-      this.container = container;
-      this.parent.appendChild(container);
-      this.applyContainerOptions();
-      this.clearAndRender();
-    }
-  }, {
-    key: "containerOptions",
-    value: function containerOptions() {
-      return {};
-    }
-  }, {
-    key: "clearAndRender",
-    value: function clearAndRender() {
-      // console.log('Clear and render');
-      this.container.innerHTML = '';
-      this.render();
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      console.error("This is the component base, extend it with something...");
-    }
-  }]);
-  return Component;
-}();
-
-
-/***/ }),
-
-/***/ "./src/lib/build.js":
-/*!**************************!*\
-  !*** ./src/lib/build.js ***!
-  \**************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "build": () => (/* binding */ build)
-/* harmony export */ });
-function build(parent, el, options) {
-  // console.log('build options', options);
-  var element = document.createElement(el);
-  if (options !== null && options !== void 0 && options.id) element.id = options.id;
-  if (options !== null && options !== void 0 && options.className) element.classList.add(options.className);
-  if (options !== null && options !== void 0 && options.classNames) {
-    options.classNames.forEach(function (className) {
-      element.classList.add(className);
-    });
-  }
-  if (options !== null && options !== void 0 && options.text) {
-    if (el === "input") element.setAttribute("value", options.text);else element.innerText = options.text;
-  }
-  if (options !== null && options !== void 0 && options.contentEditable) element.contentEditable = true;
-  if (options !== null && options !== void 0 && options.onClick) element.addEventListener("click", options.onClick);
-  if (options !== null && options !== void 0 && options.onInput) element.addEventListener("input", options.onInput);
-  parent.appendChild(element);
-  return element;
+function copyToClipboard(copyText) {
+  navigator.clipboard.writeText(copyText).then(function () {
+    alert("Personality copied to clipboard");
+  });
 }
-
-/***/ }),
-
-/***/ "./src/lib/store.js":
-/*!**************************!*\
-  !*** ./src/lib/store.js ***!
-  \**************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ Store)
-/* harmony export */ });
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-var Store = /*#__PURE__*/function () {
-  function Store() {
-    _classCallCheck(this, Store);
-    this.state = null;
-    this.stateRegistered = {};
-    this.registered = {};
-  }
-  _createClass(Store, [{
-    key: "initState",
-    value: function initState(initialState) {
-      this.state = initialState;
-    }
-  }, {
-    key: "setState",
-    value: function setState(key, val) {
-      this.state[key] = val;
-      console.log("NEW STATE", this.state);
-
-      // this.publish(key);
-      this.statePublish(key);
-    }
-  }, {
-    key: "stateRegister",
-    value: function stateRegister(field, callback) {
-      this.stateRegistered[field] = callback;
-      // console.log('STATE REGISTERED', this.stateRegistered);
-    }
-  }, {
-    key: "statePublish",
-    value: function statePublish(field) {
-      // console.log('attempt to statePublish ', field);
-      if (this.stateRegistered[field]) this.stateRegistered[field]();
-      // console.log('STATE PUBLISHED ', field);
-    }
-  }, {
-    key: "register",
-    value: function register(field, callback) {
-      this.registered[field] = callback;
-      // console.log('REGISTERED', registered);
-    }
-  }, {
-    key: "publish",
-    value: function publish(field) {
-      // console.log('attempt to publish ', field);
-      if (this.registered[field]) this.registered[field]();
-      // console.log('PUBLISHED ', field);
-    }
-  }]);
-  return Store;
-}();
-
+function download(file) {
+  var link = document.createElement("a");
+  var url = URL.createObjectURL(file);
+  link.href = url;
+  link.download = file.name;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  window.URL.revokeObjectURL(url);
+}
 
 /***/ }),
 
@@ -1169,12 +2485,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 /* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/getUrl.js */ "./node_modules/css-loader/dist/runtime/getUrl.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2__);
 // Imports
 
 
+
+var ___CSS_LOADER_URL_IMPORT_0___ = new URL(/* asset import */ __webpack_require__(/*! ../../images/card-exchange.svg */ "./src/images/card-exchange.svg"), __webpack_require__.b);
+var ___CSS_LOADER_URL_IMPORT_1___ = new URL(/* asset import */ __webpack_require__(/*! ../../images/cancel.svg */ "./src/images/cancel.svg"), __webpack_require__.b);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+var ___CSS_LOADER_URL_REPLACEMENT_0___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_0___);
+var ___CSS_LOADER_URL_REPLACEMENT_1___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_1___);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".char-item {\n  background: skyblue;\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  padding: 5px;\n  margin-bottom: 10px;\n  overflow: auto;\n}\n@media only screen and (min-width: 600px) {\n  .char-item {\n    padding: 10px;\n  }\n}\n.char-item .left {\n  display: flex;\n  justify-content: flex-start;\n  align-items: center;\n}\n.char-item .left .char-item-drag-handle {\n  background: green;\n  padding: 10px;\n  cursor: pointer;\n  user-select: none;\n}\n.char-item .left .text {\n  margin-left: 10px;\n  padding: 3px;\n  min-width: 100px;\n}\n.char-item .remove {\n  cursor: pointer;\n  user-select: none;\n  margin: 0 10px;\n}\n.char-item:last-child {\n  margin-bottom: 0;\n}", "",{"version":3,"sources":["webpack://./src/components/CharItem/CharItem.scss"],"names":[],"mappings":"AAAA;EACE,mBAAA;EACA,aAAA;EACA,8BAAA;EACA,mBAAA;EACA,YAAA;EACA,mBAAA;EACA,cAAA;AACF;AACE;EATF;IAUI,aAAA;EAEF;AACF;AAAE;EACE,aAAA;EACA,2BAAA;EACA,mBAAA;AAEJ;AAAI;EACE,iBAAA;EACA,aAAA;EACA,eAAA;EACA,iBAAA;AAEN;AACI;EACE,iBAAA;EACA,YAAA;EACA,gBAAA;AACN;AAGE;EACE,eAAA;EACA,iBAAA;EACA,cAAA;AADJ;AAIE;EACE,gBAAA;AAFJ","sourcesContent":[".char-item {\n  background: skyblue;\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  padding: 5px;\n  margin-bottom: 10px;\n  overflow: auto;\n\n  @media only screen and (min-width: 600px) {\n    padding: 10px;\n  }\n\n  .left {\n    display: flex;\n    justify-content: flex-start;\n    align-items: center;\n\n    .char-item-drag-handle {\n      background: green;\n      padding: 10px;\n      cursor: pointer;\n      user-select: none;\n    }\n\n    .text {\n      margin-left: 10px;\n      padding: 3px;\n      min-width: 100px;\n    }\n  }\n\n  .remove {\n    cursor: pointer;\n    user-select: none;\n    margin: 0 10px;\n  }\n\n  &:last-child {\n    margin-bottom: 0;\n  }\n}"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ".char-item {\n  background: skyblue;\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  padding: 5px;\n  margin-bottom: 10px;\n  overflow: auto;\n}\n@media only screen and (min-width: 600px) {\n  .char-item {\n    padding: 10px;\n  }\n}\n.char-item .left {\n  display: flex;\n  justify-content: flex-start;\n  align-items: center;\n}\n.char-item .left .char-item-drag-handle {\n  background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ");\n  transform: rotate(90deg) scaleX(-1);\n  background-size: cover;\n  cursor: pointer;\n  width: 30px;\n  height: 30px;\n  min-width: 30px;\n}\n.char-item .left .text {\n  margin-left: 10px;\n  padding: 3px;\n  min-width: 100px;\n}\n.char-item .remove {\n  cursor: pointer;\n  margin: 0 10px 0;\n  background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ");\n  background-size: cover;\n  width: 20px;\n  height: 20px;\n  min-width: 20px;\n}\n.char-item:last-child {\n  margin-bottom: 0;\n}", "",{"version":3,"sources":["webpack://./src/components/CharItem/CharItem.scss"],"names":[],"mappings":"AAAA;EACE,mBAAA;EACA,aAAA;EACA,8BAAA;EACA,mBAAA;EACA,YAAA;EACA,mBAAA;EACA,cAAA;AACF;AACE;EATF;IAUI,aAAA;EAEF;AACF;AAAE;EACE,aAAA;EACA,2BAAA;EACA,mBAAA;AAEJ;AAAI;EAEE,yDAAA;EAEA,mCAAA;EACA,sBAAA;EACA,eAAA;EAEA,WAAA;EACA,YAAA;EACA,eAAA;AADN;AAII;EACE,iBAAA;EACA,YAAA;EACA,gBAAA;AAFN;AAME;EACE,eAAA;EAEA,gBAAA;EACA,yDAAA;EACA,sBAAA;EACA,WAAA;EACA,YAAA;EACA,eAAA;AALJ;AAQE;EACE,gBAAA;AANJ","sourcesContent":[".char-item {\n  background: skyblue;\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  padding: 5px;\n  margin-bottom: 10px;\n  overflow: auto;\n\n  @media only screen and (min-width: 600px) {\n    padding: 10px;\n  }\n\n  .left {\n    display: flex;\n    justify-content: flex-start;\n    align-items: center;\n\n    .char-item-drag-handle {\n      // background: green;\n      background-image: url('../../images/card-exchange.svg');\n      // transform: rotate(90deg);\n      transform: rotate(90deg) scaleX(-1);\n      background-size: cover;\n      cursor: pointer;\n      // user-select: none;\n      width: 30px;\n      height: 30px;\n      min-width: 30px;\n    }\n\n    .text {\n      margin-left: 10px;\n      padding: 3px;\n      min-width: 100px;\n    }\n  }\n\n  .remove {\n    cursor: pointer;\n    // user-select: none;\n    margin: 0 10px 0;\n    background-image: url('../../images/cancel.svg');\n    background-size: cover;\n    width: 20px;\n    height: 20px;\n    min-width: 20px;\n  }\n\n  &:last-child {\n    margin-bottom: 0;\n  }\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -1200,7 +2523,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".char-list {\n  background: lightblue;\n  padding: 10px 5px;\n}\n@media only screen and (min-width: 600px) {\n  .char-list {\n    padding: 10px;\n  }\n}", "",{"version":3,"sources":["webpack://./src/components/CharList/CharList.scss"],"names":[],"mappings":"AAAE;EACE,qBAAA;EACA,iBAAA;AACJ;AACI;EAJF;IAKI,aAAA;EAEJ;AACF","sourcesContent":["  .char-list {\n    background: lightblue;\n    padding: 10px 5px;\n\n    @media only screen and (min-width: 600px) {\n      padding: 10px;\n    }\n  }"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ".char-list {\n  background: lightblue;\n  padding: 10px 5px;\n}\n@media only screen and (min-width: 600px) {\n  .char-list {\n    padding: 10px;\n  }\n}\n.char-list .no-characteristics-text {\n  background: skyblue;\n  padding: 5px;\n}\n@media only screen and (min-width: 600px) {\n  .char-list .no-characteristics-text {\n    padding: 10px;\n  }\n}", "",{"version":3,"sources":["webpack://./src/components/CharList/CharList.scss"],"names":[],"mappings":"AAAE;EACE,qBAAA;EACA,iBAAA;AACJ;AACI;EAJF;IAKI,aAAA;EAEJ;AACF;AAAI;EACE,mBAAA;EACA,YAAA;AAEN;AAAM;EAJF;IAKI,aAAA;EAGN;AACF","sourcesContent":["  .char-list {\n    background: lightblue;\n    padding: 10px 5px;\n\n    @media only screen and (min-width: 600px) {\n      padding: 10px;\n    }\n\n    .no-characteristics-text {\n      background: skyblue;\n      padding: 5px;\n\n      @media only screen and (min-width: 600px) {\n        padding: 10px;\n      }\n    }\n  }"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -1226,7 +2549,40 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".char-options {\n  background: lightgreen;\n  padding: 5px 10px 5px;\n}\n@media only screen and (min-width: 600px) {\n  .char-options {\n    padding: 5px 20px 5px;\n  }\n}\n.char-options .categories {\n  display: flex;\n  flex-wrap: wrap;\n}\n.char-options .categories .category {\n  background: white;\n  border: 1px solid black;\n  padding: 2px 4px;\n  margin-right: 10px;\n  margin-bottom: 5px;\n  cursor: pointer;\n  user-select: none;\n}\n.char-options .categories .category.unselected {\n  opacity: 0.3;\n}", "",{"version":3,"sources":["webpack://./src/components/CharOptions/CharOptions.scss"],"names":[],"mappings":"AAAE;EACE,sBAAA;EACA,qBAAA;AACJ;AACI;EAJF;IAKI,qBAAA;EAEJ;AACF;AAAI;EAEE,aAAA;EACA,eAAA;AACN;AACM;EACE,iBAAA;EACA,uBAAA;EACA,gBAAA;EACA,kBAAA;EACA,kBAAA;EACA,eAAA;EACA,iBAAA;AACR;AACQ;EACE,YAAA;AACV","sourcesContent":["  .char-options {\n    background: lightgreen;\n    padding: 5px 10px 5px;\n\n    @media only screen and (min-width: 600px) {\n      padding: 5px 20px 5px;\n    }\n\n    .categories {\n      // background: lightyellow;\n      display: flex;\n      flex-wrap: wrap;\n\n      .category {\n        background: white;\n        border: 1px solid black;\n        padding: 2px 4px;;\n        margin-right: 10px;\n        margin-bottom: 5px;\n        cursor: pointer;\n        user-select: none;\n\n        &.unselected {\n          opacity: 0.3;\n        }\n      }\n    }\n  }\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ".char-options {\n  background: lightgreen;\n  padding: 5px 10px 5px;\n  display: flex;\n  justify-content: center;\n}\n@media only screen and (min-width: 600px) {\n  .char-options {\n    padding: 5px 20px 5px;\n  }\n}\n.char-options .categories {\n  display: flex;\n  flex-wrap: wrap;\n}\n.char-options .categories .category {\n  background: white;\n  border: 1px solid black;\n  padding: 2px 4px;\n  margin-right: 10px;\n  margin-bottom: 5px;\n  cursor: pointer;\n  user-select: none;\n}\n.char-options .categories .category.unselected {\n  opacity: 0.3;\n}", "",{"version":3,"sources":["webpack://./src/components/CharOptions/CharOptions.scss"],"names":[],"mappings":"AAAE;EACE,sBAAA;EACA,qBAAA;EACA,aAAA;EACA,uBAAA;AACJ;AACI;EANF;IAOI,qBAAA;EAEJ;AACF;AAAI;EAEE,aAAA;EACA,eAAA;AACN;AACM;EACE,iBAAA;EACA,uBAAA;EACA,gBAAA;EACA,kBAAA;EACA,kBAAA;EACA,eAAA;EACA,iBAAA;AACR;AACQ;EACE,YAAA;AACV","sourcesContent":["  .char-options {\n    background: lightgreen;\n    padding: 5px 10px 5px;\n    display: flex;\n    justify-content: center;\n\n    @media only screen and (min-width: 600px) {\n      padding: 5px 20px 5px;\n    }\n\n    .categories {\n      // background: lightyellow;\n      display: flex;\n      flex-wrap: wrap;\n\n      .category {\n        background: white;\n        border: 1px solid black;\n        padding: 2px 4px;;\n        margin-right: 10px;\n        margin-bottom: 5px;\n        cursor: pointer;\n        user-select: none;\n\n        &.unselected {\n          opacity: 0.3;\n        }\n      }\n    }\n  }\n"],"sourceRoot":""}]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/components/Header/Header.scss":
+/*!************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/components/Header/Header.scss ***!
+  \************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/sourceMaps.js */ "./node_modules/css-loader/dist/runtime/sourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/getUrl.js */ "./node_modules/css-loader/dist/runtime/getUrl.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2__);
+// Imports
+
+
+
+var ___CSS_LOADER_URL_IMPORT_0___ = new URL(/* asset import */ __webpack_require__(/*! ../../images/icons8-copy-96.png */ "./src/images/icons8-copy-96.png"), __webpack_require__.b);
+var ___CSS_LOADER_URL_IMPORT_1___ = new URL(/* asset import */ __webpack_require__(/*! ../../images/load.svg */ "./src/images/load.svg"), __webpack_require__.b);
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+var ___CSS_LOADER_URL_REPLACEMENT_0___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_0___);
+var ___CSS_LOADER_URL_REPLACEMENT_1___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_1___);
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, ".header {\n  background: lightcoral;\n  padding: 20px 10px;\n  font-size: 30px;\n  display: flex;\n  justify-content: space-between;\n}\n@media only screen and (min-width: 600px) {\n  .header {\n    padding: 20px;\n  }\n}\n.header .right button {\n  background: transparent;\n  background-size: cover;\n  width: 30px;\n  height: 30px;\n  border: none;\n  cursor: pointer;\n}\n.header .right .copy {\n  background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ");\n}\n.header .right .file {\n  background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ");\n  margin-left: 8px;\n}", "",{"version":3,"sources":["webpack://./src/components/Header/Header.scss"],"names":[],"mappings":"AAAE;EACE,sBAAA;EACA,kBAAA;EACA,eAAA;EACA,aAAA;EACA,8BAAA;AACJ;AACI;EAPF;IAQI,aAAA;EAEJ;AACF;AAEM;EACE,uBAAA;EACA,sBAAA;EACA,WAAA;EACA,YAAA;EACA,YAAA;EACA,eAAA;AAAR;AAGM;EACE,yDAAA;AADR;AAIM;EACE,yDAAA;EACA,gBAAA;AAFR","sourcesContent":["  .header {\n    background: lightcoral;\n    padding: 20px 10px;\n    font-size: 30px;\n    display: flex;\n    justify-content: space-between;\n\n    @media only screen and (min-width: 600px) {\n      padding: 20px;\n    }\n\n    .right {\n\n      button {\n        background: transparent;\n        background-size: cover;\n        width: 30px;\n        height: 30px;\n        border: none;\n        cursor: pointer;\n      }\n\n      .copy {\n        background-image: url('../../images/icons8-copy-96.png');\n      }\n\n      .file {\n        background-image: url('../../images/load.svg');\n        margin-left: 8px;\n      }\n    }\n\n  }"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -1257,7 +2613,7 @@ var ___CSS_LOADER_URL_IMPORT_0___ = new URL(/* asset import */ __webpack_require
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 var ___CSS_LOADER_URL_REPLACEMENT_0___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_0___);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".roll-chars {\n  background: lightgreen;\n  padding: 10px 10px 5px;\n  display: flex;\n  align-items: center;\n}\n@media only screen and (min-width: 600px) {\n  .roll-chars {\n    padding: 10px 20px 5px;\n  }\n}\n.roll-chars .roll {\n  width: 40px;\n  height: 40px;\n  background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ");\n  margin: 0 5px 0 0;\n  border-radius: 8px;\n  cursor: pointer;\n}\n.roll-chars textarea {\n  resize: vertical;\n  width: calc(100% - 90px);\n}\n.roll-chars .add-me {\n  width: 40px;\n  height: 40px;\n  margin: 0 0 0 5px;\n  border-radius: 8px;\n  cursor: pointer;\n  font-family: Times;\n  font-size: 16px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}", "",{"version":3,"sources":["webpack://./src/components/RollChars/RollChars.scss"],"names":[],"mappings":"AAAE;EACE,sBAAA;EACA,sBAAA;EACA,aAAA;EACA,mBAAA;AACJ;AACI;EANF;IAOI,sBAAA;EAEJ;AACF;AAAI;EACE,WAAA;EACA,YAAA;EACA,yDAAA;EACA,iBAAA;EACA,kBAAA;EACA,eAAA;AAEN;AACI;EACE,gBAAA;EACA,wBAAA;AACN;AAEI;EACE,WAAA;EACA,YAAA;EACA,iBAAA;EACA,kBAAA;EACA,eAAA;EACA,kBAAA;EACA,eAAA;EACA,aAAA;EACA,uBAAA;EACA,mBAAA;AAAN","sourcesContent":["  .roll-chars {\n    background: lightgreen;\n    padding: 10px 10px 5px;;\n    display: flex;\n    align-items: center;\n\n    @media only screen and (min-width: 600px) {\n      padding: 10px 20px 5px;;\n    }\n\n    .roll {\n      width: 40px;\n      height: 40px;\n      background-image: url(\"../../images/rule-book.svg\");\n      margin: 0 5px 0 0;\n      border-radius: 8px;\n      cursor: pointer;\n    }\n\n    textarea {\n      resize: vertical;\n      width: calc(100% - 90px);\n    }\n\n    .add-me {\n      width: 40px;\n      height: 40px;\n      margin: 0 0 0 5px;\n      border-radius: 8px;;\n      cursor: pointer;\n      font-family: Times;\n      font-size: 16px;\n      display: flex;\n      justify-content: center;\n      align-items: center;\n    }\n  }\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ".roll-chars {\n  background: lightgreen;\n  padding: 10px 10px 5px;\n  display: flex;\n  align-items: center;\n}\n@media only screen and (min-width: 600px) {\n  .roll-chars {\n    padding: 10px 20px 5px;\n  }\n}\n.roll-chars .roll {\n  width: 40px;\n  height: 40px;\n  background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ");\n  background-size: cover;\n  margin: 0 5px 0 0;\n  border-radius: 8px;\n  border: 1px solid black;\n  border-right: 2px solid black;\n  cursor: pointer;\n}\n.roll-chars textarea {\n  resize: vertical;\n  width: calc(100% - 90px);\n}\n.roll-chars .add-me {\n  width: 40px;\n  height: 40px;\n  margin: 0 0 0 5px;\n  border-radius: 8px;\n  cursor: pointer;\n  font-family: Times;\n  font-size: 16px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}", "",{"version":3,"sources":["webpack://./src/components/RollChars/RollChars.scss"],"names":[],"mappings":"AAAE;EACE,sBAAA;EACA,sBAAA;EACA,aAAA;EACA,mBAAA;AACJ;AACI;EANF;IAOI,sBAAA;EAEJ;AACF;AAAI;EACE,WAAA;EACA,YAAA;EACA,yDAAA;EACA,sBAAA;EACA,iBAAA;EACA,kBAAA;EACA,uBAAA;EACA,6BAAA;EACA,eAAA;AAEN;AACI;EACE,gBAAA;EACA,wBAAA;AACN;AAEI;EACE,WAAA;EACA,YAAA;EACA,iBAAA;EACA,kBAAA;EACA,eAAA;EACA,kBAAA;EACA,eAAA;EACA,aAAA;EACA,uBAAA;EACA,mBAAA;AAAN","sourcesContent":["  .roll-chars {\n    background: lightgreen;\n    padding: 10px 10px 5px;;\n    display: flex;\n    align-items: center;\n\n    @media only screen and (min-width: 600px) {\n      padding: 10px 20px 5px;;\n    }\n\n    .roll {\n      width: 40px;\n      height: 40px;\n      background-image: url(\"../../images/rule-book.svg\");\n      background-size: cover;\n      margin: 0 5px 0 0;\n      border-radius: 8px;\n      border: 1px solid black;\n      border-right: 2px solid black;\n      cursor: pointer;\n    }\n\n    textarea {\n      resize: vertical;\n      width: calc(100% - 90px);\n    }\n\n    .add-me {\n      width: 40px;\n      height: 40px;\n      margin: 0 0 0 5px;\n      border-radius: 8px;;\n      cursor: pointer;\n      font-family: Times;\n      font-size: 16px;\n      display: flex;\n      justify-content: center;\n      align-items: center;\n    }\n  }\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -1283,7 +2639,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "body {\n  background: #333;\n}\n\n.main {\n  background: #555;\n  padding: 0px;\n  max-width: 620px;\n  margin: 0 auto;\n}\n@media only screen and (min-width: 600px) {\n  .main {\n    padding: 20px;\n  }\n}\n.main .header {\n  background: lightcoral;\n  padding: 20px 10px;\n  font-size: 30px;\n}\n@media only screen and (min-width: 600px) {\n  .main .header {\n    padding: 20px;\n  }\n}", "",{"version":3,"sources":["webpack://./src/styles/style.scss"],"names":[],"mappings":"AAAA;EACE,gBAAA;AACF;;AAEA;EACE,gBAAA;EACA,YAAA;EACA,gBAAA;EACA,cAAA;AACF;AACE;EANF;IAOI,aAAA;EAEF;AACF;AAAE;EACE,sBAAA;EACA,kBAAA;EACA,eAAA;AAEJ;AAAI;EALF;IAMI,aAAA;EAGJ;AACF","sourcesContent":["body {\n  background: #333;\n}\n\n.main {\n  background: #555;\n  padding: 0px;\n  max-width: 620px;\n  margin: 0 auto;\n\n  @media only screen and (min-width: 600px) {\n    padding: 20px;\n  }\n\n  .header {\n    background: lightcoral;\n    padding: 20px 10px;\n    font-size: 30px;\n\n    @media only screen and (min-width: 600px) {\n      padding: 20px;\n    }\n  }\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, "body {\n  background: #333;\n}\n\n.main {\n  background: #555;\n  padding: 0px;\n  max-width: 620px;\n  margin: 0 auto;\n}\n@media only screen and (min-width: 600px) {\n  .main {\n    padding: 20px;\n  }\n}", "",{"version":3,"sources":["webpack://./src/styles/style.scss"],"names":[],"mappings":"AAAA;EACE,gBAAA;AACF;;AAEA;EACE,gBAAA;EACA,YAAA;EACA,gBAAA;EACA,cAAA;AACF;AACE;EANF;IAOI,aAAA;EAEF;AACF","sourcesContent":["body {\n  background: #333;\n}\n\n.main {\n  background: #555;\n  padding: 0px;\n  max-width: 620px;\n  margin: 0 auto;\n\n  @media only screen and (min-width: 600px) {\n    padding: 20px;\n  }\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -5433,6 +6789,60 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
+/***/ "./src/components/Header/Header.scss":
+/*!*******************************************!*\
+  !*** ./src/components/Header/Header.scss ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleDomAPI.js */ "./node_modules/style-loader/dist/runtime/styleDomAPI.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertBySelector.js */ "./node_modules/style-loader/dist/runtime/insertBySelector.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js */ "./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertStyleElement.js */ "./node_modules/style-loader/dist/runtime/insertStyleElement.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleTagTransform.js */ "./node_modules/style-loader/dist/runtime/styleTagTransform.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_node_modules_sass_loader_dist_cjs_js_Header_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js!./Header.scss */ "./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/components/Header/Header.scss");
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var options = {};
+
+options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());
+options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());
+
+      options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
+    
+options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
+options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_node_modules_sass_loader_dist_cjs_js_Header_scss__WEBPACK_IMPORTED_MODULE_6__["default"], options);
+
+
+
+
+       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_node_modules_sass_loader_dist_cjs_js_Header_scss__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_node_modules_sass_loader_dist_cjs_js_Header_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_node_modules_sass_loader_dist_cjs_js_Header_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
+
+
+/***/ }),
+
 /***/ "./src/components/RollChars/RollChars.scss":
 /*!*************************************************!*\
   !*** ./src/components/RollChars/RollChars.scss ***!
@@ -6023,6 +7433,46 @@ function validate(uuid) {
 
 /***/ }),
 
+/***/ "./src/images/cancel.svg":
+/*!*******************************!*\
+  !*** ./src/images/cancel.svg ***!
+  \*******************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "83b6ba2be4145efc2817.svg";
+
+/***/ }),
+
+/***/ "./src/images/card-exchange.svg":
+/*!**************************************!*\
+  !*** ./src/images/card-exchange.svg ***!
+  \**************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "d3e5536d7b820fa46ba1.svg";
+
+/***/ }),
+
+/***/ "./src/images/icons8-copy-96.png":
+/*!***************************************!*\
+  !*** ./src/images/icons8-copy-96.png ***!
+  \***************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "236bdad6aa5e33bffc03.png";
+
+/***/ }),
+
+/***/ "./src/images/load.svg":
+/*!*****************************!*\
+  !*** ./src/images/load.svg ***!
+  \*****************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "1f4f92f425a6f5336590.svg";
+
+/***/ }),
+
 /***/ "./src/images/rule-book.svg":
 /*!**********************************!*\
   !*** ./src/images/rule-book.svg ***!
@@ -6030,6 +7480,178 @@ function validate(uuid) {
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports = __webpack_require__.p + "6551e8394c16c2f610c1.svg";
+
+/***/ }),
+
+/***/ "./node_modules/foolsgold/index.js":
+/*!*****************************************!*\
+  !*** ./node_modules/foolsgold/index.js ***!
+  \*****************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _lib_component_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./lib/component.js */ "./node_modules/foolsgold/lib/component.js");
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_lib_component_js__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+/***/ }),
+
+/***/ "./node_modules/foolsgold/lib/build.js":
+/*!*********************************************!*\
+  !*** ./node_modules/foolsgold/lib/build.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "build": () => (/* binding */ build)
+/* harmony export */ });
+function build(parent, el, options) {
+  const element = document.createElement(el);
+  if (options?.id) element.id = options.id;
+  if (options?.className) element.classList.add(options.className);
+  if (options?.classNames) {
+    options.classNames.forEach((className) => {
+      element.classList.add(className);
+    });
+  }
+  if (options?.text) {
+    if (el === "input") element.setAttribute("value", options.text);
+    else element.innerText = options.text;
+  }
+  if (options?.contentEditable) element.contentEditable = true;
+  if (options?.title) element.title = options.title;
+
+  if (options?.onClick) element.addEventListener("click", options.onClick);
+  if (options?.onInput) element.addEventListener("input", options.onInput);
+  parent.appendChild(element);
+
+  return element;
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/foolsgold/lib/component.js":
+/*!*************************************************!*\
+  !*** ./node_modules/foolsgold/lib/component.js ***!
+  \*************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Foolsgold)
+/* harmony export */ });
+/* harmony import */ var _build_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./build.js */ "./node_modules/foolsgold/lib/build.js");
+/* harmony import */ var _store_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./store.js */ "./node_modules/foolsgold/lib/store.js");
+
+
+
+class Foolsgold {
+  constructor(parent, rootElement, props={}) {
+    this.parent = parent;
+    this.rootElement = rootElement;
+    this.props = props;
+
+    this.build = _build_js__WEBPACK_IMPORTED_MODULE_0__.build;
+
+    this.$store = _store_js__WEBPACK_IMPORTED_MODULE_1__["default"];
+
+    if (this.props.initialState) {
+      this.$store.initState(this.props.initialState);
+    }
+
+    this.init();
+  }
+
+  init() {
+    const container = document.createElement(this.rootElement);
+    this.container = container;
+    this.parent.appendChild(container);
+
+    this.applyContainerOptions();
+
+    this.clearAndRender();
+  }
+
+  applyContainerOptions = () => {
+    const options = this.containerOptions();
+    if (options?.id) this.container.id = options.id;
+    if (options?.className) this.container.classList.add(options.className);
+    if (options?.classNames) {
+      options.classNames.forEach(className => {
+        this.container.classList.add(className);
+      })
+    }
+  };
+
+  containerOptions() {
+    return {}
+  }
+
+  clearAndRender() {
+    this.container.innerHTML = ''
+    this.render()
+  }
+
+  render() {
+    console.error("This is the component base, extend it with something...");
+  }
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/foolsgold/lib/store.js":
+/*!*********************************************!*\
+  !*** ./node_modules/foolsgold/lib/store.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+class Store {
+  constructor() {
+    this.state = null;
+    this.stateRegistered = {};
+    this.registered = {};
+  }
+
+  initState(initialState) {
+    this.state = initialState;
+  }
+
+  setState(key, val) {
+    this.state[key] = val;
+
+    this.statePublish(key);
+  }
+
+  stateRegister(field, callback) {
+    this.stateRegistered[field] = callback;
+  }
+
+  statePublish(field) {
+    if (this.stateRegistered[field]) this.stateRegistered[field]();
+  }
+
+  register(field, callback) {
+    this.registered[field] = callback;
+  }
+
+  publish(field) {
+    if (this.registered[field]) this.registered[field]();
+  }
+}
+
+const store = new Store();
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (store);
+
 
 /***/ })
 
@@ -6174,12 +7796,12 @@ var __webpack_exports__ = {};
   !*** ./src/index.js ***!
   \**********************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! uuid */ "./node_modules/uuid/dist/esm-browser/v4.js");
-/* harmony import */ var _lib_Component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./lib/Component */ "./src/lib/Component.js");
-/* harmony import */ var _components_RollChars_RollChars__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/RollChars/RollChars */ "./src/components/RollChars/RollChars.js");
-/* harmony import */ var _components_CharOptions_CharOptions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/CharOptions/CharOptions */ "./src/components/CharOptions/CharOptions.js");
-/* harmony import */ var _components_CharList_CharList__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/CharList/CharList */ "./src/components/CharList/CharList.js");
-/* harmony import */ var _styles_style_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./styles/style.scss */ "./src/styles/style.scss");
+/* harmony import */ var foolsgold__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! foolsgold */ "./node_modules/foolsgold/index.js");
+/* harmony import */ var _components_Header_Header__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/Header/Header */ "./src/components/Header/Header.js");
+/* harmony import */ var _components_RollChars_RollChars__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/RollChars/RollChars */ "./src/components/RollChars/RollChars.js");
+/* harmony import */ var _components_CharOptions_CharOptions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/CharOptions/CharOptions */ "./src/components/CharOptions/CharOptions.js");
+/* harmony import */ var _components_CharList_CharList__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/CharList/CharList */ "./src/components/CharList/CharList.js");
+/* harmony import */ var _styles_style_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./styles/style.scss */ "./src/styles/style.scss");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -6192,17 +7814,34 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
+// import Component from "./lib/Component";
 
 
 
 
 
-var App = /*#__PURE__*/function (_Component) {
-  _inherits(App, _Component);
+
+var App = /*#__PURE__*/function (_Foolsgold) {
+  _inherits(App, _Foolsgold);
   var _super = _createSuper(App);
   function App() {
+    var _this;
     _classCallCheck(this, App);
-    return _super.apply(this, arguments);
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+    _this = _super.call.apply(_super, [this].concat(args));
+    var storedCharacteristics = localStorage.getItem("chars");
+    if (storedCharacteristics) {
+      var parsedCharacteristics = JSON.parse(storedCharacteristics);
+      _this.$store.setState("characteristics", parsedCharacteristics);
+    }
+    _this.$store.stateRegister("characteristics", function () {
+      var characteristicsString = JSON.stringify(_this.$store.state.characteristics);
+      localStorage.setItem("chars", characteristicsString);
+    });
+    _this.clearAndRender();
+    return _this;
   }
   _createClass(App, [{
     key: "containerOptions",
@@ -6214,30 +7853,24 @@ var App = /*#__PURE__*/function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var DOMHeader = this.build(this.container, "h1", {
-        className: "header",
-        text: this.$store.state.title
-      });
-      var DOMRollChars = new _components_RollChars_RollChars__WEBPACK_IMPORTED_MODULE_1__["default"](this.container, "div");
-      var DOMCharOptions = new _components_CharOptions_CharOptions__WEBPACK_IMPORTED_MODULE_2__["default"](this.container, "div");
-      var DOMCharList = new _components_CharList_CharList__WEBPACK_IMPORTED_MODULE_3__["default"](this.container, "div", {
+      var DOMHeader = new _components_Header_Header__WEBPACK_IMPORTED_MODULE_1__["default"](this.container, "div");
+      var DOMRollChars = new _components_RollChars_RollChars__WEBPACK_IMPORTED_MODULE_2__["default"](this.container, "div");
+      var DOMCharOptions = new _components_CharOptions_CharOptions__WEBPACK_IMPORTED_MODULE_3__["default"](this.container, "div");
+      var DOMCharList = new _components_CharList_CharList__WEBPACK_IMPORTED_MODULE_4__["default"](this.container, "div", {
         test: "CharList props test"
       });
     }
   }]);
   return App;
-}(_lib_Component__WEBPACK_IMPORTED_MODULE_0__["default"]);
+}(foolsgold__WEBPACK_IMPORTED_MODULE_0__["default"]);
 var DOMRoot = document.getElementById("root");
 var initialState = {
   title: "Personalities 5e",
   mainInput: "",
-  characteristics: [{
-    text: "test1",
-    id: (0,uuid__WEBPACK_IMPORTED_MODULE_5__["default"])()
-  }, {
-    text: "test2",
-    id: (0,uuid__WEBPACK_IMPORTED_MODULE_5__["default"])()
-  }],
+  characteristics: [
+    // { text: "test1", id: uuidv4() },
+    // { text: "test2", id: uuidv4() },
+  ],
   categories: ["traits", "ideals", "bonds", "flaws"]
 };
 var app = new App(DOMRoot, "div", {

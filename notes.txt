@@ -51,12 +51,6 @@ TODO BONUS FEATURES for TYPESCRIPT
 
 
       
-TODO LIB
-  add multiple callbacks for register
-    Unregister? (return a reference to the function, and search for that?)
-      ooh, return the unsubscribe function! (see jsmanifest)
-  LOOKOUT component render is called before component constructor
-    because the parent construtor (super) is called first!
 
 TODO study
   review the flow of "this" definitions in a method like charInput
