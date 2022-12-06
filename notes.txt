@@ -37,20 +37,22 @@ vim config for vscode https://www.youtube.com/watch?v=Vkm4bc2Y0AA
 
 
 TODO APP
+  https://awik.io/adjust-textarea-height-while-typing-to-fit-content-javascript/
+  accessibility
+    form for main options
+    remove should be a button for access
+
   absolute import paths? (eg: https://adamrackis.dev/blog/css-modules)
     https://medium.com/@etherealm/getting-rid-of-relative-paths-in-imports-using-webpack-alias-78d4bf15bb42
     https://webpack.js.org/configuration/resolve/
   
-  accessibility
-    form for main options
-    remove should be a button for access
 
 TODO BONUS FEATURES for TYPESCRIPT
   tag list for each item (add, remove, edit) for category, background, source
   foldable background list for backgrounds & sources
 
 
-      
+
 
 TODO study
   review the flow of "this" definitions in a method like charInput
