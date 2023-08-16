@@ -1,4 +1,3 @@
-// import Component from "../../lib/Component";
 import Foolsgold from "foolsgold";
 
 import { copyToClipboard, download } from "../../utils/export";

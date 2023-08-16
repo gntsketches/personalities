@@ -3,7 +3,6 @@ import store from "./store";
 
 export default class Component {
   constructor(parent, rootElement, props={}) {
-    // console.log('COMPONENT CONSTRUCTOR');
     this.parent = parent;
     this.rootElement = rootElement;
     this.props = props;
@@ -13,8 +12,6 @@ export default class Component {
     this.$store = store;
 
     if (this.props.initialState) {
-      // TODO only allow once?
-      // console.log('SET INITIAL STATE');
       this.$store.initState(this.props.initialState);
     }
 
@@ -22,7 +19,6 @@ export default class Component {
   }
 
   init() {
-    // console.log('...init... this:', this);
     const container = document.createElement(this.rootElement);
     this.container = container;
     this.parent.appendChild(container);
@@ -34,7 +30,6 @@ export default class Component {
 
   applyContainerOptions = () => {
     const options = this.containerOptions();
-    // console.log("defineContainerOptions options", options);
     if (options?.id) this.container.id = options.id;
     if (options?.className) this.container.classList.add(options.className);
     if (options?.classNames) {
@@ -49,7 +44,6 @@ export default class Component {
   }
 
   clearAndRender() {
-    // console.log('Clear and render');
     this.container.innerHTML = ''
     this.render()
   }

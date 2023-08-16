@@ -1,4 +1,3 @@
-// import Component from "../../lib/Component";
 import Foolsgold from "foolsgold";
 
 import "./CharOptions.scss";
@@ -78,7 +77,6 @@ export default class CharOptions extends Foolsgold {
     const DOMTrinkets = this.build(DOMCategories, "p", {
       className: !categories.includes("trinkets") ? "unselected" : "",
       classNames: ["category"],
-      // className: 'unselected',
       text: "Trinkets",
       onClick: (e) => this.updateCategories(e, "trinkets"),
     });

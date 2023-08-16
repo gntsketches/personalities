@@ -17,13 +17,10 @@
     align-items: center;
 
     .char-item-drag-handle {
-      // background: green;
       background-image: url('../../images/card-exchange.svg');
-      // transform: rotate(90deg);
       transform: rotate(90deg) scaleX(-1);
       background-size: cover;
       cursor: pointer;
-      // user-select: none;
       width: 30px;
       height: 30px;
       min-width: 30px;
@@ -38,7 +35,6 @@
 
   .remove {
     cursor: pointer;
-    // user-select: none;
     margin: 0 10px 0;
     background-image: url('../../images/cancel.svg');
     background-size: cover;

@@ -1,5 +1,4 @@
 import Sortable from "sortablejs";
-// import Component from "../../lib/Component";
 import Foolsgold from "foolsgold";
 
 import CharItem from "../CharItem/CharItem";
@@ -13,10 +12,7 @@ export default class CharList extends Foolsgold {
   }
 
   charInput(e, key) {
-    console.log('charInput key', key);
-
     const index = this.$store.state.characteristics.findIndex(e => e.id === key);
-    console.log('index', index);
     const newCharacteristics = [...this.$store.state.characteristics];
     newCharacteristics[index].text = e.target.innerText;
     this.$store.setState("characteristics", newCharacteristics);
@@ -24,7 +20,6 @@ export default class CharList extends Foolsgold {
 
   removeChar(key) {
     const index = this.$store.state.characteristics.findIndex(e => e.id === key);
-    console.log('index', index);
     const newCharacteristics = [...this.$store.state.characteristics];
     newCharacteristics.splice(index, 1);
     this.$store.setState("characteristics", newCharacteristics);
@@ -33,7 +28,6 @@ export default class CharList extends Foolsgold {
     foundCharItem.remove();
 
     if (newCharacteristics.length === 0) {
-      console.log('char length is 0');
       this.clearAndRender();
     }
   }
@@ -59,7 +53,6 @@ export default class CharList extends Foolsgold {
 
   render() {
     if (this.$store.state.characteristics.length === 0) {
-      console.log('CharList char length', this.$store.state.characteristics.length);
       this.build(this.container, "div", {
         className: "no-characteristics-text",
         text: "No characteristics yet...",

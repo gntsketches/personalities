@@ -1,5 +1,4 @@
 import { v4 as uuidv4 } from 'uuid';
-// import Component from "../../lib/Component";
 import Foolsgold from "foolsgold";
 
 import { traits, ideals, bonds, flaws, trinkets } from "../../descriptors";
@@ -33,28 +32,21 @@ export default class RollChars extends Foolsgold {
 
   roll = () => {
     const descriptors = getDescriptors(this.$store.state.categories);
-    console.log("descriptors", descriptors);
     const descriptor =
       descriptors[Math.floor(Math.random() * descriptors.length)];
-    console.log("descriptor", descriptor);
     this.$store.setState("mainInput", descriptor.description);
   };
 
   updateMainInput = (e) => {
-    // console.log("updateMainInput e", e);
     const target = e.target;
     const value = target.value;
-    // console.log('listening!', value);
     this.$store.setState("mainInput", value);
   };
 
   addMe = () => {
-    // console.log('adding the current info to the list!');
-    // TS define as interface
     if (this.$store.state.mainInput === '') return;
 
     const newId = uuidv4();
-    console.log('newId', newId);
     const characteristic = {
       text: this.$store.state.mainInput,
       id: newId,
@@ -64,7 +56,6 @@ export default class RollChars extends Foolsgold {
       characteristic,
     ]);
     this.$store.setState("mainInput", "");
-    // console.log("addMe state", this.$store.state);
     this.$store.publish("addMe");
   };
 
@@ -76,8 +67,6 @@ export default class RollChars extends Foolsgold {
   }
 
   render() {
-    // const DOMTop = this.build(this.container, "div", { className: "top" });
-
     const DOMRoll = this.build(this.container, "button", {
       className: "roll",
       onClick: () => this.roll(),

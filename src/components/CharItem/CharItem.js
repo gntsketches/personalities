@@ -1,6 +1,4 @@
-// import Component from "../../lib/Component";
 import Foolsgold from "foolsgold";
-
 
 import "./CharItem.scss";
 
